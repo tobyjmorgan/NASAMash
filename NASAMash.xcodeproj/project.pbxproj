@@ -31,6 +31,10 @@
 		6B871CB81E5DF104006F2236 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CB61E5DF104006F2236 /* Key.swift */; };
 		6B871CBB1E5DF2B8006F2236 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CBA1E5DF2B8006F2236 /* Date+extensions.swift */; };
 		6B871CBC1E5DF2B8006F2236 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CBA1E5DF2B8006F2236 /* Date+extensions.swift */; };
+		6B871CBE1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CBD1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift */; };
+		6B871CBF1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CBD1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift */; };
+		6B871CC11E5DF7DC006F2236 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CC01E5DF7DC006F2236 /* String+extensions.swift */; };
+		6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CC01E5DF7DC006F2236 /* String+extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +77,8 @@
 		6B871CB31E5DF0BD006F2236 /* RoverRequestParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverRequestParameters.swift; sourceTree = "<group>"; };
 		6B871CB61E5DF104006F2236 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		6B871CBA1E5DF2B8006F2236 /* Date+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
+		6B871CBD1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryAddValuesFromDictionary.swift; sourceTree = "<group>"; };
+		6B871CC01E5DF7DC006F2236 /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +186,8 @@
 			isa = PBXGroup;
 			children = (
 				6B871CBA1E5DF2B8006F2236 /* Date+extensions.swift */,
+				6B871CBD1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift */,
+				6B871CC01E5DF7DC006F2236 /* String+extensions.swift */,
 			);
 			name = "Foundation Extensions";
 			sourceTree = "<group>";
@@ -322,8 +330,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B871CA01E5DE2F0006F2236 /* Rover.swift in Sources */,
+				6B871CC11E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CB71E5DF104006F2236 /* Key.swift in Sources */,
 				6B871CB41E5DF0BD006F2236 /* RoverRequestParameters.swift in Sources */,
+				6B871CBE1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CA61E5DE43D006F2236 /* APIClient.swift in Sources */,
 				6B871CBB1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871C9D1E5DE289006F2236 /* Camera.swift in Sources */,
@@ -341,11 +351,13 @@
 			files = (
 				6B871CB51E5DF0BD006F2236 /* RoverRequestParameters.swift in Sources */,
 				6B871C9E1E5DE289006F2236 /* Camera.swift in Sources */,
+				6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CA41E5DE40E006F2236 /* NASAEndpoint.swift in Sources */,
 				6B871CBC1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871C841E5DE253006F2236 /* NASAMashTests.swift in Sources */,
 				6B871CB01E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
 				6B871CB81E5DF104006F2236 /* Key.swift in Sources */,
+				6B871CBF1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CA71E5DE43D006F2236 /* APIClient.swift in Sources */,
 				6B871CA11E5DE2F0006F2236 /* Rover.swift in Sources */,
 			);

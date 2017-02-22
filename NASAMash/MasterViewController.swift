@@ -13,7 +13,8 @@ class MasterViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
 
-
+    let apiClient = NASAAPIClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -24,6 +25,21 @@ class MasterViewController: UITableViewController {
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            
+            
+            if let requestParams = RoverRequestParameters(rover: Rover.curiosity, sol: 1000, earthDate: nil, cameras: nil, page: nil) {
+                
+                let endpoint = NASAEndpoint.roverPhotosBySol(requestParams)
+                
+                apiClient.fetch(request: endpoint.request, parse: { (json) in return json }, completion: { (result) in
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                    case .success(let payload):
+                        print(payload)
+                    }
+                })
+            }
         }
     }
 
