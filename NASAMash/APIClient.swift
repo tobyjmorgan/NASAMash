@@ -13,6 +13,9 @@ import Foundation
 typealias JSON = [String : AnyObject]
 typealias JSONTask = URLSessionDataTask
 typealias JSONTaskCompletion = (JSON?, HTTPURLResponse?, APIClientError?) -> Void
+typealias HTTPKey = String
+typealias HTTPParameters = [HTTPKey : Any]
+
 
 enum APIClientError: Error {
     case missingHTTPResponse
@@ -28,20 +31,49 @@ enum APIResult<T> {
     case failure(Error)
 }
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Mark: - APIEndpoint
 protocol APIEndpoint {
     var baseURL: String { get }
     var path: String { get }
+    var parameters: HTTPParameters { get }
 }
 
 extension APIEndpoint {
+    
+    // provide parameters in URLQueryItem form
+    var queryComponents: [URLQueryItem] {
+        var components = [URLQueryItem]()
+        
+        for (key, value) in parameters {
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
+            components.append(queryItem)
+        }
+        
+        return components
+    }
+    
+    // provide a request utilizing all the elements of the Endpoint
     var request: URLRequest {
-        print(baseURL)
-        print(path)
-        let url = URL(string: baseURL + path)!
-        return URLRequest(url: url)
+        var components = URLComponents(string: baseURL)!
+        components.path = path
+        components.queryItems = queryComponents
+        
+        let url = components.url!
+        
+        print(url.absoluteString)
+        return URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
     }
 }
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Mark: - APIClient
 protocol JSONDecodable {
     init?(JSON: JSON)
 }
