@@ -8,19 +8,17 @@
 
 import Foundation
 
-enum Rover: String {
-    case curiosity
-    case opportunity
-    case spirit
-}
+typealias RoverName = String
 
-extension Rover {
-    var cameras: [Camera] {
-        switch self {
-        case .curiosity:
-            return [.FHAZ, .RHAZ, .MAST, .CHEMCAM, .MAHLI, .MARDI, .NAVCAM]
-        case .opportunity, .spirit:
-            return [.FHAZ, .RHAZ, .NAVCAM, .PANCAM, .MINITES]
-        }
-    }
+struct Rover {
+    
+    let id: Int
+    let name: RoverName
+    let landingDate: NasaDate
+    let launchDate: NasaDate
+    let status: String
+    let maxSol: Sol
+    let maxDate: NasaDate
+    let totalPhotos: Int
+    let cameras: [Camera]
 }

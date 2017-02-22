@@ -29,7 +29,7 @@ extension NASAEndpoint: APIEndpoint {
         switch self {
             
         case .roverPhotosBySol(let params), .roverPhotosByEarthDate(let params):
-            return "/mars-photos/api/v1/rovers/\(params.rover.rawValue)/photos"
+            return "/mars-photos/api/v1/rovers/\(params.roverName)/photos"
         }
     }
     
@@ -42,8 +42,7 @@ extension NASAEndpoint: APIEndpoint {
             if let cameras = requestParams.cameras,
                 cameras.count > 0 {
 
-                let stringCameras: [String] = cameras.map { $0.rawValue }
-                let concatenatedCameras = String.concatenateWithCommas(arrayOfItems: stringCameras)
+                let concatenatedCameras = String.concatenateWithCommas(arrayOfItems: cameras)
                 parameters[Key.camera.rawValue] = "\(concatenatedCameras)"
             }
 

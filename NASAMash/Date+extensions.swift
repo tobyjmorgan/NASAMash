@@ -8,8 +8,10 @@
 
 import Foundation
 
+typealias NasaDate = String
+
 extension Date {
-    var earthDate: EarthDate {
+    var earthDate: NasaDate {
         
         let formatter = DateFormatter()
         
@@ -17,7 +19,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    init?(earthDate: EarthDate) {
+    init?(earthDate: NasaDate) {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"

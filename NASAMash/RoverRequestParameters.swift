@@ -14,18 +14,18 @@ typealias EarthDate = String
 
 struct RoverRequestParameters {
     
-    let rover: Rover
+    let roverName: RoverName
     let sol: Sol?
     let earthDate: EarthDate?
-    let cameras: [Camera]?
+    let cameras: [CameraName]?
     let page: Page?
     
-    init?(rover: Rover, sol: Sol?, earthDate: Date?, cameras: [Camera]?, page: Page?) {
+    init?(roverName: RoverName, sol: Sol?, earthDate: Date?, cameras: [CameraName]?, page: Page?) {
         
         // sol and earthdate cannot both be nil
         guard !(sol == nil && earthDate == nil) else { return nil }
         
-        self.rover = rover
+        self.roverName = roverName
         self.sol = sol
         self.cameras = cameras
         self.page = page

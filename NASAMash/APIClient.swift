@@ -36,6 +36,7 @@ enum APIResult<T> {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // Mark: - APIEndpoint
+
 protocol APIEndpoint {
     var baseURL: String { get }
     var path: String { get }
@@ -74,9 +75,6 @@ extension APIEndpoint {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // Mark: - APIClient
-protocol JSONDecodable {
-    init?(JSON: JSON)
-}
 
 protocol APIClient {
     var configuration: URLSessionConfiguration { get }
