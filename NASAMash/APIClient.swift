@@ -146,7 +146,7 @@ extension APIClient {
         task.resume()
     }
     
-    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> [T]?, completion: @escaping (APIResult<[T]>) -> Void) {
+    func fetch<T>(request: URLRequest, parse: @escaping  (JSON) -> [T]?, completion: @escaping (APIResult<[T]>) -> Void) {
         
         let task = JSONTaskWithRequest(request: request) { (json, response, error) in
             

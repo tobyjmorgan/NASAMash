@@ -38,8 +38,6 @@
 		6B871CC41E5E12E9006F2236 /* RoverPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CC31E5E12E9006F2236 /* RoverPhoto.swift */; };
 		6B871CC51E5E12E9006F2236 /* RoverPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CC31E5E12E9006F2236 /* RoverPhoto.swift */; };
 		6B871CC71E5E1445006F2236 /* JSONInitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CC61E5E1445006F2236 /* JSONInitable.swift */; };
-		6B871CCD1E5E21EB006F2236 /* HasListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CCC1E5E21EB006F2236 /* HasListParser.swift */; };
-		6B871CCE1E5E21EB006F2236 /* HasListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CCC1E5E21EB006F2236 /* HasListParser.swift */; };
 		6B871CCF1E5E2313006F2236 /* JSONInitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CC61E5E1445006F2236 /* JSONInitable.swift */; };
 		6B871CD21E5E26BA006F2236 /* Rover+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CD11E5E26BA006F2236 /* Rover+extensions.swift */; };
 		6B871CD31E5E26BA006F2236 /* Rover+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CD11E5E26BA006F2236 /* Rover+extensions.swift */; };
@@ -47,6 +45,16 @@
 		6B871CD61E5E26D5006F2236 /* RoverPhoto+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CD41E5E26D5006F2236 /* RoverPhoto+extensions.swift */; };
 		6B871CD81E5E2702006F2236 /* Camera+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CD71E5E2702006F2236 /* Camera+extensions.swift */; };
 		6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CD71E5E2702006F2236 /* Camera+extensions.swift */; };
+		6B871CDB1E5E30A7006F2236 /* ListParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CDA1E5E30A7006F2236 /* ListParseable.swift */; };
+		6B871CDC1E5E30A7006F2236 /* ListParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CDA1E5E30A7006F2236 /* ListParseable.swift */; };
+		6B871CE21E5F6BFF006F2236 /* RoverManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */; };
+		6B871CE31E5F6BFF006F2236 /* RoverManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */; };
+		6B871CE51E5F7163006F2236 /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE41E5F7163006F2236 /* PhotoCollection.swift */; };
+		6B871CE61E5F7163006F2236 /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE41E5F7163006F2236 /* PhotoCollection.swift */; };
+		6B871CE81E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */; };
+		6B871CE91E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */; };
+		6B871CEB1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */; };
+		6B871CEC1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,10 +101,16 @@
 		6B871CC01E5DF7DC006F2236 /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		6B871CC31E5E12E9006F2236 /* RoverPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhoto.swift; sourceTree = "<group>"; };
 		6B871CC61E5E1445006F2236 /* JSONInitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONInitable.swift; sourceTree = "<group>"; };
-		6B871CCC1E5E21EB006F2236 /* HasListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasListParser.swift; sourceTree = "<group>"; };
 		6B871CD11E5E26BA006F2236 /* Rover+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rover+extensions.swift"; sourceTree = "<group>"; };
 		6B871CD41E5E26D5006F2236 /* RoverPhoto+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RoverPhoto+extensions.swift"; sourceTree = "<group>"; };
 		6B871CD71E5E2702006F2236 /* Camera+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Camera+extensions.swift"; sourceTree = "<group>"; };
+		6B871CDA1E5E30A7006F2236 /* ListParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListParseable.swift; sourceTree = "<group>"; };
+		6B871CE01E5E3982006F2236 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverManifest.swift; sourceTree = "<group>"; };
+		6B871CE41E5F7163006F2236 /* PhotoCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollection.swift; sourceTree = "<group>"; };
+		6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RoverManifest+extensions.swift"; sourceTree = "<group>"; };
+		6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhotoCollection+extensions.swift"; sourceTree = "<group>"; };
+		6B871D271E5FCF4A006F2236 /* ConformingClosure.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ConformingClosure.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +141,7 @@
 		6B871C601E5DE253006F2236 = {
 			isa = PBXGroup;
 			children = (
+				6B871D271E5FCF4A006F2236 /* ConformingClosure.playground */,
 				6B871C6B1E5DE253006F2236 /* NASAMash */,
 				6B871C821E5DE253006F2236 /* NASAMashTests */,
 				6B871C8D1E5DE253006F2236 /* NASAMashUITests */,
@@ -185,9 +200,13 @@
 				6B871C9C1E5DE289006F2236 /* Camera.swift */,
 				6B871C9F1E5DE2F0006F2236 /* Rover.swift */,
 				6B871CC31E5E12E9006F2236 /* RoverPhoto.swift */,
+				6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */,
+				6B871CE41E5F7163006F2236 /* PhotoCollection.swift */,
 				6B871CD71E5E2702006F2236 /* Camera+extensions.swift */,
 				6B871CD11E5E26BA006F2236 /* Rover+extensions.swift */,
 				6B871CD41E5E26D5006F2236 /* RoverPhoto+extensions.swift */,
+				6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */,
+				6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -219,7 +238,8 @@
 			children = (
 				6B871CA51E5DE43D006F2236 /* APIClient.swift */,
 				6B871CC61E5E1445006F2236 /* JSONInitable.swift */,
-				6B871CCC1E5E21EB006F2236 /* HasListParser.swift */,
+				6B871CDA1E5E30A7006F2236 /* ListParseable.swift */,
+				6B871CE01E5E3982006F2236 /* MyPlayground.playground */,
 			);
 			name = "Base Networking";
 			sourceTree = "<group>";
@@ -365,21 +385,25 @@
 				6B871CC71E5E1445006F2236 /* JSONInitable.swift in Sources */,
 				6B871CD81E5E2702006F2236 /* Camera+extensions.swift in Sources */,
 				6B871CC11E5DF7DC006F2236 /* String+extensions.swift in Sources */,
+				6B871CEB1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */,
 				6B871CB71E5DF104006F2236 /* Key.swift in Sources */,
 				6B871CB41E5DF0BD006F2236 /* RoverRequestParameters.swift in Sources */,
 				6B871CBE1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
-				6B871CCD1E5E21EB006F2236 /* HasListParser.swift in Sources */,
 				6B871CD51E5E26D5006F2236 /* RoverPhoto+extensions.swift in Sources */,
 				6B871CA61E5DE43D006F2236 /* APIClient.swift in Sources */,
 				6B871CBB1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871C9D1E5DE289006F2236 /* Camera.swift in Sources */,
 				6B871C711E5DE253006F2236 /* DetailViewController.swift in Sources */,
 				6B871CA31E5DE40E006F2236 /* NASAEndpoint.swift in Sources */,
+				6B871CE81E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */,
 				6B871CD21E5E26BA006F2236 /* Rover+extensions.swift in Sources */,
 				6B871C6F1E5DE253006F2236 /* MasterViewController.swift in Sources */,
 				6B871CC41E5E12E9006F2236 /* RoverPhoto.swift in Sources */,
+				6B871CE51E5F7163006F2236 /* PhotoCollection.swift in Sources */,
+				6B871CDB1E5E30A7006F2236 /* ListParseable.swift in Sources */,
 				6B871C6D1E5DE253006F2236 /* AppDelegate.swift in Sources */,
 				6B871CAF1E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
+				6B871CE21E5F6BFF006F2236 /* RoverManifest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,23 +411,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B871CE61E5F7163006F2236 /* PhotoCollection.swift in Sources */,
 				6B871CB51E5DF0BD006F2236 /* RoverRequestParameters.swift in Sources */,
 				6B871CCF1E5E2313006F2236 /* JSONInitable.swift in Sources */,
 				6B871C9E1E5DE289006F2236 /* Camera.swift in Sources */,
 				6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */,
-				6B871CCE1E5E21EB006F2236 /* HasListParser.swift in Sources */,
 				6B871CD31E5E26BA006F2236 /* Rover+extensions.swift in Sources */,
 				6B871CC51E5E12E9006F2236 /* RoverPhoto.swift in Sources */,
 				6B871CA41E5DE40E006F2236 /* NASAEndpoint.swift in Sources */,
+				6B871CE91E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */,
+				6B871CDC1E5E30A7006F2236 /* ListParseable.swift in Sources */,
 				6B871CBC1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871CD61E5E26D5006F2236 /* RoverPhoto+extensions.swift in Sources */,
 				6B871C841E5DE253006F2236 /* NASAMashTests.swift in Sources */,
 				6B871CB01E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
+				6B871CEC1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */,
 				6B871CB81E5DF104006F2236 /* Key.swift in Sources */,
 				6B871CBF1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CA71E5DE43D006F2236 /* APIClient.swift in Sources */,
 				6B871CA11E5DE2F0006F2236 /* Rover.swift in Sources */,
+				6B871CE31E5F6BFF006F2236 /* RoverManifest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +674,7 @@
 				6B871C951E5DE253006F2236 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B871C961E5DE253006F2236 /* Build configuration list for PBXNativeTarget "NASAMashTests" */ = {
 			isa = XCConfigurationList;
@@ -654,6 +683,7 @@
 				6B871C981E5DE253006F2236 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B871C991E5DE253006F2236 /* Build configuration list for PBXNativeTarget "NASAMashUITests" */ = {
 			isa = XCConfigurationList;
@@ -662,6 +692,7 @@
 				6B871C9B1E5DE253006F2236 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

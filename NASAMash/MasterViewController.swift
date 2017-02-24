@@ -25,21 +25,48 @@ class MasterViewController: UITableViewController {
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-            
-            if let requestParams = RoverRequestParameters(roverName: "curiostiy", sol: 1000, earthDate: nil, cameras: nil, page: nil) {
-                
-                let endpoint = NASAEndpoint.roverPhotosBySol(requestParams)
-                
-                apiClient.fetch(request: endpoint.request, parse: RoverPhoto.listParser, completion: { (result) in
-                    switch result {
-                    case .failure(let error):
-                        print(error)
-                    case .success(let payload):
-                        print(payload)
-                    }
-                })
+        }
+
+//        let endpoint = NASAEndpoint.rovers
+//        apiClient.fetch(request: endpoint.request, parse: NASAEndpoint.roversParser) { (result) in
+//            
+//            switch result {
+//            case .success(let payload):
+//                for rover in payload {
+//                    print(rover.name)
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+
+        let endpoint = NASAEndpoint.manifest("Curiosity")
+        apiClient.fetch(request: endpoint.request, parse: NASAEndpoint.manifestParser) { (result) in
+            switch result {
+            case .success(let manifest):
+                print(manifest.roverName)
+                for collection in manifest.photoCollections {
+                    print(collection.totalPhotos)
+                }
+            case .failure(let error):
+                print(error)
             }
         }
+//        if let requestParams = RoverRequestParameters(roverName: "curiosity", sol: 1000, earthDate: nil, cameras: nil, page: nil) {
+//            
+//            let endpoint = NASAEndpoint.roverPhotosBySol(requestParams)
+//            let parser: (JSON) -> [RoverPhoto]? = RoverPhoto.listParser
+//            apiClient.fetch(request: endpoint.request, parse: parser) { (result) in
+//                switch result {
+//                case .failure(let error):
+//                    print(error)
+//                case .success(let payload):
+//                    for photo in payload {
+//                        print(photo.imageURL)
+//                    }
+//                }
+//            }
+//        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

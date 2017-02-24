@@ -22,3 +22,8 @@ extension Camera: JSONInitable {
     }
 }
 
+extension Camera: ListParseable {
+    static var listKey: HTTPKey {
+        return Key.cameras.rawValue
+    }
+}

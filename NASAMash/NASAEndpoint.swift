@@ -9,8 +9,10 @@
 import Foundation
 
 enum NASAEndpoint {
+    case rovers
     case roverPhotosBySol(RoverRequestParameters)
     case roverPhotosByEarthDate(RoverRequestParameters)
+    case manifest(RoverName)
 }
 
 // computed properties which get the path components we need based on the endpoint being used
@@ -28,8 +30,15 @@ extension NASAEndpoint: APIEndpoint {
         
         switch self {
             
+        case .rovers:
+            return "/mars-photos/api/v1/rovers/"
+            
         case .roverPhotosBySol(let params), .roverPhotosByEarthDate(let params):
             return "/mars-photos/api/v1/rovers/\(params.roverName)/photos"
+            
+        case .manifest(let roverName):
+            return "/mars-photos/api/v1/manifests/\(roverName)"
+            
         }
     }
     
@@ -77,8 +86,34 @@ extension NASAEndpoint: APIEndpoint {
             
             parameters.addValuesFromDictionary(dictionary: getCommonRoverParams(requestParams))
             
+        case .rovers, .manifest:
+            // no parameters other than api_key
+            break
         }
         
         return parameters
     }
+}
+
+extension NASAEndpoint {
+    
+    static var roversParser: (JSON) -> [Rover]? {
+        return Rover.listParser
+    }
+
+    static var photosParser: (JSON) -> [RoverPhoto]? {
+        return RoverPhoto.listParser
+    }
+    
+    static var manifestParser: (JSON) -> RoverManifest? {
+        return RoverManifest.init
+    }
+    
+//    var parser: (JSON) -> [JSONInitable]? {
+//        switch self {
+//        case .rovers:
+//            let roversParser = Rover.listParser
+//            return roversParser
+//        }
+//    }
 }

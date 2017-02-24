@@ -15,7 +15,7 @@ extension RoverPhoto: JSONInitable {
         guard let id            = json[Key.id.rawValue] as? Int,
             let rawCamera     = json[Key.camera.rawValue] as? JSON,
             let earthDate     = json[Key.earth_date.rawValue] as? NasaDate,
-            let sol           = json[Key.max_sol.rawValue] as? Int,
+            let sol           = json[Key.sol.rawValue] as? Int,
             let imageURL      = json[Key.img_src.rawValue] as? String,
             let rawRover      = json[Key.rover.rawValue] as? JSON else {
                 return nil
@@ -32,8 +32,10 @@ extension RoverPhoto: JSONInitable {
     }
 }
 
-extension RoverPhoto: HasListParser {
+extension RoverPhoto: ListParseable {
+
     static var listKey: HTTPKey {
         return Key.photos.rawValue
     }
 }
+

@@ -32,4 +32,7 @@ enum Key: HTTPKey {
     case max_date
     case total_photos
     case cameras
+    
+    case photo_manifest
+    case rovers
 }
