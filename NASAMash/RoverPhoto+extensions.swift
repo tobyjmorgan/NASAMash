@@ -13,12 +13,12 @@ extension RoverPhoto: JSONInitable {
     init?(json: JSON) {
         
         guard let id            = json[Key.id.rawValue] as? Int,
-            let rawCamera     = json[Key.camera.rawValue] as? JSON,
-            let earthDate     = json[Key.earth_date.rawValue] as? NasaDate,
-            let sol           = json[Key.sol.rawValue] as? Int,
-            let imageURL      = json[Key.img_src.rawValue] as? String,
-            let rawRover      = json[Key.rover.rawValue] as? JSON else {
-                return nil
+              let rawCamera     = json[Key.camera.rawValue] as? JSON,
+              let earthDate     = json[Key.earth_date.rawValue] as? NasaDate,
+              let sol           = json[Key.sol.rawValue] as? Int,
+              let imageURL      = json[Key.img_src.rawValue] as? String,
+              let rawRover      = json[Key.rover.rawValue] as? JSON else {
+            return nil
         }
         
         guard let camera = Camera(json: rawCamera), let rover = Rover(json: rawRover) else { return nil }

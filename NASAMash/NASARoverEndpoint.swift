@@ -1,5 +1,5 @@
 //
-//  NASAEndpoint.swift
+//  NASARoverEndpoint.swift
 //  NASAMash
 //
 //  Created by redBred LLC on 2/22/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NASAEndpoint {
+enum NASARoverEndpoint {
     case rovers
     case roverPhotosBySol(RoverRequestParameters)
     case roverPhotosByEarthDate(RoverRequestParameters)
@@ -16,7 +16,7 @@ enum NASAEndpoint {
 }
 
 // computed properties which get the path components we need based on the endpoint being used
-extension NASAEndpoint: APIEndpoint {
+extension NASARoverEndpoint: APIEndpoint {
     
     var apiKey: String {
         return "GCPIr7WPD2SiwQwqWrddqNMJOFMvXkf57rhRX4sx"
@@ -95,7 +95,7 @@ extension NASAEndpoint: APIEndpoint {
     }
 }
 
-extension NASAEndpoint {
+extension NASARoverEndpoint {
     
     static var roversParser: (JSON) -> [Rover]? {
         return Rover.listParser
@@ -105,10 +105,22 @@ extension NASAEndpoint {
         return RoverPhoto.listParser
     }
     
-    static var manifestParser: (JSON) -> RoverManifest? {
-        return RoverManifest.init
+    static var manifestParser: (JSON) -> [Manifest]? {
+        
+        func parseManifest(json: JSON) -> [Manifest]? {
+            
+            guard let manifestsJSON = json[Key.photo_manifest.rawValue] as? JSON,
+                  let manifests     = Manifest.listParser(json: manifestsJSON) else {
+                return nil
+            }
+            
+            return manifests
+        }
+        
+        return parseManifest
     }
     
+    // conforming closures cannot be returned from functions (and cannot cast a closure)
 //    var parser: (JSON) -> [JSONInitable]? {
 //        switch self {
 //        case .rovers:

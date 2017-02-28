@@ -12,9 +12,9 @@ extension Camera: JSONInitable {
     
     init?(json: JSON) {
         
-        guard let name  = json[Key.name.rawValue] as? CameraName,
-            let fullName  = json[Key.full_name.rawValue] as? String else {
-                return nil
+        guard let name      = json[Key.name.rawValue] as? CameraName,
+              let fullName  = json[Key.full_name.rawValue] as? String else {
+            return nil
         }
         
         self.name = name
