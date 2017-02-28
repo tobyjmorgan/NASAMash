@@ -9,6 +9,7 @@
 import Foundation
 
 typealias NasaDate = String
+typealias NasaDateTime = String
 
 extension Date {
     var earthDate: NasaDate {
@@ -25,6 +26,17 @@ extension Date {
         formatter.dateFormat = "yyyy-MM-dd"
         
         guard let newDate = formatter.date(from: earthDate) else { return nil }
+        
+        self.init(timeInterval:0, since:newDate)
+    }
+    
+    init?(nasaDateTime: NasaDateTime) {
+        
+        let removedLetterT = nasaDateTime.replacingOccurrences(of: "T", with: " ")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let newDate = formatter.date(from: removedLetterT) else { return nil }
         
         self.init(timeInterval:0, since:newDate)
     }

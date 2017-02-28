@@ -31,7 +31,7 @@ class Model: NSObject {
     
     private func startUp() {
         
-        fetchRovers()
+//        fetchRovers()
 //        if let roverParams = RoverRequestParameters(roverName: "curiosity", sol: 1000, earthDate: nil, cameras: nil, page: nil) {
 //            
 //            let endpoint = NASARoverEndpoint.roverPhotosBySol(roverParams)
@@ -45,6 +45,40 @@ class Model: NSObject {
 //                }
 //            }
 //        }
+        
+//        let endpoint = NASAEarthImageryEndpoint.getAssets(52.7229, -4.0561, "2011-01-01", "2017-01-01")
+//        client.fetch(request: endpoint.request, parse: NASAEarthImageryEndpoint.assetsParser) { (result) in
+//            switch result {
+//            case .success(let assets):
+//                print(assets)
+//            case .failure(let error):
+//                print(error)
+//                
+//            }
+//        }
+        
+        
+//        let earthParams = EarthImageryParams(lat: 52.7229, lon: -4.0561, dim: nil, date: nil)
+//        let endpoint = NASAEarthImageryEndpoint.getImageForLocation(earthParams)
+//        client.fetch(request: endpoint.request, parse: EarthImagery.init) { (result) in
+//            switch result {
+//            case .success(let imagery):
+//                print(imagery)
+//            case .failure(let error):
+//                print(error)
+//                
+//            }
+//        }
+
+        let endpoint = NASAAPODEndpoint.getAPODImage("2017-02-28")
+        client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
+            switch result {
+            case .success(let image):
+                print(image)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func fetchRovers() {

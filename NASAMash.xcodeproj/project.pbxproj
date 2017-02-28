@@ -19,8 +19,8 @@
 		6B871C9E1E5DE289006F2236 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C9C1E5DE289006F2236 /* Camera.swift */; };
 		6B871CA01E5DE2F0006F2236 /* Rover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C9F1E5DE2F0006F2236 /* Rover.swift */; };
 		6B871CA11E5DE2F0006F2236 /* Rover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C9F1E5DE2F0006F2236 /* Rover.swift */; };
-		6B871CA31E5DE40E006F2236 /* NASAEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CA21E5DE40E006F2236 /* NASAEndpoint.swift */; };
-		6B871CA41E5DE40E006F2236 /* NASAEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CA21E5DE40E006F2236 /* NASAEndpoint.swift */; };
+		6B871CA31E5DE40E006F2236 /* NASARoverEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CA21E5DE40E006F2236 /* NASARoverEndpoint.swift */; };
+		6B871CA41E5DE40E006F2236 /* NASARoverEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CA21E5DE40E006F2236 /* NASARoverEndpoint.swift */; };
 		6B871CA61E5DE43D006F2236 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CA51E5DE43D006F2236 /* APIClient.swift */; };
 		6B871CA71E5DE43D006F2236 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CA51E5DE43D006F2236 /* APIClient.swift */; };
 		6B871CAF1E5DE498006F2236 /* NASAAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CAE1E5DE498006F2236 /* NASAAPIClient.swift */; };
@@ -47,14 +47,32 @@
 		6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CD71E5E2702006F2236 /* Camera+extensions.swift */; };
 		6B871CDB1E5E30A7006F2236 /* ListParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CDA1E5E30A7006F2236 /* ListParseable.swift */; };
 		6B871CDC1E5E30A7006F2236 /* ListParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CDA1E5E30A7006F2236 /* ListParseable.swift */; };
-		6B871CE21E5F6BFF006F2236 /* RoverManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */; };
-		6B871CE31E5F6BFF006F2236 /* RoverManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */; };
-		6B871CE51E5F7163006F2236 /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE41E5F7163006F2236 /* PhotoCollection.swift */; };
-		6B871CE61E5F7163006F2236 /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE41E5F7163006F2236 /* PhotoCollection.swift */; };
-		6B871CE81E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */; };
-		6B871CE91E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */; };
-		6B871CEB1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */; };
-		6B871CEC1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */; };
+		6B871D291E60C6CB006F2236 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D281E60C6CB006F2236 /* Model.swift */; };
+		6B871D2A1E60C6CB006F2236 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D281E60C6CB006F2236 /* Model.swift */; };
+		6B871D2C1E647CD6006F2236 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D2B1E647CD6006F2236 /* UserSettings.swift */; };
+		6B871D2D1E647CD6006F2236 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D2B1E647CD6006F2236 /* UserSettings.swift */; };
+		6B871D311E64B7C9006F2236 /* Manifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D301E64B7C9006F2236 /* Manifest.swift */; };
+		6B871D321E64B7C9006F2236 /* Manifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D301E64B7C9006F2236 /* Manifest.swift */; };
+		6B871D341E64B84F006F2236 /* Manifest+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D331E64B84F006F2236 /* Manifest+extensions.swift */; };
+		6B871D351E64B84F006F2236 /* Manifest+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871D331E64B84F006F2236 /* Manifest+extensions.swift */; };
+		6B907B071E652F3300B75514 /* NASAEarthImageryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B061E652F3300B75514 /* NASAEarthImageryEndpoint.swift */; };
+		6B907B081E652F3300B75514 /* NASAEarthImageryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B061E652F3300B75514 /* NASAEarthImageryEndpoint.swift */; };
+		6B907B0A1E65310C00B75514 /* EarthImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B091E65310C00B75514 /* EarthImageAsset.swift */; };
+		6B907B0B1E65310C00B75514 /* EarthImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B091E65310C00B75514 /* EarthImageAsset.swift */; };
+		6B907B0D1E65393C00B75514 /* EarthImagery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B0C1E65393C00B75514 /* EarthImagery.swift */; };
+		6B907B0E1E65393C00B75514 /* EarthImagery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B0C1E65393C00B75514 /* EarthImagery.swift */; };
+		6B907B101E6539E400B75514 /* EarthImageryParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B0F1E6539E400B75514 /* EarthImageryParams.swift */; };
+		6B907B111E6539E400B75514 /* EarthImageryParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B0F1E6539E400B75514 /* EarthImageryParams.swift */; };
+		6B907B131E653F0500B75514 /* EarthImageAsset+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B121E653F0500B75514 /* EarthImageAsset+extensions.swift */; };
+		6B907B141E653F0500B75514 /* EarthImageAsset+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B121E653F0500B75514 /* EarthImageAsset+extensions.swift */; };
+		6B907B161E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B151E65F2F300B75514 /* EarthImagery+extensions.swift */; };
+		6B907B171E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B151E65F2F300B75514 /* EarthImagery+extensions.swift */; };
+		6B907B191E660D2200B75514 /* APODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B181E660D2200B75514 /* APODImage.swift */; };
+		6B907B1A1E660D2200B75514 /* APODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B181E660D2200B75514 /* APODImage.swift */; };
+		6B907B1C1E660E2D00B75514 /* APODImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B1B1E660E2D00B75514 /* APODImage+extensions.swift */; };
+		6B907B1D1E660E2D00B75514 /* APODImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B1B1E660E2D00B75514 /* APODImage+extensions.swift */; };
+		6B907B1F1E66124300B75514 /* NASAAPODEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B1E1E66124300B75514 /* NASAAPODEndpoint.swift */; };
+		6B907B201E66124300B75514 /* NASAAPODEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B1E1E66124300B75514 /* NASAAPODEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,7 +109,7 @@
 		6B871C901E5DE253006F2236 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B871C9C1E5DE289006F2236 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		6B871C9F1E5DE2F0006F2236 /* Rover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rover.swift; sourceTree = "<group>"; };
-		6B871CA21E5DE40E006F2236 /* NASAEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NASAEndpoint.swift; sourceTree = "<group>"; };
+		6B871CA21E5DE40E006F2236 /* NASARoverEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NASARoverEndpoint.swift; sourceTree = "<group>"; };
 		6B871CA51E5DE43D006F2236 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		6B871CAE1E5DE498006F2236 /* NASAAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NASAAPIClient.swift; sourceTree = "<group>"; };
 		6B871CB31E5DF0BD006F2236 /* RoverRequestParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverRequestParameters.swift; sourceTree = "<group>"; };
@@ -105,12 +123,19 @@
 		6B871CD41E5E26D5006F2236 /* RoverPhoto+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RoverPhoto+extensions.swift"; sourceTree = "<group>"; };
 		6B871CD71E5E2702006F2236 /* Camera+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Camera+extensions.swift"; sourceTree = "<group>"; };
 		6B871CDA1E5E30A7006F2236 /* ListParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListParseable.swift; sourceTree = "<group>"; };
-		6B871CE01E5E3982006F2236 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
-		6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverManifest.swift; sourceTree = "<group>"; };
-		6B871CE41E5F7163006F2236 /* PhotoCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollection.swift; sourceTree = "<group>"; };
-		6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RoverManifest+extensions.swift"; sourceTree = "<group>"; };
-		6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhotoCollection+extensions.swift"; sourceTree = "<group>"; };
-		6B871D271E5FCF4A006F2236 /* ConformingClosure.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ConformingClosure.playground; sourceTree = "<group>"; };
+		6B871D281E60C6CB006F2236 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		6B871D2B1E647CD6006F2236 /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		6B871D301E64B7C9006F2236 /* Manifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manifest.swift; sourceTree = "<group>"; };
+		6B871D331E64B84F006F2236 /* Manifest+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Manifest+extensions.swift"; sourceTree = "<group>"; };
+		6B907B061E652F3300B75514 /* NASAEarthImageryEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NASAEarthImageryEndpoint.swift; sourceTree = "<group>"; };
+		6B907B091E65310C00B75514 /* EarthImageAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthImageAsset.swift; sourceTree = "<group>"; };
+		6B907B0C1E65393C00B75514 /* EarthImagery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthImagery.swift; sourceTree = "<group>"; };
+		6B907B0F1E6539E400B75514 /* EarthImageryParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthImageryParams.swift; sourceTree = "<group>"; };
+		6B907B121E653F0500B75514 /* EarthImageAsset+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EarthImageAsset+extensions.swift"; sourceTree = "<group>"; };
+		6B907B151E65F2F300B75514 /* EarthImagery+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EarthImagery+extensions.swift"; sourceTree = "<group>"; };
+		6B907B181E660D2200B75514 /* APODImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APODImage.swift; sourceTree = "<group>"; };
+		6B907B1B1E660E2D00B75514 /* APODImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APODImage+extensions.swift"; sourceTree = "<group>"; };
+		6B907B1E1E66124300B75514 /* NASAAPODEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NASAAPODEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +166,6 @@
 		6B871C601E5DE253006F2236 = {
 			isa = PBXGroup;
 			children = (
-				6B871D271E5FCF4A006F2236 /* ConformingClosure.playground */,
 				6B871C6B1E5DE253006F2236 /* NASAMash */,
 				6B871C821E5DE253006F2236 /* NASAMashTests */,
 				6B871C8D1E5DE253006F2236 /* NASAMashUITests */,
@@ -197,16 +221,10 @@
 		6B871CB11E5DE5A5006F2236 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6B871C9C1E5DE289006F2236 /* Camera.swift */,
-				6B871C9F1E5DE2F0006F2236 /* Rover.swift */,
-				6B871CC31E5E12E9006F2236 /* RoverPhoto.swift */,
-				6B871CE11E5F6BFF006F2236 /* RoverManifest.swift */,
-				6B871CE41E5F7163006F2236 /* PhotoCollection.swift */,
-				6B871CD71E5E2702006F2236 /* Camera+extensions.swift */,
-				6B871CD11E5E26BA006F2236 /* Rover+extensions.swift */,
-				6B871CD41E5E26D5006F2236 /* RoverPhoto+extensions.swift */,
-				6B871CE71E5F72F4006F2236 /* RoverManifest+extensions.swift */,
-				6B871CEA1E5F745D006F2236 /* PhotoCollection+extensions.swift */,
+				6B871D281E60C6CB006F2236 /* Model.swift */,
+				6B871D2B1E647CD6006F2236 /* UserSettings.swift */,
+				6B871D2E1E64B4F5006F2236 /* Base Types */,
+				6B871D2F1E64B54C006F2236 /* Extensions */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -216,9 +234,12 @@
 			children = (
 				6B871CD01E5E2683006F2236 /* Base Networking */,
 				6B871CAE1E5DE498006F2236 /* NASAAPIClient.swift */,
-				6B871CA21E5DE40E006F2236 /* NASAEndpoint.swift */,
+				6B871CA21E5DE40E006F2236 /* NASARoverEndpoint.swift */,
+				6B907B061E652F3300B75514 /* NASAEarthImageryEndpoint.swift */,
+				6B907B1E1E66124300B75514 /* NASAAPODEndpoint.swift */,
 				6B871CB61E5DF104006F2236 /* Key.swift */,
 				6B871CB31E5DF0BD006F2236 /* RoverRequestParameters.swift */,
+				6B907B0F1E6539E400B75514 /* EarthImageryParams.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -239,9 +260,36 @@
 				6B871CA51E5DE43D006F2236 /* APIClient.swift */,
 				6B871CC61E5E1445006F2236 /* JSONInitable.swift */,
 				6B871CDA1E5E30A7006F2236 /* ListParseable.swift */,
-				6B871CE01E5E3982006F2236 /* MyPlayground.playground */,
 			);
 			name = "Base Networking";
+			sourceTree = "<group>";
+		};
+		6B871D2E1E64B4F5006F2236 /* Base Types */ = {
+			isa = PBXGroup;
+			children = (
+				6B871C9C1E5DE289006F2236 /* Camera.swift */,
+				6B871C9F1E5DE2F0006F2236 /* Rover.swift */,
+				6B871CC31E5E12E9006F2236 /* RoverPhoto.swift */,
+				6B871D301E64B7C9006F2236 /* Manifest.swift */,
+				6B907B091E65310C00B75514 /* EarthImageAsset.swift */,
+				6B907B0C1E65393C00B75514 /* EarthImagery.swift */,
+				6B907B181E660D2200B75514 /* APODImage.swift */,
+			);
+			name = "Base Types";
+			sourceTree = "<group>";
+		};
+		6B871D2F1E64B54C006F2236 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6B871CD71E5E2702006F2236 /* Camera+extensions.swift */,
+				6B871CD11E5E26BA006F2236 /* Rover+extensions.swift */,
+				6B871CD41E5E26D5006F2236 /* RoverPhoto+extensions.swift */,
+				6B871D331E64B84F006F2236 /* Manifest+extensions.swift */,
+				6B907B121E653F0500B75514 /* EarthImageAsset+extensions.swift */,
+				6B907B151E65F2F300B75514 /* EarthImagery+extensions.swift */,
+				6B907B1B1E660E2D00B75514 /* APODImage+extensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,11 +430,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B871CA01E5DE2F0006F2236 /* Rover.swift in Sources */,
+				6B907B0D1E65393C00B75514 /* EarthImagery.swift in Sources */,
 				6B871CC71E5E1445006F2236 /* JSONInitable.swift in Sources */,
 				6B871CD81E5E2702006F2236 /* Camera+extensions.swift in Sources */,
 				6B871CC11E5DF7DC006F2236 /* String+extensions.swift in Sources */,
-				6B871CEB1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */,
 				6B871CB71E5DF104006F2236 /* Key.swift in Sources */,
+				6B907B1C1E660E2D00B75514 /* APODImage+extensions.swift in Sources */,
 				6B871CB41E5DF0BD006F2236 /* RoverRequestParameters.swift in Sources */,
 				6B871CBE1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CD51E5E26D5006F2236 /* RoverPhoto+extensions.swift in Sources */,
@@ -394,16 +443,24 @@
 				6B871CBB1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871C9D1E5DE289006F2236 /* Camera.swift in Sources */,
 				6B871C711E5DE253006F2236 /* DetailViewController.swift in Sources */,
-				6B871CA31E5DE40E006F2236 /* NASAEndpoint.swift in Sources */,
-				6B871CE81E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */,
+				6B871CA31E5DE40E006F2236 /* NASARoverEndpoint.swift in Sources */,
+				6B871D291E60C6CB006F2236 /* Model.swift in Sources */,
+				6B907B191E660D2200B75514 /* APODImage.swift in Sources */,
+				6B871D341E64B84F006F2236 /* Manifest+extensions.swift in Sources */,
 				6B871CD21E5E26BA006F2236 /* Rover+extensions.swift in Sources */,
 				6B871C6F1E5DE253006F2236 /* MasterViewController.swift in Sources */,
+				6B907B131E653F0500B75514 /* EarthImageAsset+extensions.swift in Sources */,
 				6B871CC41E5E12E9006F2236 /* RoverPhoto.swift in Sources */,
-				6B871CE51E5F7163006F2236 /* PhotoCollection.swift in Sources */,
+				6B907B101E6539E400B75514 /* EarthImageryParams.swift in Sources */,
+				6B907B0A1E65310C00B75514 /* EarthImageAsset.swift in Sources */,
 				6B871CDB1E5E30A7006F2236 /* ListParseable.swift in Sources */,
+				6B907B1F1E66124300B75514 /* NASAAPODEndpoint.swift in Sources */,
+				6B907B071E652F3300B75514 /* NASAEarthImageryEndpoint.swift in Sources */,
 				6B871C6D1E5DE253006F2236 /* AppDelegate.swift in Sources */,
+				6B871D311E64B7C9006F2236 /* Manifest.swift in Sources */,
+				6B907B161E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */,
 				6B871CAF1E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
-				6B871CE21E5F6BFF006F2236 /* RoverManifest.swift in Sources */,
+				6B871D2C1E647CD6006F2236 /* UserSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,27 +468,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B871CE61E5F7163006F2236 /* PhotoCollection.swift in Sources */,
 				6B871CB51E5DF0BD006F2236 /* RoverRequestParameters.swift in Sources */,
 				6B871CCF1E5E2313006F2236 /* JSONInitable.swift in Sources */,
+				6B907B0B1E65310C00B75514 /* EarthImageAsset.swift in Sources */,
 				6B871C9E1E5DE289006F2236 /* Camera.swift in Sources */,
+				6B907B081E652F3300B75514 /* NASAEarthImageryEndpoint.swift in Sources */,
 				6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */,
+				6B907B111E6539E400B75514 /* EarthImageryParams.swift in Sources */,
 				6B871CD31E5E26BA006F2236 /* Rover+extensions.swift in Sources */,
+				6B907B1A1E660D2200B75514 /* APODImage.swift in Sources */,
 				6B871CC51E5E12E9006F2236 /* RoverPhoto.swift in Sources */,
-				6B871CA41E5DE40E006F2236 /* NASAEndpoint.swift in Sources */,
-				6B871CE91E5F72F4006F2236 /* RoverManifest+extensions.swift in Sources */,
+				6B871D321E64B7C9006F2236 /* Manifest.swift in Sources */,
+				6B871CA41E5DE40E006F2236 /* NASARoverEndpoint.swift in Sources */,
+				6B907B201E66124300B75514 /* NASAAPODEndpoint.swift in Sources */,
 				6B871CDC1E5E30A7006F2236 /* ListParseable.swift in Sources */,
 				6B871CBC1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871CD61E5E26D5006F2236 /* RoverPhoto+extensions.swift in Sources */,
+				6B871D351E64B84F006F2236 /* Manifest+extensions.swift in Sources */,
 				6B871C841E5DE253006F2236 /* NASAMashTests.swift in Sources */,
 				6B871CB01E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
-				6B871CEC1E5F745D006F2236 /* PhotoCollection+extensions.swift in Sources */,
+				6B871D2D1E647CD6006F2236 /* UserSettings.swift in Sources */,
 				6B871CB81E5DF104006F2236 /* Key.swift in Sources */,
+				6B907B141E653F0500B75514 /* EarthImageAsset+extensions.swift in Sources */,
+				6B907B171E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */,
 				6B871CBF1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CA71E5DE43D006F2236 /* APIClient.swift in Sources */,
+				6B871D2A1E60C6CB006F2236 /* Model.swift in Sources */,
 				6B871CA11E5DE2F0006F2236 /* Rover.swift in Sources */,
-				6B871CE31E5F6BFF006F2236 /* RoverManifest.swift in Sources */,
+				6B907B0E1E65393C00B75514 /* EarthImagery.swift in Sources */,
+				6B907B1D1E660E2D00B75514 /* APODImage+extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
