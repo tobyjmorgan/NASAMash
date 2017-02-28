@@ -17,4 +17,5 @@ struct APODImage {
     let url: String
     let mediaType: String
     let serviceVersion: String
+    let copyright: String?
 }

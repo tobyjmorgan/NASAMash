@@ -54,4 +54,5 @@ enum Key: HTTPKey {
     case media_type
     case service_version
     case title
+    case copyright
 }

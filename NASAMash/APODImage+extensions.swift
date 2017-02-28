@@ -31,5 +31,11 @@ extension APODImage: JSONInitable {
         self.url = url
         self.mediaType = mediaType
         self.serviceVersion = serviceVersion
+        
+        if let copyright = json[Key.copyright.rawValue] as? String {
+            self.copyright = copyright
+        } else {
+            self.copyright = nil
+        }
     }
 }
