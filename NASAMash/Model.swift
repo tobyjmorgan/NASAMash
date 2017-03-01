@@ -8,15 +8,43 @@
 
 import Foundation
 
+enum APODMode: Int {
+    case latest
+    case favorites
+}
+
 class Model: NSObject {
     
     enum Notifications: String {
         case roversChanged
+        case apodImagesChanged
     }
     
     var rovers: [Rover] = []
+    var apodImages: [APODImage] = []
+    var apodMode: APODMode = .latest {
+        
+        didSet {
+            
+            // if the value has changed, update the available images and send a notification
+            if oldValue != apodMode {
+                
+                switch apodMode {
+                case .latest:
+                    apodImages = prefetchedAPODImages
+                case .favorites:
+                    apodImages = favoriteAPODImages
+                }
+                
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+            }
+        }
+    }
     
-    let client = NASAAPIClient()
+    private var prefetchedAPODImages: [APODImage] = []
+    private var favoriteAPODImages: [APODImage] = []
+    
+    private let client = NASAAPIClient()
     
     // singleton stuff
     static let shared = Model()
@@ -31,7 +59,9 @@ class Model: NSObject {
     
     private func startUp() {
         
-//        fetchRovers()
+        fetchRovers()
+        fetchAPODImages(lastFetchDate: Date())
+        
 //        if let roverParams = RoverRequestParameters(roverName: "curiosity", sol: 1000, earthDate: nil, cameras: nil, page: nil) {
 //            
 //            let endpoint = NASARoverEndpoint.roverPhotosBySol(roverParams)
@@ -70,13 +100,36 @@ class Model: NSObject {
 //            }
 //        }
 
-        let endpoint = NASAAPODEndpoint.getAPODImage("2017-02-28")
-        client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
-            switch result {
-            case .success(let image):
-                print(image)
-            case .failure(let error):
-                print(error)
+    }
+    
+    func fetchAPODImages(lastFetchDate: Date) {
+        
+        for daysBefore in 0...6 {
+            
+            if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: lastFetchDate) {
+                
+                let endpoint = NASAAPODEndpoint.getAPODImage(fetchDate.earthDate)
+                
+                client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
+                    switch result {
+                    
+                    case .success(let image):
+                        if !self.prefetchedAPODImages.contains(image) {
+                            
+                            self.prefetchedAPODImages.append(image)
+                            self.prefetchedAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
+                                return firstImage.date > secondImage.date
+                            })
+                            
+                            self.apodImages = self.prefetchedAPODImages
+                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+                        }
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                    }
+                }
             }
         }
     }

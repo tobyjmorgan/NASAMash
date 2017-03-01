@@ -39,3 +39,9 @@ extension APODImage: JSONInitable {
         }
     }
 }
+
+extension APODImage: Equatable { }
+
+func == (lhs: APODImage, rhs: APODImage) -> Bool {
+    return lhs.title == rhs.title && lhs.date == rhs.date
+}
