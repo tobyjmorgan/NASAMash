@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,12 +15,15 @@
         <scene sceneID="pY4-Hu-kfo">
             <objects>
                 <navigationController title="Master" id="RMx-3f-FxP" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="7bK-jq-Zjz" kind="relationship" relationship="rootViewController" id="tsl-Nk-0bq"/>
+                        <segue destination="sHF-01-CWU" kind="relationship" relationship="rootViewController" id="t5V-8P-ag9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
@@ -245,7 +250,7 @@
         <!--Master-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="MasterViewController" customModule="NASAMash" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -268,9 +273,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -283,7 +285,131 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="-630"/>
+            <point key="canvasLocation" x="2470" y="-898"/>
+        </scene>
+        <!--NASA Mash-->
+        <scene sceneID="xud-Ok-Gjz">
+            <objects>
+                <viewController title="NASA Mash" id="sHF-01-CWU" customClass="FeatureViewController" customModule="NASAMash" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="R6j-nd-ROd"/>
+                        <viewControllerLayoutGuide type="bottom" id="jPP-O0-wFo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nb3-Uc-EnP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Bo-Vq-7kI">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fb-Cg-Sii">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="8"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="cxa-KQ-uM4"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LMo-Ei-75r">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="4"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="cWW-WC-aaL"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xsv-Ch-aBR">
+                                        <rect key="frame" x="0.0" y="12" width="375" height="8"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="9bs-6Z-lAp"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="140" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4PG-eI-Zev">
+                                        <rect key="frame" x="0.0" y="20" width="375" height="503"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeatureCell" id="4w9-M7-SCv" customClass="FeatureCell" customModule="NASAMash" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="140"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4w9-M7-SCv" id="5X6-1v-WqV">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FTD-YE-Kf3">
+                                                            <rect key="frame" x="4" y="0.0" width="367" height="131.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PxH-jT-jRe">
+                                                            <rect key="frame" x="12" y="8" width="351" height="115.5"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AstronomyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="t5k-Uu-mD2">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="115.5" height="115.5"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" secondItem="t5k-Uu-mD2" secondAttribute="height" multiplier="1:1" id="o4R-hF-x2Z"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Astronomy Picture of the Day" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="qNK-uc-VcU">
+                                                                    <rect key="frame" x="115.5" y="0.0" width="225.5" height="115.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zqD-Bz-dzM">
+                                                                    <rect key="frame" x="341" y="0.0" width="10" height="115.5"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="10" id="YlM-A8-pKc"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="PxH-jT-jRe" firstAttribute="top" secondItem="5X6-1v-WqV" secondAttribute="topMargin" id="2HC-my-5Bk"/>
+                                                        <constraint firstItem="FTD-YE-Kf3" firstAttribute="leading" secondItem="5X6-1v-WqV" secondAttribute="leading" constant="4" id="45a-U1-p3q"/>
+                                                        <constraint firstItem="PxH-jT-jRe" firstAttribute="leading" secondItem="5X6-1v-WqV" secondAttribute="leadingMargin" constant="4" id="Amh-cI-Ffl"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="PxH-jT-jRe" secondAttribute="bottom" constant="8" id="N5f-C1-6GX"/>
+                                                        <constraint firstAttribute="bottom" secondItem="FTD-YE-Kf3" secondAttribute="bottom" constant="8" id="ef8-Rk-HQH"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="PxH-jT-jRe" secondAttribute="trailing" constant="4" id="hsU-g5-llo"/>
+                                                        <constraint firstItem="FTD-YE-Kf3" firstAttribute="top" secondItem="5X6-1v-WqV" secondAttribute="top" id="qT5-ht-kRX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="FTD-YE-Kf3" secondAttribute="trailing" constant="4" id="rWU-vA-bD4"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <outlet property="frameView" destination="FTD-YE-Kf3" id="jb8-dk-xg2"/>
+                                                    <outlet property="icon" destination="t5k-Uu-mD2" id="lWO-cF-Q7G"/>
+                                                    <outlet property="name" destination="qNK-uc-VcU" id="BQF-8u-0rA"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PSb-AO-gEL">
+                                        <rect key="frame" x="0.0" y="523" width="375" height="80"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="V2c-VZ-VNc"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="8Bo-Vq-7kI" secondAttribute="bottom" id="0To-3X-Yrw"/>
+                            <constraint firstItem="8Bo-Vq-7kI" firstAttribute="top" secondItem="R6j-nd-ROd" secondAttribute="bottom" id="dun-Ck-Q5C"/>
+                            <constraint firstItem="8Bo-Vq-7kI" firstAttribute="leading" secondItem="nb3-Uc-EnP" secondAttribute="leading" id="gQC-Yy-mMK"/>
+                            <constraint firstAttribute="trailing" secondItem="8Bo-Vq-7kI" secondAttribute="trailing" id="rBo-N9-jhs"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="NASA Mash" id="gER-a2-Is7"/>
+                    <connections>
+                        <outlet property="tableView" destination="4PG-eI-Zev" id="YAm-l9-04j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dhy-Ja-2bf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="708" y="-630"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -302,7 +428,7 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
-    </inferredMetricsTieBreakers>
+    <resources>
+        <image name="AstronomyIcon" width="512" height="512"/>
+    </resources>
 </document>
