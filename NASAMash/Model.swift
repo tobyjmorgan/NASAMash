@@ -14,6 +14,8 @@ enum APODMode: Int {
 }
 
 class Model: NSObject {
+
+    static let maxDaysBefore = 6
     
     enum Notifications: String {
         case roversChanged
@@ -45,6 +47,9 @@ class Model: NSObject {
     private var favoriteAPODImages: [APODImage] = []
     
     private let client = NASAAPIClient()
+    internal let defaults = UserDefaults.standard
+    
+
     
     // singleton stuff
     static let shared = Model()
@@ -104,7 +109,7 @@ class Model: NSObject {
     
     func fetchAPODImages(lastFetchDate: Date) {
         
-        for daysBefore in 0...6 {
+        for daysBefore in 0...Model.maxDaysBefore {
             
             if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: lastFetchDate) {
                 
@@ -122,7 +127,9 @@ class Model: NSObject {
                             })
                             
                             self.apodImages = self.prefetchedAPODImages
-                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+                            if daysBefore == Model.maxDaysBefore {
+                                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+                            }
                         }
                         
                     case .failure(let error):
@@ -188,5 +195,60 @@ class Model: NSObject {
                 }
             }
         }
+    }
+}
+
+// MARK: - User Settings
+extension Model {
+    
+    // return all favorite APOD image URLs from user defaults
+    func allFavoriteApods() -> [String] {
+        
+        guard let favorites = defaults.array(forKey: UserDefaultsKey.favoriteApodImageUrls.rawValue) as? [String] else { return [] }
+        
+        return favorites
+    }
+    
+    // returns if specified APOD URL is a favorite
+    func isFavoriteApod(apodURL: String) -> Bool {
+        
+        return allFavoriteApods().contains(apodURL)
+    }
+    
+    // adds the specified APOD URL to favorites, if not already there
+    func addApodToFavorites(apodURL: String) {
+        
+        guard !isFavoriteApod(apodURL: apodURL) else { return }
+        
+        let newFavorites = allFavoriteApods() + [apodURL]
+        
+        defaults.set(newFavorites, forKey: UserDefaultsKey.favoriteApodImageUrls.rawValue)
+        defaults.synchronize()
+    }
+
+    //removes the specified track from favorites, if present
+    func removeApodFromFavorites(apodURL: String) {
+        
+        var currentFavorites = allFavoriteApods()
+
+        if let index = currentFavorites.index(of: apodURL) {
+            currentFavorites.remove(at: index)
+        }
+        
+        defaults.set(currentFavorites, forKey: UserDefaultsKey.favoriteApodImageUrls.rawValue)
+        defaults.synchronize()
+    }
+    
+    // has the app been run before (offer welcome)
+    func hasBeenRunBefore() -> Bool {
+        
+        let runBefore = defaults.bool(forKey: UserDefaultsKey.everBeenRunBefore.rawValue)
+        
+        if runBefore { return true }
+        
+        defaults.set(true, forKey: UserDefaultsKey.everBeenRunBefore.rawValue)
+        defaults.synchronize()
+        
+        return false
     }
 }

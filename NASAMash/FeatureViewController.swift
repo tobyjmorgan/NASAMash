@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import SAMCache
 
 class FeatureViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    
+    @IBOutlet var settingsButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,9 +21,21 @@ class FeatureViewController: UIViewController {
         tableView.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        tableView.invalidateIntrinsicContentSize()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showDetail" {
+            
+            if let controller = (segue.destination as! UINavigationController).topViewController {
+                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
     }
 }
 
@@ -60,6 +74,34 @@ extension FeatureViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.size.height / CGFloat(Feature.count)
+    }
+}
+
+
+
+
+//////////////////////////////////////////////////////////////
+// MARK: - IBActions
+extension FeatureViewController {
+    
+    @IBAction func onSettings() {
+        
+        let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+        
+        let clearCacheAction = UIAlertAction(title: "Clear Cache", style: .default) { (action) in
+            SAMCache.shared().removeAllObjects()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(clearCacheAction)
+        alert.addAction(cancelAction)
+        
+        let popover = alert.popoverPresentationController
+        popover?.sourceView = settingsButton
+        popover?.sourceRect = settingsButton.bounds
+        
+        present(alert, animated: true)
     }
 }
 
