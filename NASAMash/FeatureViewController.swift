@@ -14,17 +14,45 @@ class FeatureViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var settingsButton: UIButton!
 
+    var detailViewController: DetailViewController? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let split = self.splitViewController {
+            let controllers = split.viewControllers
+            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        }
+        
         tableView.dataSource = self
         tableView.delegate = self
+
+        NotificationCenter.default.addObserver(self, selector: #selector(FeatureViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         tableView.invalidateIntrinsicContentSize()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        displayWelcome()
+        
+        // unselect anything that was previously selected when returning to this screen
+        // but only if not in split view mode (both sides showing)
+        if self.splitViewController!.isCollapsed {
+            
+            if let selections = tableView.indexPathsForSelectedRows {
+                
+                for selection in selections {
+                    tableView.deselectRow(at: selection, animated: true)
+                }
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -35,6 +63,15 @@ class FeatureViewController: UIViewController {
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
+        }
+    }
+    
+    func displayWelcome() {
+        
+        if !Model.shared.hasBeenRunBefore() {
+            
+            let welcome = TJMApplicationNotification(title: "Welcome", message: "We hope you enjoy exploring some great images from NASA!", fatal: false)
+            welcome.postMyself()
         }
     }
 }
@@ -88,7 +125,7 @@ extension FeatureViewController {
         
         let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
         
-        let clearCacheAction = UIAlertAction(title: "Clear Cache", style: .default) { (action) in
+        let clearCacheAction = UIAlertAction(title: "Clear Cached Images", style: .default) { (action) in
             SAMCache.shared().removeAllObjects()
         }
 

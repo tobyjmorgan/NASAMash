@@ -7,10 +7,17 @@
 //
 
 import Foundation
+import GameKit
 
 enum APODMode: Int {
     case latest
     case favorites
+}
+
+enum RoverMode: Int {
+    case latest
+    case random
+    case search
 }
 
 class Model: NSObject {
@@ -20,9 +27,11 @@ class Model: NSObject {
     enum Notifications: String {
         case roversChanged
         case apodImagesChanged
+        case roverPhotosChanged
     }
     
     var rovers: [Rover] = []
+    
     var apodImages: [APODImage] = []
     var apodMode: APODMode = .latest {
         
@@ -42,11 +51,37 @@ class Model: NSObject {
             }
         }
     }
+
+    var roverPhotos: [RoverPhoto] = []
+    var roverMode: RoverMode = .latest {
+        
+        didSet {
+            
+            // if the value has changed, update the available images and send a notification
+            if oldValue != roverMode {
+                
+                switch roverMode {
+                case .latest:
+                    roverPhotos = []
+                    fetchLatestRoverPhotos()
+                    
+                case .random:
+                    roverPhotos = []
+                    fetchRandomRoverPhotos()
+                    
+                case .search:
+                    roverPhotos = []
+                }
+                
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
+            }
+        }
+    }
+
+    internal var prefetchedAPODImages: [APODImage] = []
+    internal var favoriteAPODImages: [APODImage] = []
     
-    private var prefetchedAPODImages: [APODImage] = []
-    private var favoriteAPODImages: [APODImage] = []
-    
-    private let client = NASAAPIClient()
+    internal let client = NASAAPIClient()
     internal let defaults = UserDefaults.standard
     
 
@@ -65,7 +100,8 @@ class Model: NSObject {
     private func startUp() {
         
         fetchRovers()
-        fetchAPODImages(lastFetchDate: Date())
+        fetchLatestAPODImages(lastFetchDate: Date())
+        fetchFavoriteAPODImages()
         
 //        if let roverParams = RoverRequestParameters(roverName: "curiosity", sol: 1000, earthDate: nil, cameras: nil, page: nil) {
 //            
@@ -107,37 +143,70 @@ class Model: NSObject {
 
     }
     
-    func fetchAPODImages(lastFetchDate: Date) {
+    private func fetchAPODImage(nasaDate: NasaDate, contextApodMode: APODMode, finalOfBatch: Bool) {
+        
+        let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
+        
+        client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
+            
+            switch result {
+                
+            case .success(let image):
+                
+                switch contextApodMode {
+                    
+                case .favorites:
+                    if !self.favoriteAPODImages.contains(image) {
+                        
+                        self.favoriteAPODImages.append(image)
+                        self.favoriteAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
+                            return firstImage.date > secondImage.date
+                        })
+                        
+                        if finalOfBatch {
+                            if self.apodMode == .favorites { self.apodImages = self.favoriteAPODImages }
+                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+                        }
+                    }
+
+                case .latest:
+                    if !self.prefetchedAPODImages.contains(image) {
+                        
+                        self.prefetchedAPODImages.append(image)
+                        self.prefetchedAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
+                            return firstImage.date > secondImage.date
+                        })
+                        
+                        if finalOfBatch {
+                            if self.apodMode == .latest { self.apodImages = self.prefetchedAPODImages }
+                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+                        }
+                    }
+                }
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+        }
+    }
+    
+    private func fetchLatestAPODImages(lastFetchDate: Date) {
         
         for daysBefore in 0...Model.maxDaysBefore {
             
             if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: lastFetchDate) {
                 
-                let endpoint = NASAAPODEndpoint.getAPODImage(fetchDate.earthDate)
-                
-                client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
-                    switch result {
-                    
-                    case .success(let image):
-                        if !self.prefetchedAPODImages.contains(image) {
-                            
-                            self.prefetchedAPODImages.append(image)
-                            self.prefetchedAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
-                                return firstImage.date > secondImage.date
-                            })
-                            
-                            self.apodImages = self.prefetchedAPODImages
-                            if daysBefore == Model.maxDaysBefore {
-                                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
-                            }
-                        }
-                        
-                    case .failure(let error):
-                        print(error)
-                        
-                    }
-                }
+                fetchAPODImage(nasaDate: fetchDate.earthDate, contextApodMode: .latest, finalOfBatch: daysBefore == Model.maxDaysBefore)
             }
+        }
+    }
+    
+    private func fetchFavoriteAPODImages() {
+        
+        for favoriteDate in allFavoriteApods() {
+            
+            fetchAPODImage(nasaDate: favoriteDate, contextApodMode: .favorites, finalOfBatch: false)
         }
     }
     
@@ -196,48 +265,126 @@ class Model: NSObject {
             }
         }
     }
+    
+    func fetchRoverPhotos(roverName: RoverName, sol: Sol, lastInBatch: Bool) {
+        
+        if let params = RoverRequestParameters(roverName: roverName, sol: sol, earthDate: nil, cameras: nil, page: nil) {
+            
+            let endpoint = NASARoverEndpoint.roverPhotosBySol(params)
+            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.photosParser) {(result) in
+                
+                DispatchQueue.main.async {
+                    
+                    switch result {
+                        
+                    case .failure(let error):
+                        // TODO: handle error correctly
+                        print(error)
+                        
+                    case .success(let photos):
+                        self.roverPhotos = self.roverPhotos + photos
+                        print("RoverPhotos: \(self.roverPhotos.count)")
+                        if lastInBatch {
+                            print("notifying")
+                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchLatestRoverPhotos() {
+        
+        for rover in rovers {
+            
+            guard let lastRover = rovers.last else { break }
+            
+            fetchRoverPhotos(roverName: rover.name, sol: rover.maxSol, lastInBatch: rover==lastRover)
+        }
+    }
+    
+    func fetchRandomRoverPhotos() {
+        
+        for rover in rovers {
+
+            guard let lastRover = rovers.last else { break }
+            
+            let randomSol = Int.random(range: Range(0...rover.maxSol))
+            
+            fetchRoverPhotos(roverName: rover.name, sol: randomSol, lastInBatch: rover==lastRover)
+        }
+    }
 }
 
-// MARK: - User Settings
+// MARK: - Favorite APOD
 extension Model {
     
-    // return all favorite APOD image URLs from user defaults
+    // return all favorite APODs from user defaults
     func allFavoriteApods() -> [String] {
         
-        guard let favorites = defaults.array(forKey: UserDefaultsKey.favoriteApodImageUrls.rawValue) as? [String] else { return [] }
+        guard let favorites = defaults.array(forKey: UserDefaultsKey.favoriteApodImages.rawValue) as? [String] else { return [] }
         
         return favorites
     }
     
-    // returns if specified APOD URL is a favorite
-    func isFavoriteApod(apodURL: String) -> Bool {
+    // returns if specified APOD is a favorite
+    func isFavoriteApod(apodImage: APODImage) -> Bool {
         
-        return allFavoriteApods().contains(apodURL)
+        return allFavoriteApods().contains(apodImage.date.earthDate)
     }
     
-    // adds the specified APOD URL to favorites, if not already there
-    func addApodToFavorites(apodURL: String) {
+    // adds the specified APOD to favorites, if not already there
+    func addApodToFavorites(apodImage: APODImage) {
         
-        guard !isFavoriteApod(apodURL: apodURL) else { return }
+        guard !isFavoriteApod(apodImage: apodImage) else { return }
         
-        let newFavorites = allFavoriteApods() + [apodURL]
+        let newFavorites = allFavoriteApods() + [apodImage.date.earthDate]
         
-        defaults.set(newFavorites, forKey: UserDefaultsKey.favoriteApodImageUrls.rawValue)
+        defaults.set(newFavorites, forKey: UserDefaultsKey.favoriteApodImages.rawValue)
         defaults.synchronize()
+        
+        // now add it to the array of APODImages 
+        if !favoriteAPODImages.contains(apodImage) {
+            favoriteAPODImages.insert(apodImage, at: 0)
+
+            if apodMode == .favorites {
+
+                // refresh apodImages to reflect the new state of favoriteApodImages
+                apodImages = favoriteAPODImages
+                
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+            }
+        }
     }
 
-    //removes the specified track from favorites, if present
-    func removeApodFromFavorites(apodURL: String) {
+    //removes the specified APOD from favorites, if present
+    func removeApodFromFavorites(apodImage: APODImage) {
         
         var currentFavorites = allFavoriteApods()
 
-        if let index = currentFavorites.index(of: apodURL) {
+        if let index = currentFavorites.index(of: apodImage.date.earthDate) {
             currentFavorites.remove(at: index)
         }
         
-        defaults.set(currentFavorites, forKey: UserDefaultsKey.favoriteApodImageUrls.rawValue)
+        defaults.set(currentFavorites, forKey: UserDefaultsKey.favoriteApodImages.rawValue)
         defaults.synchronize()
+        
+        // now remove it from the array of APODImages
+        if let index = favoriteAPODImages.index(of: apodImage) {
+            favoriteAPODImages.remove(at: index)
+            
+            if apodMode == .favorites {
+                // refresh apodImages to reflect the new state of favoriteApodImages
+                apodImages = favoriteAPODImages
+                
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+            }
+        }
     }
+}
+
+extension Model {
     
     // has the app been run before (offer welcome)
     func hasBeenRunBefore() -> Bool {

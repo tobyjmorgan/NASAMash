@@ -22,10 +22,9 @@ class APODCell: UICollectionViewCell {
     @IBOutlet var subtitle: UILabel!
     @IBOutlet var noImage: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var emptyHeart: UIImageView!
-    @IBOutlet var fullHeart: UIImageView!
     @IBOutlet var downloadButton: UIButton!
     @IBOutlet var faveButton: UIButton!
+    @IBOutlet var fullHeartImage: UIImageView!
     
     @IBAction func onFavorite() {
         onFavoriteClosure?(self)
@@ -35,8 +34,14 @@ class APODCell: UICollectionViewCell {
         onDownloadClosure?(self)
     }
 
-    var onFavoriteClosure: ((UICollectionViewCell) -> Void)? = nil
-    var onDownloadClosure: ((UICollectionViewCell) -> Void)? = nil
+    var onFavoriteClosure: ((APODCell) -> Void)? = nil
+    var onDownloadClosure: ((APODCell) -> Void)? = nil
+    
+    var isFavorite: Bool = false {
+        didSet {
+            refreshFavorite()
+        }
+    }
     
     var imageState: ImageState = .lookingForImage {
         didSet {
@@ -57,6 +62,21 @@ class APODCell: UICollectionViewCell {
         }
     }
     
+    func startHeartAnimation() {
+        // start the heartbeat animation
+        
+        fullHeartImage.layer.removeAllAnimations()
+        
+        let throb = CAKeyframeAnimation(keyPath: "transform.scale")
+        throb.values = [ 1.0, 0.8, 1.0 ]
+        throb.keyTimes = [ NSNumber(floatLiteral: 0.0), NSNumber(floatLiteral: 0.5), NSNumber(floatLiteral: 1.0)]
+        throb.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        throb.repeatCount = 1000
+        throb.duration = 1.0
+        fullHeartImage.layer.add(throb, forKey: "throb")
+        
+    }
+    
     func resetCell() {
         image.image = UIImage()
         imageURL = nil
@@ -64,6 +84,8 @@ class APODCell: UICollectionViewCell {
         subtitle.text = ""
         onFavoriteClosure = nil
         onDownloadClosure = nil
+        isFavorite = false
+        setNeedsDisplay()
     }
     
     func refreshForImageState(newImageState: ImageState) {
@@ -122,6 +144,30 @@ class APODCell: UICollectionViewCell {
                 SAMCache.shared().setImage(image, forKey: secureURLString)
                 self.imageState = .imageFound
             }
+        }
+        
+        setNeedsDisplay()
+    }
+    
+    func refreshFavorite() {
+        
+        if isFavorite {
+
+            // show the beating heart animation
+            fullHeartImage.isHidden = false
+            
+            // replace the button image with an empty image
+            faveButton.setImage(UIImage(), for: .normal)
+            
+            startHeartAnimation()
+            
+        } else {
+            
+            // hide the beating heart N.B. couldn't find a good way of stopping the beating heart animation
+            fullHeartImage.isHidden = true
+            
+            // ensure the button image is the empty heart image 
+            faveButton.setImage(#imageLiteral(resourceName: "EmptyHeart"), for: .normal)
         }
         
         setNeedsDisplay()

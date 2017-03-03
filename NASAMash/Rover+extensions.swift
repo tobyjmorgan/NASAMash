@@ -56,3 +56,9 @@ extension Rover {
         return newRover
     }
 }
+
+extension Rover: Equatable { }
+
+func == (lhs: Rover, rhs: Rover) -> Bool {
+    return lhs.id == rhs.id
+}

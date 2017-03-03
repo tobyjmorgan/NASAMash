@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Photos
 
 class APODViewController: UIViewController {
 
@@ -46,6 +45,70 @@ class APODViewController: UIViewController {
         
     }
     
+    func configureCell(cell: APODCell, apodImage: APODImage, indexPath: IndexPath) {
+        
+        cell.title.text = apodImage.title
+        cell.imageURL = apodImage.url
+        
+        if let copyright = apodImage.copyright {
+            cell.subtitle.text = copyright
+        } else {
+            cell.subtitle.text = ""
+        }
+        
+        cell.isFavorite = model.isFavoriteApod(apodImage: apodImage)
+        
+        // we provide the APODCell with a closure telling it what to do when the user
+        // taps the favorite button
+        cell.onFavoriteClosure = { [weak self] (cell) in
+            
+            // get the index path for the cell if it exists
+            // if it doesn't for some strange reason, then do nothing
+            guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
+            
+            let model = Model.shared
+            
+            // unwrap weak self and get the image information
+            guard model.apodImages.indices.contains(indexPath.item) else { return }
+            
+            let apodImage = model.apodImages[indexPath.item]
+            
+            // check to see if it is already a favorite
+            if model.isFavoriteApod(apodImage: apodImage) {
+                
+                // yes, so unfavorite it
+                model.removeApodFromFavorites(apodImage: apodImage)
+                cell.isFavorite = false
+                
+            } else {
+                
+                // no so favorite it
+                model.addApodToFavorites(apodImage: apodImage)
+                cell.isFavorite = true
+            }
+        }
+        
+        // we provide the APODCell with a closure telling it what to do when the user
+        // taps the download button
+        cell.onDownloadClosure = { [weak self] (cell) in
+            
+            // get the index path for the cell if it exists
+            // if it doesn't for some strange reason, then do nothing
+            guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
+            
+            let model = Model.shared
+            
+            guard model.apodImages.indices.contains(indexPath.row) else { return }
+            
+            let apodImage = model.apodImages[indexPath.item]
+            
+            // go do the download processing and disable the download button, so repeated downloads don't occur
+            self?.onDownload(urlString: apodImage.hdUrl)
+            
+            cell.downloadButton.isEnabled = false
+        }
+    }
+    
     func onChanges() {
         collectionView.reloadData()
     }
@@ -57,48 +120,6 @@ class APODViewController: UIViewController {
         if apodMode.rawValue <= apodModeSegmentedControl.numberOfSegments {
             apodModeSegmentedControl.selectedSegmentIndex = apodMode.rawValue
         }
-    }
-
-    func onFavorite(indexPath: IndexPath) {
-        
-    }
-    
-    func onDownload(indexPath: IndexPath) {
-        
-        let apodImage = model.apodImages[indexPath.item]
-        
-        // make sure we have permission to save to the Photo Library
-        PHPhotoLibrary.requestAuthorization { (authorizationStatus) in
-            
-            switch authorizationStatus {
-
-            case .authorized:
-                
-                // only allow secure requests - if it fails then no image will show
-                let secureURLString = apodImage.hdUrl.replacingOccurrences(of: "http://", with: "https://")
-                
-                // ok download image in the background
-                UIImage.getImageAsynchronously(urlString: secureURLString) { (image) in
-                    
-                    guard let image = image else {
-                        // failed to download image
-                        let note = TJMApplicationNotification(title: "Oops!", message: "Unable to download high-definition image from the server", fatal: false)
-                        note.postMyself()
-                        return
-                    }
-                    
-                    // success - save to Photo Library
-                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(APODViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                }
-
-            default:
-                // we don't have permission, so notify the user that this feature can't be used
-                let note = TJMApplicationNotification(title: "Oops!", message: "This app does not have permission to access your Photo Library. You can change this in Settings if you want download images in future", fatal: false)
-                note.postMyself()
-            }
-        }
-        
-        
     }
     
     func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
@@ -138,39 +159,18 @@ extension APODViewController: UICollectionViewDataSource {
         cell.resetCell()
         
         let apodImage = model.apodImages[indexPath.item]
+        configureCell(cell: cell, apodImage: apodImage, indexPath: indexPath)
+        cell.setNeedsDisplay()
         
-        cell.title.text = apodImage.title
-        cell.imageURL = apodImage.url
-        
-        if let copyright = apodImage.copyright {
-            cell.subtitle.text = copyright
-        } else {
-            cell.subtitle.text = ""
-        }
-        
-        cell.onFavoriteClosure = { (cell) in
-            guard let indexPath = collectionView.indexPath(for: cell) else { return }
-            
-            self.onFavorite(indexPath: indexPath)
-        }
-
-        cell.onDownloadClosure = { (cell) in
-            guard let indexPath = collectionView.indexPath(for: cell) else { return }
-            
-            self.onDownload(indexPath: indexPath)
-        }
-
         return cell
     }
-    
-    
 }
 
 
 
 
 //////////////////////////////////////////////////////////////
-// MARK: - UICollectionViewDataSource
+// MARK: - UICollectionViewDelegateFlowLayout
 extension APODViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -191,7 +191,7 @@ extension APODViewController: UICollectionViewDelegateFlowLayout {
 
 
 //////////////////////////////////////////////////////////////
-// MARK: - UICollectionViewDataSource
+// MARK: - UICollectionViewDelegate
 extension APODViewController: UICollectionViewDelegate {
     
     

@@ -12,5 +12,6 @@ enum UserDefaultsKey: String {
     
     case everBeenRunBefore
     case photoRootPath
-    case favoriteApodImageUrls
+    case favoriteApodImages
+    case favoriteRoverPhotos
 }
