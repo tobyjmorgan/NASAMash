@@ -19,6 +19,8 @@
 		6B5FE8241E69DF56002CBDAA /* RoverPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8231E69DF56002CBDAA /* RoverPhotosViewController.swift */; };
 		6B5FE8261E6A067D002CBDAA /* Int+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8251E6A067D002CBDAA /* Int+extensions.swift */; };
 		6B5FE8271E6A067D002CBDAA /* Int+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8251E6A067D002CBDAA /* Int+extensions.swift */; };
+		6B5FE8291E6BBF72002CBDAA /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */; };
+		6B5FE82A1E6BBF72002CBDAA /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */; };
 		6B871C6D1E5DE253006F2236 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C6C1E5DE253006F2236 /* AppDelegate.swift */; };
 		6B871C6F1E5DE253006F2236 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C6E1E5DE253006F2236 /* MasterViewController.swift */; };
 		6B871C711E5DE253006F2236 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C701E5DE253006F2236 /* DetailViewController.swift */; };
@@ -123,6 +125,7 @@
 		6B5FE8201E687E15002CBDAA /* TJMApplicationNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TJMApplicationNotification.swift; sourceTree = "<group>"; };
 		6B5FE8231E69DF56002CBDAA /* RoverPhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhotosViewController.swift; sourceTree = "<group>"; };
 		6B5FE8251E6A067D002CBDAA /* Int+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+extensions.swift"; sourceTree = "<group>"; };
+		6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		6B871C691E5DE253006F2236 /* NASAMash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NASAMash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B871C6C1E5DE253006F2236 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B871C6E1E5DE253006F2236 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +230,7 @@
 				6B907B271E663EFF00B75514 /* FeatureViewController.swift */,
 				6B907B311E67417700B75514 /* APODViewController.swift */,
 				6B5FE8231E69DF56002CBDAA /* RoverPhotosViewController.swift */,
+				6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */,
 				6B871C6E1E5DE253006F2236 /* MasterViewController.swift */,
 				6B871C701E5DE253006F2236 /* DetailViewController.swift */,
 			);
@@ -688,6 +692,7 @@
 				6B871CBE1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CD51E5E26D5006F2236 /* RoverPhoto+extensions.swift in Sources */,
 				6B5FE8241E69DF56002CBDAA /* RoverPhotosViewController.swift in Sources */,
+				6B5FE8291E6BBF72002CBDAA /* PhotoViewController.swift in Sources */,
 				6B871CA61E5DE43D006F2236 /* APIClient.swift in Sources */,
 				6B871CBB1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871C9D1E5DE289006F2236 /* Camera.swift in Sources */,
@@ -735,6 +740,7 @@
 				6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */,
 				6B907B111E6539E400B75514 /* EarthImageryParams.swift in Sources */,
+				6B5FE82A1E6BBF72002CBDAA /* PhotoViewController.swift in Sources */,
 				6B871CD31E5E26BA006F2236 /* Rover+extensions.swift in Sources */,
 				6B907B1A1E660D2200B75514 /* APODImage.swift in Sources */,
 				6B5FE8221E687E15002CBDAA /* TJMApplicationNotification.swift in Sources */,

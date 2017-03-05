@@ -22,17 +22,21 @@ enum RoverMode: Int {
 
 class Model: NSObject {
 
-    static let maxDaysBefore = 6
+    static let daysOfAPODImagesForLatest = 6
     
     enum Notifications: String {
         case roversChanged
-        case apodImagesChanged
+        case selectedRoverChanged
+        case selectedManifestChanged
         case roverPhotosChanged
+        case roverModeChanged
+        case apodImagesChanged
     }
     
     var rovers: [Rover] = []
-    
     var apodImages: [APODImage] = []
+    var roverPhotos: [RoverPhoto] = []
+    
     var apodMode: APODMode = .latest {
         
         didSet {
@@ -52,7 +56,6 @@ class Model: NSObject {
         }
     }
 
-    var roverPhotos: [RoverPhoto] = []
     var roverMode: RoverMode = .latest {
         
         didSet {
@@ -73,14 +76,106 @@ class Model: NSObject {
                     roverPhotos = []
                 }
                 
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverModeChanged.rawValue), object: self)
                 NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
             }
         }
     }
+    
+    var selectedRoverIndex: Int? = nil {
+        
+        didSet {
+            
+            // try to unwrap the value
+            if let unwrappedRoverIndex = selectedRoverIndex {
+                
+                // check that this is a valid rover index, otherwise clear everything out and return
+                guard rovers.indices.contains(unwrappedRoverIndex) else {
+                    selectedRoverIndex = nil
+                    selectedManifestIndex = nil
+                    return
+                }
+                
+                selectedManifestIndex = maxManifestIndex
+                
+            } else {
+                // it was nil, so make sure the manifest index is nil too
+                selectedManifestIndex = nil
+            }
+            
+            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.selectedRoverChanged.rawValue), object: self)
+        }
+    }
+    
+    var currentRover: Rover? {
+        
+        guard let roverIndex = selectedRoverIndex,
+              rovers.indices.contains(roverIndex) else { return nil }
+        
+        return rovers[roverIndex]
+    }
+    
+    var maxManifestIndex: Int? {
+        
+        // try to unwrap the rover index
+        if let unwrappedRoverIndex = selectedRoverIndex {
+            
+            // check that this is a valid rover index, otherwise we have to return nil
+            guard rovers.indices.contains(unwrappedRoverIndex) else {
+                return nil
+            }
+            
+            let rover = rovers[unwrappedRoverIndex]
+            let manifestCount = rover.manifests.count
+            
+            if manifestCount > 0 {
+                return manifestCount - 1 // the max possible index
+            } else {
+                return nil // no manifests, so return nil
+            }
+            
+            
+        } else {
+            // it was nil, so make sure the max index is nil too
+            return nil
+        }
+    }
+    
+    var selectedManifestIndex: Int? = nil {
+        didSet {
+            
+            if let unwrappedManifestIndex = selectedManifestIndex {
+            
+                if let maxManifestIndex = maxManifestIndex {
+                    
+                    if unwrappedManifestIndex < 0 {
+                        selectedManifestIndex = 0
+                    }
+                    
+                    if unwrappedManifestIndex > maxManifestIndex {
+                        selectedManifestIndex = maxManifestIndex
+                    }
+                    
+                } else {
+                    selectedManifestIndex = nil
+                }
+            }
 
+            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.selectedManifestChanged.rawValue), object: self)
+        }
+    }
+    
+    var currentManifest: Manifest? {
+        
+        guard let rover = currentRover,
+              let manifestIndex = selectedManifestIndex,
+              rover.manifests.indices.contains(manifestIndex) else { return nil }
+        
+        return rover.manifests[manifestIndex]
+    }
+    
     internal var prefetchedAPODImages: [APODImage] = []
     internal var favoriteAPODImages: [APODImage] = []
-    
     internal let client = NASAAPIClient()
     internal let defaults = UserDefaults.standard
     
@@ -97,53 +192,25 @@ class Model: NSObject {
         startUp()
     }
     
-    private func startUp() {
+    internal func startUp() {
         
         fetchRovers()
         fetchLatestAPODImages(lastFetchDate: Date())
         fetchFavoriteAPODImages()
-        
-//        if let roverParams = RoverRequestParameters(roverName: "curiosity", sol: 1000, earthDate: nil, cameras: nil, page: nil) {
-//            
-//            let endpoint = NASARoverEndpoint.roverPhotosBySol(roverParams)
-//            
-//            client.fetch(request: endpoint.request, parse: NASAEndpoint.photosParser) { (result) in
-//                switch result {
-//                case .success:
-//                    print("Success!")
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            }
-//        }
-        
-//        let endpoint = NASAEarthImageryEndpoint.getAssets(52.7229, -4.0561, "2011-01-01", "2017-01-01")
-//        client.fetch(request: endpoint.request, parse: NASAEarthImageryEndpoint.assetsParser) { (result) in
-//            switch result {
-//            case .success(let assets):
-//                print(assets)
-//            case .failure(let error):
-//                print(error)
-//                
-//            }
-//        }
-        
-        
-//        let earthParams = EarthImageryParams(lat: 52.7229, lon: -4.0561, dim: nil, date: nil)
-//        let endpoint = NASAEarthImageryEndpoint.getImageForLocation(earthParams)
-//        client.fetch(request: endpoint.request, parse: EarthImagery.init) { (result) in
-//            switch result {
-//            case .success(let imagery):
-//                print(imagery)
-//            case .failure(let error):
-//                print(error)
-//                
-//            }
-//        }
-
+        apodMode = .latest
+        roverMode = .latest
     }
+}
+
     
-    private func fetchAPODImage(nasaDate: NasaDate, contextApodMode: APODMode, finalOfBatch: Bool) {
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - APOD Image Handling
+extension Model {
+
+    internal func fetchAPODImage(nasaDate: NasaDate, contextApodMode: APODMode, finalOfBatch: Bool) {
         
         let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
         
@@ -185,55 +252,69 @@ class Model: NSObject {
                 }
                 
             case .failure(let error):
-                print(error)
+                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Astronomy Photo information: \(error.localizedDescription)", fatal: false)
+                note.postMyself()
                 
             }
         }
     }
     
-    private func fetchLatestAPODImages(lastFetchDate: Date) {
+    internal func fetchLatestAPODImages(lastFetchDate: Date) {
         
-        for daysBefore in 0...Model.maxDaysBefore {
+        for daysBefore in 0...Model.daysOfAPODImagesForLatest {
             
             if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: lastFetchDate) {
                 
-                fetchAPODImage(nasaDate: fetchDate.earthDate, contextApodMode: .latest, finalOfBatch: daysBefore == Model.maxDaysBefore)
+                fetchAPODImage(nasaDate: fetchDate.earthDate, contextApodMode: .latest, finalOfBatch: daysBefore == Model.daysOfAPODImagesForLatest)
             }
         }
     }
     
-    private func fetchFavoriteAPODImages() {
+    internal func fetchFavoriteAPODImages() {
         
         for favoriteDate in allFavoriteApods() {
             
             fetchAPODImage(nasaDate: favoriteDate, contextApodMode: .favorites, finalOfBatch: false)
         }
     }
+}
+
     
-    func fetchRovers() {
+    
+    
+    
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Rover and Manifest Handling
+extension Model {
+
+    internal func fetchRovers() {
         
         let endpoint = NASARoverEndpoint.rovers
         client.fetch(request: endpoint.request, parse: NASARoverEndpoint.roversParser) { (result) in
-            
-            DispatchQueue.main.async {
+        
+            switch result {
                 
-                switch result {
-
-                case .failure(let error):
-                    // TODO: handle error correctly
-                    print(error)
+            case .success(let rovers):
+                self.rovers = rovers
                 
-                case .success(let rovers):
-                    self.rovers = rovers
-                    self.fetchManifestsForRovers()
-                    NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: self)
-                
+                // make the first rover initially selected
+                if self.rovers.count > 0 {
+                    self.selectedRoverIndex = 0
+                } else {
+                    self.selectedRoverIndex = nil
                 }
+                
+                self.fetchManifestsForRovers()
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: self)
+                
+            case .failure(let error):
+                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Mars Rover information: \(error.localizedDescription)", fatal: false)
+                note.postMyself()
             }
         }
     }
     
-    func fetchManifestsForRovers() {
+    internal func fetchManifestsForRovers() {
         
         for (index, rover) in rovers.enumerated() {
             
@@ -245,56 +326,57 @@ class Model: NSObject {
 
                 case .success(let manifests):
                     
-                    DispatchQueue.main.async {
-                        
-                        // update the relevant rover in the list of rovers with the returned manifests
-                        let newRover = rover.roverWithManifests(manifests: manifests)
-                        
-                        // quick check nothing has changed during the asynchronous call
-                        if self.rovers.indices.contains(index) {
-                            
-                            self.rovers[index] = newRover
-                        }
-                    }
+                    // update the relevant rover in the list of rovers with the returned manifests
+                    let newRover = rover.roverWithManifests(manifests: manifests)
                     
+                    // quick check nothing has changed during the asynchronous call
+                    if self.rovers.indices.contains(index) {
+                        
+                        self.rovers[index] = newRover
+                    }
+
                 case .failure(let error):
-                    // TODO: report error to whoever can present an error message
-                    print("Failed to fetch manifests: \(error)")
-                    break
+                    let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Manifest information for Mars Rovers: \(error.localizedDescription)", fatal: false)
+                    note.postMyself()
                 }
             }
         }
     }
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Rover Photo Handling
+extension Model {
     
-    func fetchRoverPhotos(roverName: RoverName, sol: Sol, lastInBatch: Bool) {
+    internal func fetchRoverPhotos(roverName: RoverName, sol: Sol, lastInBatch: Bool) {
         
         if let params = RoverRequestParameters(roverName: roverName, sol: sol, earthDate: nil, cameras: nil, page: nil) {
             
             let endpoint = NASARoverEndpoint.roverPhotosBySol(params)
             client.fetch(request: endpoint.request, parse: NASARoverEndpoint.photosParser) {(result) in
                 
-                DispatchQueue.main.async {
+                switch result {
                     
-                    switch result {
-                        
-                    case .failure(let error):
-                        // TODO: handle error correctly
-                        print(error)
-                        
-                    case .success(let photos):
-                        self.roverPhotos = self.roverPhotos + photos
-                        print("RoverPhotos: \(self.roverPhotos.count)")
-                        if lastInBatch {
-                            print("notifying")
-                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
-                        }
+                case .success(let photos):
+                    self.roverPhotos = self.roverPhotos + photos
+                    
+                    if lastInBatch {
+                        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
                     }
+                    
+                case .failure(let error):
+                    let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Rover Photos: \(error.localizedDescription)", fatal: false)
+                    note.postMyself()
                 }
             }
         }
     }
     
-    func fetchLatestRoverPhotos() {
+    internal func fetchLatestRoverPhotos() {
         
         for rover in rovers {
             
@@ -304,7 +386,7 @@ class Model: NSObject {
         }
     }
     
-    func fetchRandomRoverPhotos() {
+    internal func fetchRandomRoverPhotos() {
         
         for rover in rovers {
 
@@ -315,9 +397,24 @@ class Model: NSObject {
             fetchRoverPhotos(roverName: rover.name, sol: randomSol, lastInBatch: rover==lastRover)
         }
     }
+    
+    func fetchRoverPhotosForSelectedManifest() {
+        
+        roverPhotos = []
+        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
+        
+        guard let rover = currentRover, let manifest = currentManifest else { return }
+        
+        fetchRoverPhotos(roverName: rover.name, sol: manifest.sol, lastInBatch: true)
+    }
 }
 
-// MARK: - Favorite APOD
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - APOD Favorites Handling
 extension Model {
     
     // return all favorite APODs from user defaults
@@ -384,6 +481,12 @@ extension Model {
     }
 }
 
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Other Settings
 extension Model {
     
     // has the app been run before (offer welcome)

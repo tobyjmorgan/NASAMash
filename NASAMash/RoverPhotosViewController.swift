@@ -18,7 +18,7 @@ class RoverPhotosViewController: UIViewController {
             if showSearchControls {
                 searchControlsBottomConstraint.constant = 0
             } else {
-                searchControlsBottomConstraint.constant = -120
+                searchControlsBottomConstraint.constant = -150
             }
             
             // this animates the changes to the constraint
@@ -33,22 +33,16 @@ class RoverPhotosViewController: UIViewController {
 
     @IBOutlet var searchControlsContainer: UIView!
     @IBOutlet var searchControlsButton: UIButton!
-    
     @IBOutlet var searchControlsRoverPicker: UIPickerView!
     @IBOutlet var searchControlsSeg: UISegmentedControl!
     @IBOutlet var searchControlsDateLabel: UILabel!
     @IBOutlet var searchControlsSlider: UISlider!
     @IBOutlet var searchControlsPickerViewContainer: UIView!
-    
     @IBOutlet var searchControlsRoverLabelContainer: UIView!
     @IBOutlet var searchControlsBottomConstraint: NSLayoutConstraint!
-    
-    @IBAction func onSearchControlsButton() {
-        guard model.roverMode == .search else { return }
-        
-        // toggle controls
-        showSearchControls = !showSearchControls
-    }
+    @IBOutlet var searchControlsPhotoCountLabel: UILabel!
+    @IBOutlet var searchControlsFetchButton: UIButton!
+    @IBOutlet var searchControlsFetchButtonContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +53,24 @@ class RoverPhotosViewController: UIViewController {
         searchControlsContainer.isHidden = true
         searchControlsPickerViewContainer.layer.cornerRadius = 10
         searchControlsRoverLabelContainer.layer.cornerRadius = 3
+
+        searchControlsSlider.isEnabled = false
+        searchControlsFetchButton.isEnabled = false
+        
+        refreshSlider()
+        refreshSearchDateLabel()
+        refreshPhotoCountLabel()
+        
+        model.roverMode = .latest
         
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onChanges), name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onRoverChanges), name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: model)
+        NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onRoverModeChanged), name: Notification.Name(Model.Notifications.roverModeChanged.rawValue), object: model)
+        NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onSelectedRoverChanged), name: Notification.Name(Model.Notifications.selectedRoverChanged.rawValue), object: model)
+        NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onSelectedManifestChanged), name: Notification.Name(Model.Notifications.selectedManifestChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
+        
+        collectionView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,7 +84,12 @@ class RoverPhotosViewController: UIViewController {
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.invalidateLayout()
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
+        searchControlsFetchButtonContainer.layer.cornerRadius = searchControlsFetchButtonContainer.frame.size.height/4
     }
     
     func configureCell(cell: APODCell, roverPhoto: RoverPhoto, indexPath: IndexPath) {
@@ -85,37 +98,6 @@ class RoverPhotosViewController: UIViewController {
         cell.imageURL = roverPhoto.imageURL
         
         cell.subtitle.text = roverPhoto.camera.fullName
-        
-        
-        // we provide the APODCell with a closure telling it what to do when the user
-        // taps the favorite button
-//        cell.onFavoriteClosure = { [weak self] (cell) in
-//            
-//            // get the index path for the cell if it exists
-//            // if it doesn't for some strange reason, then do nothing
-//            guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
-//            
-//            let model = Model.shared
-//            
-//            // unwrap weak self and get the image information
-//            guard model.roverPhotos.indices.contains(indexPath.item) else { return }
-//            
-//            let apodImage = model.roverPhotos[indexPath.item]
-//            
-//            // check to see if it is already a favorite
-//            if model.isFavoriteRoverPhoto(roverPhoto: roverPhoto) {
-//                
-//                // yes, so unfavorite it
-//                model.removeRoverPhotoFromFavorites(roverPhoto: roverPhoto)
-//                cell.isFavorite = false
-//                
-//            } else {
-//                
-//                // no so favorite it
-//                model.addRoverPhotoToFavorites(roverPhoto: roverPhoto)
-//                cell.isFavorite = true
-//            }
-//        }
         
         // we provide the APODCell with a closure telling it what to do when the user
         // taps the download button
@@ -144,6 +126,79 @@ class RoverPhotosViewController: UIViewController {
     
     func onRoverChanges() {
         searchControlsRoverPicker.reloadAllComponents()
+    }
+    
+    func onRoverModeChanged() {
+        onSelectedRoverChanged()
+    }
+    
+    func onSelectedRoverChanged() {
+        refreshSlider()
+        refreshSearchDateLabel()
+        refreshPhotoCountLabel()
+    }
+    
+    func onSelectedManifestChanged() {
+        refreshSearchDateLabel()
+        refreshPhotoCountLabel()
+    }
+    
+    func refreshSlider() {
+        
+        guard let maxManifestIndex = model.maxManifestIndex else {
+              
+            searchControlsSlider.isEnabled = false
+            searchControlsSlider.minimumValue = 0
+            searchControlsSlider.maximumValue = 1.0
+            searchControlsSlider.value = 0.5
+            
+            // disable the fetch button too
+            searchControlsFetchButton.isEnabled = false
+            
+            return
+        }
+        
+        searchControlsSlider.isEnabled = true
+        searchControlsSlider.minimumValue = 0
+        searchControlsSlider.maximumValue = Float(maxManifestIndex)
+        searchControlsSlider.value = Float(maxManifestIndex)
+        
+        // enable the fetch button
+        searchControlsFetchButton.isEnabled = true
+    }
+    
+    func refreshSearchDateLabel() {
+        
+        guard let rover = model.currentRover,
+              let manifest = model.currentManifest else {
+                
+            searchControlsDateLabel.text = ""
+            return
+        }
+        
+        if searchControlsSeg.selectedSegmentIndex == 0 {
+            
+            searchControlsDateLabel.text = "Sol: \(manifest.sol)"
+        
+        } else {
+            
+            guard let landingDate = Date(earthDate: rover.landingDate),
+                  let earthDate = Calendar.current.date(byAdding: .day, value: manifest.sol, to: landingDate) else {
+                    
+                searchControlsDateLabel.text = "Error Getting Eath Date"
+                return
+            }
+            
+            searchControlsDateLabel.text = "Earth Date: \(earthDate.earthDate)"
+        }
+    }
+    
+    func refreshPhotoCountLabel() {
+        if let manifest = model.currentManifest {
+            searchControlsPhotoCountLabel.text = "Photos: \(manifest.totalPhotos)"
+        } else {
+            searchControlsPhotoCountLabel.text = ""
+        }
     }
 }
 
@@ -179,6 +234,7 @@ extension RoverPhotosViewController: UICollectionViewDataSource {
 
 
 
+
 //////////////////////////////////////////////////////////////
 // MARK: - UICollectionViewDelegateFlowLayout
 extension RoverPhotosViewController: UICollectionViewDelegateFlowLayout {
@@ -194,12 +250,14 @@ extension RoverPhotosViewController: UICollectionViewDelegateFlowLayout {
 
 
 
+
 //////////////////////////////////////////////////////////////
 // MARK: - UICollectionViewDelegate
 extension RoverPhotosViewController: UICollectionViewDelegate {
     
     
 }
+
 
 
 
@@ -224,7 +282,13 @@ extension RoverPhotosViewController: UIPickerViewDataSource, UIPickerViewDelegat
         let attributedString = NSAttributedString(string: model.rovers[row].name, attributes: [NSForegroundColorAttributeName : UIColor.white])
         return attributedString
     }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        model.selectedRoverIndex = row
+    }
 }
+
+
 
 
 
@@ -235,15 +299,47 @@ extension RoverPhotosViewController {
     @IBAction func onSegmentedControlChanged(_ sender: UISegmentedControl) {
         
         guard let mode = RoverMode(rawValue: sender.selectedSegmentIndex) else { return }
-
+        
         model.roverMode = mode
         
         if mode == .search {
             showSearchControls = true
             searchControlsContainer.isHidden = false
+            
         } else {
             showSearchControls = false
             searchControlsContainer.isHidden = true
         }
+    }
+
+    @IBAction func onSearchControlsButton() {
+        guard model.roverMode == .search else { return }
+        
+        // toggle controls
+        showSearchControls = !showSearchControls
+    }
+    
+    @IBAction func onManifestSliderChanged(_ sender: UISlider) {
+        model.selectedManifestIndex = Int(sender.value)
+    }
+    
+    @IBAction func onSolEarthDateSegChanged(_ sender: UISegmentedControl) {
+        refreshSearchDateLabel()
+    }
+    
+    @IBAction func onBumpLeft() {
+        guard let selectedManifestIndex = model.selectedManifestIndex else { return }
+        
+        model.selectedManifestIndex = selectedManifestIndex - 1
+    }
+    
+    @IBAction func onBumpRight() {
+        guard let selectedManifestIndex = model.selectedManifestIndex else { return }
+        
+        model.selectedManifestIndex = selectedManifestIndex + 1
+    }
+    
+    @IBAction func onFetch() {
+        model.fetchRoverPhotosForSelectedManifest()
     }
 }

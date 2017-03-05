@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SAMCache
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -18,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         // warm up the model
         let _ = Model.shared
+        
+        // set the image cache limit
+        SAMCache.shared().cache.countLimit = 100
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
