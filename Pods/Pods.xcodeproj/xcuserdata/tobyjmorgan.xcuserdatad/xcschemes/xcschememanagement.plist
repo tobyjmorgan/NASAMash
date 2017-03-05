@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-NASAMash.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-NASAMashTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-NASAMashUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SAMCache.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>02656C34166735DF87CEB067B8C04D0E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6BE32F72B924845BB78740CA7410CDB4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B9A4DBAC2EABF45E008711B897DBF22A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C4A0CCB250AA2E747F65970F73E970FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
