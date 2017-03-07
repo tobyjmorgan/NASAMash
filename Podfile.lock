@@ -1,12 +1,15 @@
 PODS:
   - SAMCache (0.3.3)
+  - SwiftyAttributes (3.1.0)
 
 DEPENDENCIES:
   - SAMCache
+  - SwiftyAttributes
 
 SPEC CHECKSUMS:
   SAMCache: 790b2623a3e087c903daff872c90c248726c4c82
+  SwiftyAttributes: f337a324cd21f1b18782ab85d3478ccae73f7593
 
-PODFILE CHECKSUM: a3a713b735b3deb53df0f34461ff285016c24fd8
+PODFILE CHECKSUM: 791d7c3dfedc04634e6ec603a91a1ed0fdc73855
 
 COCOAPODS: 1.1.1

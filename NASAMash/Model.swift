@@ -18,6 +18,7 @@ enum RoverMode: Int {
     case latest
     case random
     case search
+    case notSet
 }
 
 class Model: NSObject {
@@ -56,7 +57,7 @@ class Model: NSObject {
         }
     }
 
-    var roverMode: RoverMode = .latest {
+    var roverMode: RoverMode = .notSet {
         
         didSet {
             
@@ -64,6 +65,10 @@ class Model: NSObject {
             if oldValue != roverMode {
                 
                 switch roverMode {
+                case .notSet:
+                    // do nothing
+                    break
+                    
                 case .latest:
                     roverPhotos = []
                     fetchLatestRoverPhotos()
@@ -125,9 +130,11 @@ class Model: NSObject {
                 return nil
             }
             
+            // get the rover and the manifest count
             let rover = rovers[unwrappedRoverIndex]
             let manifestCount = rover.manifests.count
             
+            // if there are manifests, set the max to count - 1
             if manifestCount > 0 {
                 return manifestCount - 1 // the max possible index
             } else {
@@ -144,14 +151,19 @@ class Model: NSObject {
     var selectedManifestIndex: Int? = nil {
         didSet {
             
+            // unwrap new value since it may be nil
             if let unwrappedManifestIndex = selectedManifestIndex {
             
+                // unwrap max possible index for current rover, because
+                // again it may be nil
                 if let maxManifestIndex = maxManifestIndex {
                     
+                    // manifest index cannot be less than zero
                     if unwrappedManifestIndex < 0 {
                         selectedManifestIndex = 0
                     }
                     
+                    // and it cannot be greater than the max
                     if unwrappedManifestIndex > maxManifestIndex {
                         selectedManifestIndex = maxManifestIndex
                     }
@@ -197,8 +209,6 @@ class Model: NSObject {
         fetchRovers()
         fetchLatestAPODImages(lastFetchDate: Date())
         fetchFavoriteAPODImages()
-        apodMode = .latest
-        roverMode = .latest
     }
 }
 
@@ -287,6 +297,9 @@ extension Model {
 // MARK: - Rover and Manifest Handling
 extension Model {
 
+    // this  method is only called once when the app starts up
+    // TODO: - may want to do this periodically if the app is not closed for a 
+    // day, then the user may have out of date manifests
     internal func fetchRovers() {
         
         let endpoint = NASARoverEndpoint.rovers
@@ -297,13 +310,13 @@ extension Model {
             case .success(let rovers):
                 self.rovers = rovers
                 
-                // make the first rover initially selected
-                if self.rovers.count > 0 {
-                    self.selectedRoverIndex = 0
-                } else {
-                    self.selectedRoverIndex = nil
-                }
-                
+                // now we have loaded rovers, we can set the initial rover mode
+                // this will trigger loading the latest rover photos
+                // we don't want to allow the GUI to drive this, because it won't know
+                // exaclt when the rovers are ready for use
+                self.roverMode = .latest
+
+                // now go and get all available manifests for each of the rovers
                 self.fetchManifestsForRovers()
                 NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: self)
                 
@@ -332,7 +345,8 @@ extension Model {
                     // quick check nothing has changed during the asynchronous call
                     if self.rovers.indices.contains(index) {
                         
-                        self.rovers[index] = newRover
+                        // replace the previous instance with the new instance
+                        self.rovers[index] = newRover                        
                     }
 
                 case .failure(let error):

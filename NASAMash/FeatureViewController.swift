@@ -15,7 +15,8 @@ class FeatureViewController: UIViewController {
     @IBOutlet var settingsButton: UIButton!
 
     var detailViewController: DetailViewController? = nil
-
+    var lastSelectedFeature: Feature? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,8 +58,13 @@ class FeatureViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "showDetail" {
+        if segue.identifier == "ShowDetail" {
             
+            guard let controller = (segue.destination as! UINavigationController).topViewController as? RepointerViewController,
+                  let feature = lastSelectedFeature else { return }
+            
+            controller.feature = feature
+
             if let controller = (segue.destination as! UINavigationController).topViewController {
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
@@ -111,6 +117,13 @@ extension FeatureViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.size.height / CGFloat(Feature.count)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let feature = Feature(rawValue: indexPath.row) else { return }
+        
+        lastSelectedFeature = feature
+        performSegue(withIdentifier: "ShowDetail", sender: self)
     }
 }
 

@@ -8,6 +8,7 @@ target 'NASAMash' do
   # Pods for NASAMash
 
 pod 'SAMCache'
+pod 'SwiftyAttributes'
 
   target 'NASAMashTests' do
     inherit! :search_paths

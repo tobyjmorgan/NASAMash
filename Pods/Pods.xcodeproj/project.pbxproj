@@ -7,33 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0FACF6CA318EC4A90D888852F2F38CD1 /* SAMCache-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BED8790C52C24330F152EEAF27D51EE0 /* SAMCache-dummy.m */; };
-		269F80F79B8A90A72CDD0DF866D716DD /* Pods-NASAMash-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D67898D5B379BDD58D616C95030870E0 /* Pods-NASAMash-dummy.m */; };
+		139F3380598EE34046029DB486D5169D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
+		1AEA8B417742CB208AAD032847011A93 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
+		1E2F201F9FB36DA8097390D801A06C01 /* WritingDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E91C3D98DED23123ADFC7038B0DA31 /* WritingDirection.swift */; };
 		2F25CB051D3C22C76DC7BFDDA2B9BE5B /* Pods-NASAMashTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 740915A34612F2D485FFBA9F94E6AE1C /* Pods-NASAMashTests-dummy.m */; };
-		307A301A727288CEB883DF3DD94AFC21 /* SAMCache+Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B35B249019DB5B10CAC41A6513DF756 /* SAMCache+Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4775D620F5DD9C340D2C3D8CCB0847CB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */; };
-		491CBCA08C5F936C8C0BC9E6D91DD1B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
-		4A71D6B438D49E75B3ED78D78F84000B /* SAMCache+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C0025788E70A7808EBCEB8620199A7 /* SAMCache+Image.m */; };
-		7B8AAC8ABB131F6D185CC0DBB8524C38 /* SAMCache-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DC9B3B6ADB4AF22B5745138F8E2AAF /* SAMCache-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		34F24023B4D16D03852DE053835B75FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */; };
+		38C252BFB7CF95F0F64B00A1F8E915DA /* VerticalGlyphForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F689B9A098E4250DE669FC76933E09E5 /* VerticalGlyphForm.swift */; };
+		3F841D697DE31CCB8256ED5FE0A8A8AC /* SAMCache+Image.h in Headers */ = {isa = PBXBuildFile; fileRef = F306C91F0A3A1FB4DA41038457DD5BB6 /* SAMCache+Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		425352AA15C3F58EC6A3DB4077541A73 /* Pods-NASAMash-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D67898D5B379BDD58D616C95030870E0 /* Pods-NASAMash-dummy.m */; };
+		459AA554FCFC4203078FFD72F87F4534 /* SwiftyAttributes-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 95FCC39AB9DAD7D1FBB0A92D3BFE16CC /* SwiftyAttributes-dummy.m */; };
+		54BFF37975AAE9409D697EF30A1ACF78 /* NSMutableAttributedString+SwiftyAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1B57168049002894A4A0F45B112BF7 /* NSMutableAttributedString+SwiftyAttributes.swift */; };
+		6AB0C0C2EA50F60A9E9AD1ADB403FA97 /* NSAttributedString+SwiftyAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B952701C3BD2CE8B36A5BB58F4EFE /* NSAttributedString+SwiftyAttributes.swift */; };
+		73CF0ECDFE7638F8374A96F6C1FFD0C6 /* SAMCache+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C7B3BDBDECEBEE45C2B21DCD83911 /* SAMCache+Image.m */; };
+		75E803EDC4E67C86D9998A2E9AA6D4B6 /* SAMCache-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F6B92D64665A6B08EC87733D9281B8F /* SAMCache-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D6A95824317733ED4AEE01F4672248C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
 		7DFAF2DAEF06E3420B3AEC06789DE1B6 /* Pods-NASAMashTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B3E1A9EDFF3D83829649A473317D2C4 /* Pods-NASAMashTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8243FD77829FC3BDAA70D3EEB90DB84C /* Pods-NASAMashUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 127667A9267514E6F18ABA2E74595CC5 /* Pods-NASAMashUITests-dummy.m */; };
-		8A9B39C4B266B75E4022E61AF0CACDF6 /* SAMCache+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 824BEC8BF423AC47D061AEF7F11E1D9F /* SAMCache+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		992FBB206C76872B9ED31E6F9C0A1CF7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
-		9E74C36E4C54B78A60BE1CACB38FC33B /* SAMCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 30BC0990AF077E352D04B97CC07BD21E /* SAMCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		877737A8FE0C697236AB29A590BFA908 /* SwiftyAttributes-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A05C546FBDED4CB122B7F95C56F18F9 /* SwiftyAttributes-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D7FEDBED195BD69DB66ADC0C77F11D1 /* SAMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B14D3CCA2249617E64DAE518E62B45F8 /* SAMCache.m */; };
+		AE54509464B4BA0B7E6960C3925D7880 /* SAMCache+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B4EAA98F71749FC4AFCBEE3BFCC4F2C6 /* SAMCache+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE6162A0EA1F68193F0F34353BBEB7D0 /* SAMCache-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1A2A6246CE8FDFCF4BB70F61B4FAE /* SAMCache-dummy.m */; };
+		B506DE55AA64B673CBB2DA89D9F3C551 /* TextEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E6FD025D8407E390CDDAF9850E1C /* TextEffect.swift */; };
+		B50F1C5204EE888DA9653E43C5C7207F /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D5106A5A52324F30EC71C5D96FB69 /* Attribute.swift */; };
+		BB17ED6D67B9542809E608605282F4A6 /* Attribute+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2357EB20B5138DC383BA44D7BC79CB10 /* Attribute+Sequence.swift */; };
+		C0C3D28EB7F0109B595F2276AC5F4014 /* AttributeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8BBAEA4EF1346B7A7633BC98C539D8 /* AttributeName.swift */; };
+		C39B1DC7B42D0BA0467AF3CA31B9B738 /* SAMCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DE45DADCDD47B7CF6309D7FBF8CF97A /* SAMCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C731AD95CBACB14B8584B9EDB583F127 /* Ligatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247BC5AA3EB4C74BE528869B4B058DD /* Ligatures.swift */; };
+		C81525A982EF74958CD7A923ABB2057B /* String+SwiftyAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E19D8C2E77D6475879944668D67CD /* String+SwiftyAttributes.swift */; };
+		D2211BBA52E4FCFB02B3CAE93467254D /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033CCD9701D0E37E03AFCF091592CE5 /* Operators.swift */; };
 		E2EBCABD0725C4B2C9215B05B5C7AEA9 /* Pods-NASAMashUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 216872089A730F151A5187358EC7B816 /* Pods-NASAMashUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EE7B09EDF2C024EC94CE7BBA227228AA /* Pods-NASAMash-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F5E1246A70C6FB7C9BE92DA21A6A4DE /* Pods-NASAMash-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F69ED9A2A0B7816E14BBDA614D04ECE6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
+		F7CE52F864301F98B5CF4C1073750C79 /* Pods-NASAMash-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F5E1246A70C6FB7C9BE92DA21A6A4DE /* Pods-NASAMash-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F9F15A1490AE9B46AEA0AFA7AE086CAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
-		FB0F1017E24D223FC7B770EAD546B05F /* SAMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D06D2C3D712E1817A7C2883D5AE6E8 /* SAMCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3FFFB01E7710E12A7ECBE3E38FFC96D0 /* PBXContainerItemProxy */ = {
+		26AD54B822EF359B877D8287F8691E7B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 02656C34166735DF87CEB067B8C04D0E;
+			remoteGlobalIDString = CED973194B8F8B1A488E13F826868523;
 			remoteInfo = SAMCache;
+		};
+		9406BF696670C9547F2A172F211D4944 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2CC99AC71C7BACCB879AD9B22DE8077;
+			remoteInfo = SwiftyAttributes;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -45,64 +66,90 @@
 		0B766713A3045CD27C9960ADD505CE1D /* Pods-NASAMashUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NASAMashUITests.release.xcconfig"; sourceTree = "<group>"; };
 		0E09BF9BCF3E5A72A585F0272C25D5A0 /* Pods-NASAMashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NASAMashTests.release.xcconfig"; sourceTree = "<group>"; };
 		1089DBAC2A1B55FC9BCC4A6116DA76A6 /* Pods-NASAMash-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NASAMash-acknowledgements.markdown"; sourceTree = "<group>"; };
+		1247BC5AA3EB4C74BE528869B4B058DD /* Ligatures.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Ligatures.swift; path = SwiftyAttributes/Sources/common/Ligatures.swift; sourceTree = "<group>"; };
 		127667A9267514E6F18ABA2E74595CC5 /* Pods-NASAMashUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NASAMashUITests-dummy.m"; sourceTree = "<group>"; };
 		157CB5A9BF95A67BD5A3A4C6A1000A49 /* Pods-NASAMashTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NASAMashTests-frameworks.sh"; sourceTree = "<group>"; };
 		216872089A730F151A5187358EC7B816 /* Pods-NASAMashUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NASAMashUITests-umbrella.h"; sourceTree = "<group>"; };
-		27DC9B3B6ADB4AF22B5745138F8E2AAF /* SAMCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAMCache-umbrella.h"; sourceTree = "<group>"; };
-		30BC0990AF077E352D04B97CC07BD21E /* SAMCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SAMCache.h; path = SAMCache/SAMCache.h; sourceTree = "<group>"; };
+		216FAEC86EF61810A1974E81C18B9167 /* Pods_NASAMash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NASAMash.framework; path = "Pods-NASAMash.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2357EB20B5138DC383BA44D7BC79CB10 /* Attribute+Sequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Attribute+Sequence.swift"; path = "SwiftyAttributes/Sources/common/Attribute+Sequence.swift"; sourceTree = "<group>"; };
+		24B8E19BAFC5B8061814247F500C12A8 /* SAMCache.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SAMCache.xcconfig; sourceTree = "<group>"; };
+		3B3E19D8C2E77D6475879944668D67CD /* String+SwiftyAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+SwiftyAttributes.swift"; path = "SwiftyAttributes/Sources/common/String+SwiftyAttributes.swift"; sourceTree = "<group>"; };
 		3B3E1A9EDFF3D83829649A473317D2C4 /* Pods-NASAMashTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NASAMashTests-umbrella.h"; sourceTree = "<group>"; };
 		3C225B03A3D10D70FBD16B29096E855D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DE45DADCDD47B7CF6309D7FBF8CF97A /* SAMCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SAMCache.h; path = SAMCache/SAMCache.h; sourceTree = "<group>"; };
 		3F5E1246A70C6FB7C9BE92DA21A6A4DE /* Pods-NASAMash-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NASAMash-umbrella.h"; sourceTree = "<group>"; };
-		49E7427D256EB51A5D71A45036692D41 /* Pods-NASAMashTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NASAMashTests.modulemap"; sourceTree = "<group>"; };
-		4B35B249019DB5B10CAC41A6513DF756 /* SAMCache+Image.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SAMCache+Image.h"; path = "SAMCache/SAMCache+Image.h"; sourceTree = "<group>"; };
-		4FEA8FF4F40E90BF04CCA67884295713 /* SAMCache.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SAMCache.xcconfig; sourceTree = "<group>"; };
-		50D06D2C3D712E1817A7C2883D5AE6E8 /* SAMCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SAMCache.m; path = SAMCache/SAMCache.m; sourceTree = "<group>"; };
-		5C53394E4CAF81CB9A5AD80586074C2B /* Pods_NASAMash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NASAMash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49E7427D256EB51A5D71A45036692D41 /* Pods-NASAMashTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NASAMashTests.modulemap"; sourceTree = "<group>"; };
+		4F6B92D64665A6B08EC87733D9281B8F /* SAMCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAMCache-umbrella.h"; sourceTree = "<group>"; };
+		5F1D064490953452AAE362FB439330A6 /* Pods_NASAMashUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NASAMashUITests.framework; path = "Pods-NASAMashUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		61C0025788E70A7808EBCEB8620199A7 /* SAMCache+Image.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "SAMCache+Image.m"; path = "SAMCache/SAMCache+Image.m"; sourceTree = "<group>"; };
-		6A5BE21B5CF94F6934ED831EF4B6D51F /* Pods-NASAMashUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NASAMashUITests.modulemap"; sourceTree = "<group>"; };
+		626CEDE217D6F29833B92EF2CBB8560A /* SAMCache.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SAMCache.modulemap; sourceTree = "<group>"; };
+		67DDD97435E234C7644F9DCB5F45077C /* SwiftyAttributes-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyAttributes-prefix.pch"; sourceTree = "<group>"; };
+		6A5BE21B5CF94F6934ED831EF4B6D51F /* Pods-NASAMashUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NASAMashUITests.modulemap"; sourceTree = "<group>"; };
+		6B1D5106A5A52324F30EC71C5D96FB69 /* Attribute.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Attribute.swift; path = SwiftyAttributes/Sources/common/Attribute.swift; sourceTree = "<group>"; };
 		6B8EC503AE1F06E3BCFBD41138DD6B06 /* Pods-NASAMash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NASAMash.debug.xcconfig"; sourceTree = "<group>"; };
+		6D4C7B3BDBDECEBEE45C2B21DCD83911 /* SAMCache+Image.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "SAMCache+Image.m"; path = "SAMCache/SAMCache+Image.m"; sourceTree = "<group>"; };
 		7247AFB44834F4E54294BEC352A9124B /* Pods-NASAMashUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NASAMashUITests-resources.sh"; sourceTree = "<group>"; };
 		740915A34612F2D485FFBA9F94E6AE1C /* Pods-NASAMashTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NASAMashTests-dummy.m"; sourceTree = "<group>"; };
+		75C1A2A6246CE8FDFCF4BB70F61B4FAE /* SAMCache-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SAMCache-dummy.m"; sourceTree = "<group>"; };
+		76D2143B1A9491CD44DAAF1875629483 /* SAMCache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAMCache-prefix.pch"; sourceTree = "<group>"; };
+		77E91C3D98DED23123ADFC7038B0DA31 /* WritingDirection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WritingDirection.swift; path = SwiftyAttributes/Sources/common/WritingDirection.swift; sourceTree = "<group>"; };
+		7BFB5CC4D75C1D13B3CA6990B228CE1E /* SAMCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SAMCache.framework; path = SAMCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D91AF3A97A096708E8CA34FD6936F12 /* Pods-NASAMash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NASAMash.release.xcconfig"; sourceTree = "<group>"; };
 		7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		824BEC8BF423AC47D061AEF7F11E1D9F /* SAMCache+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SAMCache+Private.h"; path = "SAMCache/SAMCache+Private.h"; sourceTree = "<group>"; };
+		7FDAA4844496297CA1B94925C2A8A7D4 /* SwiftyAttributes.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftyAttributes.modulemap; sourceTree = "<group>"; };
+		8033CCD9701D0E37E03AFCF091592CE5 /* Operators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operators.swift; path = SwiftyAttributes/Sources/common/Operators.swift; sourceTree = "<group>"; };
 		84F6D2C7F203B60EEBB2EA44B04AEAAC /* Pods-NASAMashTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NASAMashTests-resources.sh"; sourceTree = "<group>"; };
+		8A05C546FBDED4CB122B7F95C56F18F9 /* SwiftyAttributes-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyAttributes-umbrella.h"; sourceTree = "<group>"; };
 		8AB16FAE758E553B1A2008B741D412D9 /* Pods-NASAMashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NASAMashTests.debug.xcconfig"; sourceTree = "<group>"; };
-		91EA6198DAF848F4ACD456C8085F90EC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9E5A39A57998B4F8DEC8B18ED659DC8A /* SAMCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SAMCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B8BBAEA4EF1346B7A7633BC98C539D8 /* AttributeName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AttributeName.swift; path = SwiftyAttributes/Sources/common/AttributeName.swift; sourceTree = "<group>"; };
+		915E942BACE2F9B9BE003F58B562556C /* SwiftyAttributes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyAttributes.framework; path = SwiftyAttributes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		95FCC39AB9DAD7D1FBB0A92D3BFE16CC /* SwiftyAttributes-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyAttributes-dummy.m"; sourceTree = "<group>"; };
+		9C1B57168049002894A4A0F45B112BF7 /* NSMutableAttributedString+SwiftyAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSMutableAttributedString+SwiftyAttributes.swift"; path = "SwiftyAttributes/Sources/common/NSMutableAttributedString+SwiftyAttributes.swift"; sourceTree = "<group>"; };
+		9DB0E6FD025D8407E390CDDAF9850E1C /* TextEffect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextEffect.swift; path = SwiftyAttributes/Sources/common/TextEffect.swift; sourceTree = "<group>"; };
+		B14D3CCA2249617E64DAE518E62B45F8 /* SAMCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SAMCache.m; path = SAMCache/SAMCache.m; sourceTree = "<group>"; };
 		B2213DF885569D5C024DC2431922530A /* Pods-NASAMashUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NASAMashUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		B4B8C8B28585525ED77C4F86208EE1AA /* SAMCache.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SAMCache.modulemap; sourceTree = "<group>"; };
-		B55CC3039440B632267FD6214AD33FD4 /* Pods-NASAMash.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NASAMash.modulemap"; sourceTree = "<group>"; };
+		B4EAA98F71749FC4AFCBEE3BFCC4F2C6 /* SAMCache+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SAMCache+Private.h"; path = "SAMCache/SAMCache+Private.h"; sourceTree = "<group>"; };
+		B55CC3039440B632267FD6214AD33FD4 /* Pods-NASAMash.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NASAMash.modulemap"; sourceTree = "<group>"; };
 		B57048C29189516BC0D74F4ED6717217 /* Pods-NASAMashUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NASAMashUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		B774AE42DEABA1AD684F40D61E011667 /* SAMCache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAMCache-prefix.pch"; sourceTree = "<group>"; };
-		BED8790C52C24330F152EEAF27D51EE0 /* SAMCache-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SAMCache-dummy.m"; sourceTree = "<group>"; };
 		C00FC80ABF89BEF4198CBADAB9C18193 /* Pods-NASAMash-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NASAMash-frameworks.sh"; sourceTree = "<group>"; };
 		CB34FA007310DDEFA7F1E4622FD94B46 /* Pods-NASAMashUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NASAMashUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		CD03FCDDD58C065C2DA20280A2A42822 /* Pods_NASAMashUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NASAMashUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD2183E5388108F22E378D30857502A /* Pods-NASAMashTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NASAMashTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D12BBFD7C6C17A6AE352DFB0E5C2EDB6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D434791ACF48537D143D3C9B498DFC36 /* SwiftyAttributes.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyAttributes.xcconfig; sourceTree = "<group>"; };
 		D67898D5B379BDD58D616C95030870E0 /* Pods-NASAMash-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NASAMash-dummy.m"; sourceTree = "<group>"; };
-		E4519E285290CB942EDD2ADC1B6ED387 /* Pods_NASAMashTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NASAMashTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9BE8BFCB38927561940593EEB3808DC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E66D0634B4618200094EF56F21494AE2 /* Pods-NASAMashTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NASAMashTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		E9785BD6622AA3B387A60DBD6050654C /* Pods_NASAMashTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NASAMashTests.framework; path = "Pods-NASAMashTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC4B952701C3BD2CE8B36A5BB58F4EFE /* NSAttributedString+SwiftyAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+SwiftyAttributes.swift"; path = "SwiftyAttributes/Sources/common/NSAttributedString+SwiftyAttributes.swift"; sourceTree = "<group>"; };
 		F00FB7418563519271E60E908683B100 /* Pods-NASAMashUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NASAMashUITests-frameworks.sh"; sourceTree = "<group>"; };
+		F306C91F0A3A1FB4DA41038457DD5BB6 /* SAMCache+Image.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SAMCache+Image.h"; path = "SAMCache/SAMCache+Image.h"; sourceTree = "<group>"; };
+		F689B9A098E4250DE669FC76933E09E5 /* VerticalGlyphForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerticalGlyphForm.swift; path = SwiftyAttributes/Sources/common/VerticalGlyphForm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		15F92A6F5D142736B735C22F24EB7050 /* Frameworks */ = {
+		4C5AEE83E855738FF8CE12E5CF529167 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				992FBB206C76872B9ED31E6F9C0A1CF7 /* Foundation.framework in Frameworks */,
+				1AEA8B417742CB208AAD032847011A93 /* Foundation.framework in Frameworks */,
+				34F24023B4D16D03852DE053835B75FF /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C0A6D9B68D17D572819DA4A2B3A0AA09 /* Frameworks */ = {
+		8023F027F0B8EE917527C55CB94648D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				491CBCA08C5F936C8C0BC9E6D91DD1B3 /* Foundation.framework in Frameworks */,
-				4775D620F5DD9C340D2C3D8CCB0847CB /* UIKit.framework in Frameworks */,
+				F69ED9A2A0B7816E14BBDA614D04ECE6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BA4F0A0CA062DB747500BB5C8986088 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				139F3380598EE34046029DB486D5169D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +172,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		009B3751F4C774908DEC64743B1F267F /* SAMCache */ = {
+			isa = PBXGroup;
+			children = (
+				3DE45DADCDD47B7CF6309D7FBF8CF97A /* SAMCache.h */,
+				B14D3CCA2249617E64DAE518E62B45F8 /* SAMCache.m */,
+				F306C91F0A3A1FB4DA41038457DD5BB6 /* SAMCache+Image.h */,
+				6D4C7B3BDBDECEBEE45C2B21DCD83911 /* SAMCache+Image.m */,
+				B4EAA98F71749FC4AFCBEE3BFCC4F2C6 /* SAMCache+Private.h */,
+				75A82D84E0829D73E096DC33DC834DC7 /* Support Files */,
+			);
+			name = SAMCache;
+			path = SAMCache;
+			sourceTree = "<group>";
+		};
 		22BC31C77005E0DE8D54AAE98777D0FD /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,17 +196,30 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		2520D7AA17513178E7EE3C39C3482630 /* SAMCache */ = {
+		25E43857ED859B658A99E00098FA0A43 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				30BC0990AF077E352D04B97CC07BD21E /* SAMCache.h */,
-				50D06D2C3D712E1817A7C2883D5AE6E8 /* SAMCache.m */,
-				4B35B249019DB5B10CAC41A6513DF756 /* SAMCache+Image.h */,
-				61C0025788E70A7808EBCEB8620199A7 /* SAMCache+Image.m */,
-				824BEC8BF423AC47D061AEF7F11E1D9F /* SAMCache+Private.h */,
-				38F1D8C683A1782965E65E2523B48B9E /* Support Files */,
+				D9BE8BFCB38927561940593EEB3808DC /* Info.plist */,
+				7FDAA4844496297CA1B94925C2A8A7D4 /* SwiftyAttributes.modulemap */,
+				D434791ACF48537D143D3C9B498DFC36 /* SwiftyAttributes.xcconfig */,
+				95FCC39AB9DAD7D1FBB0A92D3BFE16CC /* SwiftyAttributes-dummy.m */,
+				67DDD97435E234C7644F9DCB5F45077C /* SwiftyAttributes-prefix.pch */,
+				8A05C546FBDED4CB122B7F95C56F18F9 /* SwiftyAttributes-umbrella.h */,
 			);
-			path = SAMCache;
+			name = "Support Files";
+			path = "../Target Support Files/SwiftyAttributes";
+			sourceTree = "<group>";
+		};
+		2FC0C3969492D1094AACB03A8B71007C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				216FAEC86EF61810A1974E81C18B9167 /* Pods_NASAMash.framework */,
+				E9785BD6622AA3B387A60DBD6050654C /* Pods_NASAMashTests.framework */,
+				5F1D064490953452AAE362FB439330A6 /* Pods_NASAMashUITests.framework */,
+				7BFB5CC4D75C1D13B3CA6990B228CE1E /* SAMCache.framework */,
+				915E942BACE2F9B9BE003F58B562556C /* SwiftyAttributes.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		327938B428AF05D70F3A30F1911FB06D /* Pods-NASAMash */ = {
@@ -166,18 +240,24 @@
 			path = "Target Support Files/Pods-NASAMash";
 			sourceTree = "<group>";
 		};
-		38F1D8C683A1782965E65E2523B48B9E /* Support Files */ = {
+		3EBC0B2D2C5605068A117FB6C0578C9F /* SwiftyAttributes */ = {
 			isa = PBXGroup;
 			children = (
-				91EA6198DAF848F4ACD456C8085F90EC /* Info.plist */,
-				B4B8C8B28585525ED77C4F86208EE1AA /* SAMCache.modulemap */,
-				4FEA8FF4F40E90BF04CCA67884295713 /* SAMCache.xcconfig */,
-				BED8790C52C24330F152EEAF27D51EE0 /* SAMCache-dummy.m */,
-				B774AE42DEABA1AD684F40D61E011667 /* SAMCache-prefix.pch */,
-				27DC9B3B6ADB4AF22B5745138F8E2AAF /* SAMCache-umbrella.h */,
+				6B1D5106A5A52324F30EC71C5D96FB69 /* Attribute.swift */,
+				2357EB20B5138DC383BA44D7BC79CB10 /* Attribute+Sequence.swift */,
+				8B8BBAEA4EF1346B7A7633BC98C539D8 /* AttributeName.swift */,
+				1247BC5AA3EB4C74BE528869B4B058DD /* Ligatures.swift */,
+				EC4B952701C3BD2CE8B36A5BB58F4EFE /* NSAttributedString+SwiftyAttributes.swift */,
+				9C1B57168049002894A4A0F45B112BF7 /* NSMutableAttributedString+SwiftyAttributes.swift */,
+				8033CCD9701D0E37E03AFCF091592CE5 /* Operators.swift */,
+				3B3E19D8C2E77D6475879944668D67CD /* String+SwiftyAttributes.swift */,
+				9DB0E6FD025D8407E390CDDAF9850E1C /* TextEffect.swift */,
+				F689B9A098E4250DE669FC76933E09E5 /* VerticalGlyphForm.swift */,
+				77E91C3D98DED23123ADFC7038B0DA31 /* WritingDirection.swift */,
+				25E43857ED859B658A99E00098FA0A43 /* Support Files */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/SAMCache";
+			name = SwiftyAttributes;
+			path = SwiftyAttributes;
 			sourceTree = "<group>";
 		};
 		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
@@ -188,15 +268,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		73B08C5787CD283F31A64321954FD69D /* Products */ = {
+		75A82D84E0829D73E096DC33DC834DC7 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				5C53394E4CAF81CB9A5AD80586074C2B /* Pods_NASAMash.framework */,
-				E4519E285290CB942EDD2ADC1B6ED387 /* Pods_NASAMashTests.framework */,
-				CD03FCDDD58C065C2DA20280A2A42822 /* Pods_NASAMashUITests.framework */,
-				9E5A39A57998B4F8DEC8B18ED659DC8A /* SAMCache.framework */,
+				D12BBFD7C6C17A6AE352DFB0E5C2EDB6 /* Info.plist */,
+				626CEDE217D6F29833B92EF2CBB8560A /* SAMCache.modulemap */,
+				24B8E19BAFC5B8061814247F500C12A8 /* SAMCache.xcconfig */,
+				75C1A2A6246CE8FDFCF4BB70F61B4FAE /* SAMCache-dummy.m */,
+				76D2143B1A9491CD44DAAF1875629483 /* SAMCache-prefix.pch */,
+				4F6B92D64665A6B08EC87733D9281B8F /* SAMCache-umbrella.h */,
 			);
-			name = Products;
+			name = "Support Files";
+			path = "../Target Support Files/SAMCache";
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -204,18 +287,10 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				826CFBBA3530C437E4FA213DE0140058 /* Pods */,
-				73B08C5787CD283F31A64321954FD69D /* Products */,
+				EF245EAA2443C92E24FC6F0DDAF45377 /* Pods */,
+				2FC0C3969492D1094AACB03A8B71007C /* Products */,
 				22BC31C77005E0DE8D54AAE98777D0FD /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		826CFBBA3530C437E4FA213DE0140058 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2520D7AA17513178E7EE3C39C3482630 /* SAMCache */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		D8B551D5F7CA93D2E585B0873C530C24 /* Pods-NASAMashTests */ = {
@@ -243,6 +318,15 @@
 				7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		EF245EAA2443C92E24FC6F0DDAF45377 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				009B3751F4C774908DEC64743B1F267F /* SAMCache */,
+				3EBC0B2D2C5605068A117FB6C0578C9F /* SwiftyAttributes */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		F61D45F34A09DBAADCEA74AD8A2BD23C /* Pods-NASAMashUITests */ = {
@@ -274,22 +358,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		29F909EB4856867F9968AB1CC37F9A39 /* Headers */ = {
+		1E4B9F571BD89B6648AF8D86388FE8CC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE7B09EDF2C024EC94CE7BBA227228AA /* Pods-NASAMash-umbrella.h in Headers */,
+				F7CE52F864301F98B5CF4C1073750C79 /* Pods-NASAMash-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2291635029A128FCEEC618773C8AA62 /* Headers */ = {
+		7E69146117CA224865561DE98A73624C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				307A301A727288CEB883DF3DD94AFC21 /* SAMCache+Image.h in Headers */,
-				8A9B39C4B266B75E4022E61AF0CACDF6 /* SAMCache+Private.h in Headers */,
-				7B8AAC8ABB131F6D185CC0DBB8524C38 /* SAMCache-umbrella.h in Headers */,
-				9E74C36E4C54B78A60BE1CACB38FC33B /* SAMCache.h in Headers */,
+				3F841D697DE31CCB8256ED5FE0A8A8AC /* SAMCache+Image.h in Headers */,
+				AE54509464B4BA0B7E6960C3925D7880 /* SAMCache+Private.h in Headers */,
+				75E803EDC4E67C86D9998A2E9AA6D4B6 /* SAMCache-umbrella.h in Headers */,
+				C39B1DC7B42D0BA0467AF3CA31B9B738 /* SAMCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,42 +385,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9792F473DED0B0BB6954504E05EF36E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				877737A8FE0C697236AB29A590BFA908 /* SwiftyAttributes-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		02656C34166735DF87CEB067B8C04D0E /* SAMCache */ = {
+		6077AF91E66EF926C7DEF8A1612A549C /* Pods-NASAMash */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9654F0464681832CBB1C35CB89492334 /* Build configuration list for PBXNativeTarget "SAMCache" */;
+			buildConfigurationList = 20C10BD88B220B8511F70EA2AFFFDB18 /* Build configuration list for PBXNativeTarget "Pods-NASAMash" */;
 			buildPhases = (
-				EA8001F5B0495C3188BCF0A626413161 /* Sources */,
-				C0A6D9B68D17D572819DA4A2B3A0AA09 /* Frameworks */,
-				B2291635029A128FCEEC618773C8AA62 /* Headers */,
+				D22A97F0E24CCDD1EFBCBD9297F462C2 /* Sources */,
+				8BA4F0A0CA062DB747500BB5C8986088 /* Frameworks */,
+				1E4B9F571BD89B6648AF8D86388FE8CC /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			name = SAMCache;
-			productName = SAMCache;
-			productReference = 9E5A39A57998B4F8DEC8B18ED659DC8A /* SAMCache.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		6BE32F72B924845BB78740CA7410CDB4 /* Pods-NASAMash */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C37F3DB599DACA3AA251BC5AE9499660 /* Build configuration list for PBXNativeTarget "Pods-NASAMash" */;
-			buildPhases = (
-				A0CE48B7E9EA318673C4C170B603C3E2 /* Sources */,
-				15F92A6F5D142736B735C22F24EB7050 /* Frameworks */,
-				29F909EB4856867F9968AB1CC37F9A39 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6DF146F1E9DBED6DCA66B48E710CCFCA /* PBXTargetDependency */,
+				BC25C128A1060DC66E6653AF8A8F63E4 /* PBXTargetDependency */,
+				A89BF71E0DF770B18650B3364FDB37D9 /* PBXTargetDependency */,
 			);
 			name = "Pods-NASAMash";
 			productName = "Pods-NASAMash";
-			productReference = 5C53394E4CAF81CB9A5AD80586074C2B /* Pods_NASAMash.framework */;
+			productReference = 216FAEC86EF61810A1974E81C18B9167 /* Pods_NASAMash.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A2CC99AC71C7BACCB879AD9B22DE8077 /* SwiftyAttributes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2F99D0EB3690B5655AB9AC39CF42885 /* Build configuration list for PBXNativeTarget "SwiftyAttributes" */;
+			buildPhases = (
+				30E57871109FE5C811283C0EB0B73D31 /* Sources */,
+				8023F027F0B8EE917527C55CB94648D3 /* Frameworks */,
+				D9792F473DED0B0BB6954504E05EF36E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftyAttributes;
+			productName = SwiftyAttributes;
+			productReference = 915E942BACE2F9B9BE003F58B562556C /* SwiftyAttributes.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		B9A4DBAC2EABF45E008711B897DBF22A /* Pods-NASAMashTests */ = {
@@ -353,7 +446,7 @@
 			);
 			name = "Pods-NASAMashTests";
 			productName = "Pods-NASAMashTests";
-			productReference = E4519E285290CB942EDD2ADC1B6ED387 /* Pods_NASAMashTests.framework */;
+			productReference = E9785BD6622AA3B387A60DBD6050654C /* Pods_NASAMashTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C4A0CCB250AA2E747F65970F73E970FB /* Pods-NASAMashUITests */ = {
@@ -370,7 +463,24 @@
 			);
 			name = "Pods-NASAMashUITests";
 			productName = "Pods-NASAMashUITests";
-			productReference = CD03FCDDD58C065C2DA20280A2A42822 /* Pods_NASAMashUITests.framework */;
+			productReference = 5F1D064490953452AAE362FB439330A6 /* Pods_NASAMashUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CED973194B8F8B1A488E13F826868523 /* SAMCache */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA52069A8ABD32C977EB4AA8E033A217 /* Build configuration list for PBXNativeTarget "SAMCache" */;
+			buildPhases = (
+				4D6055BCF3B5CBD67666BB40680D126E /* Sources */,
+				4C5AEE83E855738FF8CE12E5CF529167 /* Frameworks */,
+				7E69146117CA224865561DE98A73624C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SAMCache;
+			productName = SAMCache;
+			productReference = 7BFB5CC4D75C1D13B3CA6990B228CE1E /* SAMCache.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -390,19 +500,49 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 73B08C5787CD283F31A64321954FD69D /* Products */;
+			productRefGroup = 2FC0C3969492D1094AACB03A8B71007C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6BE32F72B924845BB78740CA7410CDB4 /* Pods-NASAMash */,
+				6077AF91E66EF926C7DEF8A1612A549C /* Pods-NASAMash */,
 				B9A4DBAC2EABF45E008711B897DBF22A /* Pods-NASAMashTests */,
 				C4A0CCB250AA2E747F65970F73E970FB /* Pods-NASAMashUITests */,
-				02656C34166735DF87CEB067B8C04D0E /* SAMCache */,
+				CED973194B8F8B1A488E13F826868523 /* SAMCache */,
+				A2CC99AC71C7BACCB879AD9B22DE8077 /* SwiftyAttributes */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		30E57871109FE5C811283C0EB0B73D31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB17ED6D67B9542809E608605282F4A6 /* Attribute+Sequence.swift in Sources */,
+				B50F1C5204EE888DA9653E43C5C7207F /* Attribute.swift in Sources */,
+				C0C3D28EB7F0109B595F2276AC5F4014 /* AttributeName.swift in Sources */,
+				C731AD95CBACB14B8584B9EDB583F127 /* Ligatures.swift in Sources */,
+				6AB0C0C2EA50F60A9E9AD1ADB403FA97 /* NSAttributedString+SwiftyAttributes.swift in Sources */,
+				54BFF37975AAE9409D697EF30A1ACF78 /* NSMutableAttributedString+SwiftyAttributes.swift in Sources */,
+				D2211BBA52E4FCFB02B3CAE93467254D /* Operators.swift in Sources */,
+				C81525A982EF74958CD7A923ABB2057B /* String+SwiftyAttributes.swift in Sources */,
+				459AA554FCFC4203078FFD72F87F4534 /* SwiftyAttributes-dummy.m in Sources */,
+				B506DE55AA64B673CBB2DA89D9F3C551 /* TextEffect.swift in Sources */,
+				38C252BFB7CF95F0F64B00A1F8E915DA /* VerticalGlyphForm.swift in Sources */,
+				1E2F201F9FB36DA8097390D801A06C01 /* WritingDirection.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D6055BCF3B5CBD67666BB40680D126E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73CF0ECDFE7638F8374A96F6C1FFD0C6 /* SAMCache+Image.m in Sources */,
+				AE6162A0EA1F68193F0F34353BBEB7D0 /* SAMCache-dummy.m in Sources */,
+				9D7FEDBED195BD69DB66ADC0C77F11D1 /* SAMCache.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		58020E00A1FE4690B9AC0E0966BA9ECE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,32 +559,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A0CE48B7E9EA318673C4C170B603C3E2 /* Sources */ = {
+		D22A97F0E24CCDD1EFBCBD9297F462C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				269F80F79B8A90A72CDD0DF866D716DD /* Pods-NASAMash-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EA8001F5B0495C3188BCF0A626413161 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4A71D6B438D49E75B3ED78D78F84000B /* SAMCache+Image.m in Sources */,
-				0FACF6CA318EC4A90D888852F2F38CD1 /* SAMCache-dummy.m in Sources */,
-				FB0F1017E24D223FC7B770EAD546B05F /* SAMCache.m in Sources */,
+				425352AA15C3F58EC6A3DB4077541A73 /* Pods-NASAMash-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6DF146F1E9DBED6DCA66B48E710CCFCA /* PBXTargetDependency */ = {
+		A89BF71E0DF770B18650B3364FDB37D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftyAttributes;
+			target = A2CC99AC71C7BACCB879AD9B22DE8077 /* SwiftyAttributes */;
+			targetProxy = 9406BF696670C9547F2A172F211D4944 /* PBXContainerItemProxy */;
+		};
+		BC25C128A1060DC66E6653AF8A8F63E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SAMCache;
-			target = 02656C34166735DF87CEB067B8C04D0E /* SAMCache */;
-			targetProxy = 3FFFB01E7710E12A7ECBE3E38FFC96D0 /* PBXContainerItemProxy */;
+			target = CED973194B8F8B1A488E13F826868523 /* SAMCache */;
+			targetProxy = 26AD54B822EF359B877D8287F8691E7B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -484,29 +620,29 @@
 			};
 			name = Release;
 		};
-		3203F1176BE303D5D7535D86A63650BF /* Debug */ = {
+		2BF9AA8ACC8A1FCDE4370690FB386DBF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FEA8FF4F40E90BF04CCA67884295713 /* SAMCache.xcconfig */;
+			baseConfigurationReference = D434791ACF48537D143D3C9B498DFC36 /* SwiftyAttributes.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SAMCache/SAMCache-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SAMCache/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftyAttributes/SwiftyAttributes-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftyAttributes/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SAMCache/SAMCache.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = SAMCache;
+				MODULEMAP_FILE = "Target Support Files/SwiftyAttributes/SwiftyAttributes.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SwiftyAttributes;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -514,7 +650,7 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 		50F2196BDB7451AE754DA2A7C5F3AE35 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -554,7 +690,6 @@
 		59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -596,41 +731,6 @@
 			};
 			name = Debug;
 		};
-		59E7C62775873188F3B37E196EC703A2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B8EC503AE1F06E3BCFBD41138DD6B06 /* Pods-NASAMash.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-NASAMash/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-NASAMash/Pods-NASAMash.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_NASAMash;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		5DEE24F131AEDA9C7898535F5636831A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2213DF885569D5C024DC2431922530A /* Pods-NASAMashUITests.debug.xcconfig */;
@@ -666,9 +766,42 @@
 			};
 			name = Debug;
 		};
-		720C4F2491790CE2AE084114469C09A4 /* Release */ = {
+		664EA8A62D80CBC1FE2C271D54B301D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FEA8FF4F40E90BF04CCA67884295713 /* SAMCache.xcconfig */;
+			baseConfigurationReference = D434791ACF48537D143D3C9B498DFC36 /* SwiftyAttributes.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftyAttributes/SwiftyAttributes-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftyAttributes/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftyAttributes/SwiftyAttributes.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SwiftyAttributes;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7630AE76DC13440C855D5DE9D9E50591 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24B8E19BAFC5B8061814247F500C12A8 /* SAMCache.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -698,7 +831,7 @@
 			};
 			name = Release;
 		};
-		8280E533798E87B20015C764BCBDA50E /* Release */ = {
+		86A2BAF723D18B19C5C59FF25717DDE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7D91AF3A97A096708E8CA34FD6936F12 /* Pods-NASAMash.release.xcconfig */;
 			buildSettings = {
@@ -732,6 +865,42 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		8828B6CFAE2A8A6214D71784863F2724 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B8EC503AE1F06E3BCFBD41138DD6B06 /* Pods-NASAMash.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-NASAMash/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-NASAMash/Pods-NASAMash.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_NASAMash;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		AF56A6477F3A08338B9D0F8841CAAC17 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -771,7 +940,6 @@
 		B7324857C38B065FEB1EEE3105C2367A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -809,9 +977,50 @@
 			};
 			name = Release;
 		};
+		F8060CF49BF002270FEFA6BF6FE50200 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24B8E19BAFC5B8061814247F500C12A8 /* SAMCache.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SAMCache/SAMCache-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SAMCache/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SAMCache/SAMCache.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SAMCache;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		20C10BD88B220B8511F70EA2AFFFDB18 /* Build configuration list for PBXNativeTarget "Pods-NASAMash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8828B6CFAE2A8A6214D71784863F2724 /* Debug */,
+				86A2BAF723D18B19C5C59FF25717DDE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -830,15 +1039,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9654F0464681832CBB1C35CB89492334 /* Build configuration list for PBXNativeTarget "SAMCache" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3203F1176BE303D5D7535D86A63650BF /* Debug */,
-				720C4F2491790CE2AE084114469C09A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A7D779EE9B0BEF404B456778EE29521A /* Build configuration list for PBXNativeTarget "Pods-NASAMashTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -848,11 +1048,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C37F3DB599DACA3AA251BC5AE9499660 /* Build configuration list for PBXNativeTarget "Pods-NASAMash" */ = {
+		D2F99D0EB3690B5655AB9AC39CF42885 /* Build configuration list for PBXNativeTarget "SwiftyAttributes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				59E7C62775873188F3B37E196EC703A2 /* Debug */,
-				8280E533798E87B20015C764BCBDA50E /* Release */,
+				664EA8A62D80CBC1FE2C271D54B301D6 /* Debug */,
+				2BF9AA8ACC8A1FCDE4370690FB386DBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA52069A8ABD32C977EB4AA8E033A217 /* Build configuration list for PBXNativeTarget "SAMCache" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8060CF49BF002270FEFA6BF6FE50200 /* Debug */,
+				7630AE76DC13440C855D5DE9D9E50591 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

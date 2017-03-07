@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Feature {
+enum Feature: Int {
     case astronomy
     case earth
     case rovers

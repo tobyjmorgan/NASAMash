@@ -12,6 +12,8 @@ class APODViewController: UIViewController {
 
     let model = Model.shared
     
+    var lastTouchedIndexPath: IndexPath? = nil
+    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var apodModeSegmentedControl: UISegmentedControl!
     
@@ -43,6 +45,18 @@ class APODViewController: UIViewController {
             flowLayout.invalidateLayout()
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? PhotoViewController {
+            
+            guard let indexPath = lastTouchedIndexPath,
+                  model.apodImages.indices.contains(indexPath.item) else { return }
+            
+            let apodImage = model.apodImages[indexPath.item]
+            vc.imageURLString = apodImage.hdUrl
+            vc.details = apodImage.attributedStringDescription(baseFontSize: 14, headerColor: .green, bodyColor: .white)
+        }
     }
     
     func configureCell(cell: APODCell, apodImage: APODImage, indexPath: IndexPath) {
@@ -194,7 +208,10 @@ extension APODViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 extension APODViewController: UICollectionViewDelegate {
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        lastTouchedIndexPath = indexPath
+        performSegue(withIdentifier: "ShowPhoto", sender: self)
+    }
 }
 
 
