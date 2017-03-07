@@ -21,8 +21,6 @@
 		6B5FE8271E6A067D002CBDAA /* Int+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8251E6A067D002CBDAA /* Int+extensions.swift */; };
 		6B5FE8291E6BBF72002CBDAA /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */; };
 		6B871C6D1E5DE253006F2236 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C6C1E5DE253006F2236 /* AppDelegate.swift */; };
-		6B871C6F1E5DE253006F2236 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C6E1E5DE253006F2236 /* MasterViewController.swift */; };
-		6B871C711E5DE253006F2236 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B871C701E5DE253006F2236 /* DetailViewController.swift */; };
 		6B871C741E5DE253006F2236 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B871C721E5DE253006F2236 /* Main.storyboard */; };
 		6B871C761E5DE253006F2236 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B871C751E5DE253006F2236 /* Assets.xcassets */; };
 		6B871C791E5DE253006F2236 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B871C771E5DE253006F2236 /* LaunchScreen.storyboard */; };
@@ -94,6 +92,7 @@
 		6B907B2C1E66400900B75514 /* FeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B2B1E66400900B75514 /* FeatureCell.swift */; };
 		6B907B2F1E67344800B75514 /* APODCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B2E1E67344800B75514 /* APODCell.swift */; };
 		6B907B321E67417700B75514 /* APODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B311E67417700B75514 /* APODViewController.swift */; };
+		6B9D8EC11E6F048600F626FD /* PostcardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D8EC01E6F048600F626FD /* PostcardViewController.swift */; };
 		6BBEDD301E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */; };
 		6BBEDD311E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */; };
 		6BBEDD331E6E675100ED9D3F /* RoverPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */; };
@@ -133,8 +132,6 @@
 		6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		6B871C691E5DE253006F2236 /* NASAMash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NASAMash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B871C6C1E5DE253006F2236 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6B871C6E1E5DE253006F2236 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		6B871C701E5DE253006F2236 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6B871C731E5DE253006F2236 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6B871C751E5DE253006F2236 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B871C781E5DE253006F2236 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -180,6 +177,7 @@
 		6B907B2B1E66400900B75514 /* FeatureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureCell.swift; sourceTree = "<group>"; };
 		6B907B2E1E67344800B75514 /* APODCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APODCell.swift; sourceTree = "<group>"; };
 		6B907B311E67417700B75514 /* APODViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APODViewController.swift; sourceTree = "<group>"; };
+		6B9D8EC01E6F048600F626FD /* PostcardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostcardViewController.swift; sourceTree = "<group>"; };
 		6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+extensions.swift"; sourceTree = "<group>"; };
 		6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhotoCell.swift; sourceTree = "<group>"; };
 		6BCE2B2E1E6C422A003D6893 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
@@ -238,13 +236,12 @@
 			isa = PBXGroup;
 			children = (
 				6B907B271E663EFF00B75514 /* FeatureViewController.swift */,
+				6BF4EF071E6D14EF002A81B7 /* RepointerViewController.swift */,
 				6B907B311E67417700B75514 /* APODViewController.swift */,
 				6B5FE8231E69DF56002CBDAA /* RoverPhotosViewController.swift */,
 				6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */,
-				6B871C6E1E5DE253006F2236 /* MasterViewController.swift */,
-				6B871C701E5DE253006F2236 /* DetailViewController.swift */,
+				6B9D8EC01E6F048600F626FD /* PostcardViewController.swift */,
 				6BCE2B2E1E6C422A003D6893 /* ImageManager.swift */,
-				6BF4EF071E6D14EF002A81B7 /* RepointerViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -712,7 +709,6 @@
 				6B871CA61E5DE43D006F2236 /* APIClient.swift in Sources */,
 				6B871CBB1E5DF2B8006F2236 /* Date+extensions.swift in Sources */,
 				6B871C9D1E5DE289006F2236 /* Camera.swift in Sources */,
-				6B871C711E5DE253006F2236 /* DetailViewController.swift in Sources */,
 				6B871CA31E5DE40E006F2236 /* NASARoverEndpoint.swift in Sources */,
 				6B871D291E60C6CB006F2236 /* Model.swift in Sources */,
 				6B907B191E660D2200B75514 /* APODImage.swift in Sources */,
@@ -721,7 +717,6 @@
 				6B871D341E64B84F006F2236 /* Manifest+extensions.swift in Sources */,
 				6B871CD21E5E26BA006F2236 /* Rover+extensions.swift in Sources */,
 				6B907B2C1E66400900B75514 /* FeatureCell.swift in Sources */,
-				6B871C6F1E5DE253006F2236 /* MasterViewController.swift in Sources */,
 				6BBEDD331E6E675100ED9D3F /* RoverPhotoCell.swift in Sources */,
 				6B907B131E653F0500B75514 /* EarthImageAsset+extensions.swift in Sources */,
 				6B5FE81B1E67598C002CBDAA /* UserDefaultsKey.swift in Sources */,
@@ -738,6 +733,7 @@
 				6B907B071E652F3300B75514 /* NASAEarthImageryEndpoint.swift in Sources */,
 				6B871C6D1E5DE253006F2236 /* AppDelegate.swift in Sources */,
 				6B871D311E64B7C9006F2236 /* Manifest.swift in Sources */,
+				6B9D8EC11E6F048600F626FD /* PostcardViewController.swift in Sources */,
 				6B907B161E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */,
 				6B871CAF1E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
 				6B907B321E67417700B75514 /* APODViewController.swift in Sources */,

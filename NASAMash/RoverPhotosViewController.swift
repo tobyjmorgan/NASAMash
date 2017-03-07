@@ -11,6 +11,22 @@ import SwiftyAttributes
 
 class RoverPhotosViewController: UIViewController {
 
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var roverModeSegmentedControl: UISegmentedControl!
+    @IBOutlet var searchControlsContainer: UIView!
+    @IBOutlet var searchControlsButton: UIButton!
+    @IBOutlet var searchControlsRoverPicker: UIPickerView!
+    @IBOutlet var searchControlsSeg: UISegmentedControl!
+    @IBOutlet var searchControlsDateLabel: UILabel!
+    @IBOutlet var searchControlsSlider: UISlider!
+    @IBOutlet var searchControlsPickerViewContainer: UIView!
+    @IBOutlet var searchControlsRoverLabelContainer: UIView!
+    @IBOutlet var searchControlsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var searchControlsPhotoCountLabel: UILabel!
+    @IBOutlet var searchControlsFetchButton: UIButton!
+    @IBOutlet var searchControlsFetchButtonContainer: UIView!
+    @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
+    
     let model = Model.shared
     
     var minimizeSearchControls: Bool = false {
@@ -31,23 +47,6 @@ class RoverPhotosViewController: UIViewController {
     
     var lastTouchedIndexPath: IndexPath? = nil
     
-    @IBOutlet var collectionView: UICollectionView!
-    @IBOutlet var roverModeSegmentedControl: UISegmentedControl!
-
-    @IBOutlet var searchControlsContainer: UIView!
-    @IBOutlet var searchControlsButton: UIButton!
-    @IBOutlet var searchControlsRoverPicker: UIPickerView!
-    @IBOutlet var searchControlsSeg: UISegmentedControl!
-    @IBOutlet var searchControlsDateLabel: UILabel!
-    @IBOutlet var searchControlsSlider: UISlider!
-    @IBOutlet var searchControlsPickerViewContainer: UIView!
-    @IBOutlet var searchControlsRoverLabelContainer: UIView!
-    @IBOutlet var searchControlsBottomConstraint: NSLayoutConstraint!
-    @IBOutlet var searchControlsPhotoCountLabel: UILabel!
-    @IBOutlet var searchControlsFetchButton: UIButton!
-    @IBOutlet var searchControlsFetchButtonContainer: UIView!
-    
-    @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -109,13 +108,21 @@ class RoverPhotosViewController: UIViewController {
             let roverPhoto = model.roverPhotos[indexPath.item]
             vc.imageURLString = roverPhoto.imageURL
             vc.details = roverPhoto.attributedStringDescription(baseFontSize: 14, headerColor: .green, bodyColor: .white)
+            
+        } else if let vc = segue.destination as? PostcardViewController {
+            
+            guard let indexPath = lastTouchedIndexPath,
+                  model.roverPhotos.indices.contains(indexPath.item) else { return }
+
+            let roverPhoto = model.roverPhotos[indexPath.item]
+            vc.imageURLString = roverPhoto.imageURL
         }
     }
     
     func configureCell(cell: RoverPhotoCell, roverPhoto: RoverPhoto, indexPath: IndexPath) {
         
         cell.dateLabel.text = roverPhoto.earthDate
-        cell.cameraLabel.text = roverPhoto.camera.fullName
+        cell.cameraLabel.text = roverPhoto.camera.name
         cell.imageURL = roverPhoto.imageURL
         
         // we provide the APODCell with a closure telling it what to do when the user
@@ -132,10 +139,31 @@ class RoverPhotosViewController: UIViewController {
             
             let roverPhoto = model.roverPhotos[indexPath.item]
             
-            // go do the download processing and disable the download button, so repeated downloads don't occur
-            self?.onDownload(urlString: roverPhoto.imageURL)
+            let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
+                
+                // go do the download processing
+                self?.onDownload(urlString: roverPhoto.imageURL)
+                
+                // disable the download button, so repeated downloads don't occur
+                cell.downloadButton.isEnabled = false
+            }
             
-            cell.downloadButton.isEnabled = false
+            alert.addAction(cancel)
+            alert.addAction(save)
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
+        
+        cell.onPostcardClosure = { [weak self] (cell) in
+
+            // get the index path for the cell if it exists
+            // if it doesn't for some strange reason, then do nothing
+            guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
+            
+            self?.lastTouchedIndexPath = indexPath
+            self?.performSegue(withIdentifier: "ShowPostcard", sender: self)
         }
     }
     
