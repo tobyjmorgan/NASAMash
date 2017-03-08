@@ -487,7 +487,7 @@ extension Model {
 // MARK: - Earth Image Handling
 extension Model {
     
-    internal func fetchEarthImage(date: Date, )
+//    internal func fetchEarthImage(date: Date, )
     internal func fetchEarthImage(id: String, expectedCount: Int) {
         
         let endpoint = NASAEarthImageryEndpoint.getImageForID(id)
@@ -549,9 +549,8 @@ extension Model {
                 // take each asset and fetch the corresponding EarthImagery entry
                 for asset in assets {
   
-                    asset.
 //                    self.fetchEarthImage(id: asset.id, expectedCount: 1); break
-//                    self.fetchEarthImage(id: asset.id, expectedCount: assets.count)
+                    self.fetchEarthImage(id: asset.id, expectedCount: assets.count)
                 }
                 
             case .failure(let error):
