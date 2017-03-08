@@ -14,17 +14,11 @@ class FeatureViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var settingsButton: UIButton!
 
-    var detailViewController: DetailViewController? = nil
     var lastSelectedFeature: Feature? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
-        
         tableView.dataSource = self
         tableView.delegate = self
 
@@ -35,6 +29,7 @@ class FeatureViewController: UIViewController {
         super.viewWillLayoutSubviews()
         
         tableView.invalidateIntrinsicContentSize()
+        tableView.reloadData()
     }
     
     
@@ -103,6 +98,12 @@ extension FeatureViewController: UITableViewDataSource {
         let feature = Feature.allValues[indexPath.row]
         cell.name.text = feature.description
         cell.icon.image = feature.largeIcon
+        
+        if (cell.frame.size.width / cell.frame.size.height) < 1.2 {
+            cell.name.text = ""
+        }
+        
+        cell.setNeedsLayout()
         
         return cell
     }

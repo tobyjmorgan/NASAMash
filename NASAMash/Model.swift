@@ -30,6 +30,8 @@ class Model: NSObject {
         case selectedRoverChanged
         case selectedManifestChanged
         case roverPhotosChanged
+        case roverPhotosProcessing
+        case roverPhotosDoneProcessing
         case roverModeChanged
         case apodImagesChanged
     }
@@ -370,6 +372,8 @@ extension Model {
         
         if let params = RoverRequestParameters(roverName: roverName, sol: sol, earthDate: nil, cameras: nil, page: nil) {
             
+            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosProcessing.rawValue), object: self)
+            
             let endpoint = NASARoverEndpoint.roverPhotosBySol(params)
             client.fetch(request: endpoint.request, parse: NASARoverEndpoint.photosParser) {(result) in
                 
@@ -380,6 +384,7 @@ extension Model {
                     
                     if lastInBatch {
                         NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
+                        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: self)
                     }
                     
                 case .failure(let error):

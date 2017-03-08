@@ -54,6 +54,7 @@ class ImageManager: NSObject {
         // optional
         self.activityIndicator = activityIndicator
         self.noImagImageView = noImagImageView
+        self.onImageLoaded = onImageLoaded
     }
     
     private func fetchImage(newImageUrl: String) {

@@ -31,6 +31,7 @@ class APODViewController: UIViewController {
         super.viewWillAppear(animated)
         
         refreshApodMode()
+        collectionView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,8 +55,11 @@ class APODViewController: UIViewController {
                   model.apodImages.indices.contains(indexPath.item) else { return }
             
             let apodImage = model.apodImages[indexPath.item]
+            
+            vc.photoVCMode = .apodImage
             vc.imageURLString = apodImage.hdUrl
             vc.details = apodImage.attributedStringDescription(baseFontSize: 14, headerColor: .green, bodyColor: .white)
+            vc.apodImage = apodImage
         }
     }
     
@@ -145,20 +149,6 @@ class APODViewController: UIViewController {
         if apodMode.rawValue <= apodModeSegmentedControl.numberOfSegments {
             apodModeSegmentedControl.selectedSegmentIndex = apodMode.rawValue
         }
-    }
-    
-    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
-    
-        guard error == nil else {
-            // failed to save image
-            let note = TJMApplicationNotification(title: "Oops!", message: "Unable to save image to Photo Library", fatal: false)
-            note.postMyself()
-            return
-        }
-        
-        // image saved successfully
-        let note = TJMApplicationNotification(title: "Photo Saved!", message: "Image successfully saved to Photo Library", fatal: false)
-        note.postMyself()
     }
 }
 

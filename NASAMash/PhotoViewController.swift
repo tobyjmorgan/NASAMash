@@ -10,6 +10,27 @@ import UIKit
 
 class PhotoViewController: UIViewController {
 
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var detailsLabel: UITextView!
+    @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var noImage: UIImageView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var downloadButton: UIButton!
+    @IBOutlet var faveButton: UIButton!
+    @IBOutlet var fullHeartImageView: UIImageView!
+    @IBOutlet var postcardButton: UIButton!
+    
+    enum PhotoVCMode {
+        case notSet
+        case apodImage
+        case roverPhoto
+    }
+    
     lazy var imageManager: ImageManager = {
         return ImageManager(containingView: self.view, imageView: self.imageView, activityIndicator: self.activityIndicator, noImagImageView: self.noImage) { [unowned self] (image) in
             
@@ -20,9 +41,17 @@ class PhotoViewController: UIViewController {
         }
     }()
 
+    var photoVCMode: PhotoVCMode = .notSet
     var imageURLString: String? = nil
     var details: NSAttributedString? = nil
-
+    var apodImage: APODImage? = nil
+    
+    var isFavorite: Bool = false {
+        didSet {
+            refreshFavorite()
+        }
+    }
+    
     var showDetails: Bool = true {
         didSet {
             // when value changes, makes sure controls are shown/hidden accordingly
@@ -39,24 +68,13 @@ class PhotoViewController: UIViewController {
         }
     }
     
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var detailsLabel: UITextView!
-    @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var noImage: UIImageView!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         scrollView.delegate = self
         scrollView.maximumZoomScale = 6.0
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
     }
 
     override func viewDidLayoutSubviews() {
@@ -73,11 +91,79 @@ class PhotoViewController: UIViewController {
         
         imageManager.imageURL = imageURLString
         
+        refreshSpecialButtons()
+        
+        if let apodImage = apodImage {
+            if Model.shared.isFavoriteApod(apodImage: apodImage) {
+                isFavorite = true
+            }
+        }
+        
         if let details = details,
            details.length > 0 {
 
             detailsLabel.attributedText = details
             detailsLabel.scrollRangeToVisible(NSMakeRange(0, 0))
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? PostcardViewController {
+            vc.imageURLString = imageURLString
+        }
+    }
+    
+    func refreshFavorite() {
+        
+        if isFavorite {
+            
+            // show the beating heart animation
+            fullHeartImageView.isHidden = false
+            
+            // replace the button image with an empty image
+            faveButton.setImage(UIImage(), for: .normal)
+            
+            startHeartAnimation()
+            
+        } else {
+            
+            // hide the beating heart N.B. couldn't find a good way of stopping the beating heart animation
+            fullHeartImageView.isHidden = true
+            
+            // ensure the button image is the empty heart image
+            faveButton.setImage(#imageLiteral(resourceName: "EmptyHeart"), for: .normal)
+        }
+        
+        view.setNeedsDisplay()
+    }
+    
+    func startHeartAnimation() {
+        // start the heartbeat animation
+        
+        fullHeartImageView.layer.removeAllAnimations()
+        
+        let throb = CAKeyframeAnimation(keyPath: "transform.scale")
+        throb.values = [ 1.0, 0.8, 1.0 ]
+        throb.keyTimes = [ NSNumber(floatLiteral: 0.0), NSNumber(floatLiteral: 0.5), NSNumber(floatLiteral: 1.0)]
+        throb.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        throb.repeatCount = 1000
+        throb.duration = 1.0
+        fullHeartImageView.layer.add(throb, forKey: "throb")
+    }
+
+    func refreshSpecialButtons() {
+        
+        switch photoVCMode {
+        case .apodImage:
+            postcardButton.isHidden = true
+            faveButton.isHidden = false
+            refreshFavorite()
+        case .roverPhoto:
+            postcardButton.isHidden = false
+            faveButton.isHidden = true
+            fullHeartImageView.isHidden = true
+        default:
+            break
         }
     }
 }
@@ -148,5 +234,49 @@ extension PhotoViewController {
     @IBAction func onShowDetails() {
         // toggle controls
         showDetails = !showDetails
+    }
+    
+    @IBAction func onPostcard() {
+        performSegue(withIdentifier: "ShowPostcard", sender: self)
+    }
+    
+    @IBAction func onFave() {
+
+        guard let apodImage = apodImage else { return }
+        
+        let model = Model.shared
+        
+        // check to see if it is already a favorite
+        if model.isFavoriteApod(apodImage: apodImage) {
+            
+            // yes, so unfavorite it
+            model.removeApodFromFavorites(apodImage: apodImage)
+            isFavorite = false
+            
+        } else {
+            
+            // no so favorite it
+            model.addApodToFavorites(apodImage: apodImage)
+            isFavorite = true
+        }
+    }
+    
+    @IBAction func onDownload() {
+        
+        let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
+            
+            // go do the download processing
+            self.onDownload(urlString: self.imageURLString)
+            
+            // disable the download button, so repeated downloads don't occur
+            self.downloadButton.isEnabled = false
+        }
+        
+        alert.addAction(cancel)
+        alert.addAction(save)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

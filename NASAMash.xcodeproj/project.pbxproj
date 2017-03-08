@@ -13,7 +13,6 @@
 		6B5FE81B1E67598C002CBDAA /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE81A1E67598C002CBDAA /* UserDefaultsKey.swift */; };
 		6B5FE81C1E67598C002CBDAA /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE81A1E67598C002CBDAA /* UserDefaultsKey.swift */; };
 		6B5FE81E1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE81D1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift */; };
-		6B5FE81F1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE81D1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift */; };
 		6B5FE8211E687E15002CBDAA /* TJMApplicationNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8201E687E15002CBDAA /* TJMApplicationNotification.swift */; };
 		6B5FE8221E687E15002CBDAA /* TJMApplicationNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8201E687E15002CBDAA /* TJMApplicationNotification.swift */; };
 		6B5FE8241E69DF56002CBDAA /* RoverPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8231E69DF56002CBDAA /* RoverPhotosViewController.swift */; };
@@ -752,7 +751,6 @@
 				6B871C9E1E5DE289006F2236 /* Camera.swift in Sources */,
 				6B907B081E652F3300B75514 /* NASAEarthImageryEndpoint.swift in Sources */,
 				6B907B231E66165B00B75514 /* Feature.swift in Sources */,
-				6B5FE81F1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift in Sources */,
 				6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */,
 				6B907B111E6539E400B75514 /* EarthImageryParams.swift in Sources */,

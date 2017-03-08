@@ -33,7 +33,9 @@ extension UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func onDownload(urlString: String) {
+    func onDownload(urlString: String?) {
+        
+        guard let urlString = urlString else { return }
         
         // make sure we have permission to save to the Photo Library
         PHPhotoLibrary.requestAuthorization { (authorizationStatus) in
@@ -56,7 +58,7 @@ extension UIViewController {
                     }
                     
                     // success - save to Photo Library
-                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(APODViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(UIViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
                 }
                 
             default:
@@ -65,5 +67,20 @@ extension UIViewController {
                 note.postMyself()
             }
         }
+    }
+    
+    
+    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        
+        guard error == nil else {
+            // failed to save image
+            let note = TJMApplicationNotification(title: "Oops!", message: "Unable to save image to Photo Library", fatal: false)
+            note.postMyself()
+            return
+        }
+        
+        // image saved successfully
+        let note = TJMApplicationNotification(title: "Photo Saved!", message: "Image successfully saved to Photo Library", fatal: false)
+        note.postMyself()
     }
 }

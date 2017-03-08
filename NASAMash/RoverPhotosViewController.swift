@@ -26,6 +26,7 @@ class RoverPhotosViewController: UIViewController {
     @IBOutlet var searchControlsFetchButton: UIButton!
     @IBOutlet var searchControlsFetchButtonContainer: UIView!
     @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     let model = Model.shared
     
@@ -66,6 +67,8 @@ class RoverPhotosViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onChanges), name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onRoverChanges), name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: model)
+        NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onProcessing), name: Notification.Name(Model.Notifications.roverPhotosProcessing.rawValue), object: model)
+        NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onDoneProcessing), name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onRoverModeChanged), name: Notification.Name(Model.Notifications.roverModeChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onSelectedRoverChanged), name: Notification.Name(Model.Notifications.selectedRoverChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onSelectedManifestChanged), name: Notification.Name(Model.Notifications.selectedManifestChanged.rawValue), object: model)
@@ -106,6 +109,8 @@ class RoverPhotosViewController: UIViewController {
                   model.roverPhotos.indices.contains(indexPath.item) else { return }
             
             let roverPhoto = model.roverPhotos[indexPath.item]
+            
+            vc.photoVCMode = .roverPhoto
             vc.imageURLString = roverPhoto.imageURL
             vc.details = roverPhoto.attributedStringDescription(baseFontSize: 14, headerColor: .green, bodyColor: .white)
             
@@ -165,6 +170,18 @@ class RoverPhotosViewController: UIViewController {
             self?.lastTouchedIndexPath = indexPath
             self?.performSegue(withIdentifier: "ShowPostcard", sender: self)
         }
+    }
+    
+    func onProcessing() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        
+    }
+    
+    func onDoneProcessing() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+        
     }
     
     func onChanges() {
@@ -306,21 +323,6 @@ class RoverPhotosViewController: UIViewController {
             searchControlsPhotoCountLabel.text = ""
         }
     }
-    
-    
-    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
-        
-        guard error == nil else {
-            // failed to save image
-            let note = TJMApplicationNotification(title: "Oops!", message: "Unable to save image to Photo Library", fatal: false)
-            note.postMyself()
-            return
-        }
-        
-        // image saved successfully
-        let note = TJMApplicationNotification(title: "Photo Saved!", message: "Image successfully saved to Photo Library", fatal: false)
-        note.postMyself()
-    }
 }
 
 
@@ -334,6 +336,7 @@ extension RoverPhotosViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         // get unique rovers in results set
 //        let sectionCount = Set(model.roverPhotos.map { $0.rover.name }).count
+                
         return 1
     }
     
@@ -459,6 +462,7 @@ extension RoverPhotosViewController {
     }
     
     @IBAction func onFetch() {
+
         model.fetchRoverPhotosForSelectedManifest()
     }
 }

@@ -30,13 +30,15 @@ class PostcardViewController: UIViewController {
     }()
     
     var imageURLString: String? = nil
-    var imageLoaded: Bool = true//false
+    var imageLoaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         sendButtonContainerView.layer.cornerRadius = 3
         imageContainerView.layer.cornerRadius = 20
+        imageContainerView.layer.borderColor = UIColor.white.cgColor
+        imageContainerView.layer.borderWidth = 4
         
         if let messagePlaceholderText = message1.placeholder {
             message1.attributedPlaceholder = NSAttributedString(string: messagePlaceholderText, attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
