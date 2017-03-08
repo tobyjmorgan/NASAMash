@@ -30,3 +30,9 @@ extension EarthImageAsset: ListParseable {
         return Key.results.rawValue
     }
 }
+
+extension EarthImageAsset: Equatable { }
+
+func == (lhs: EarthImageAsset, rhs: EarthImageAsset) -> Bool {
+    return lhs.id == rhs.id
+}

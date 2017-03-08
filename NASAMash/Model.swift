@@ -51,11 +51,16 @@ class Model: NSObject {
         case roverPhotosDoneProcessing
         case roverModeChanged
         case apodImagesChanged
+        case earthImagesChanged
+        case earthImageAssetsProcessing
+        case earthImageAssetsDoneProcessing
     }
     
     var rovers: [Rover] = []
     var apodImages: [APODImage] = []
     var roverPhotos: [RoverPhoto] = []
+    var earthImages: [EarthImagery] = []
+    var failedEarthImageCount: Int = 0
     
     var apodMode: APODMode = .latest {
         
@@ -471,6 +476,91 @@ extension Model {
         guard let rover = currentRover, let manifest = currentManifest else { return }
         
         fetchRoverPhotos(roverName: rover.name, sol: manifest.sol, context: .search, lastInBatch: true)
+    }
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Earth Image Handling
+extension Model {
+    
+    internal func fetchEarthImage(date: Date, )
+    internal func fetchEarthImage(id: String, expectedCount: Int) {
+        
+        let endpoint = NASAEarthImageryEndpoint.getImageForID(id)
+        client.fetch(request: endpoint.request, parse: EarthImagery.init) {(result) in
+            
+            switch result {
+                
+            case .success(let earthImage):
+                self.earthImages.append(earthImage)
+                self.earthImages.sort(by: { (firstImage, secondImage) -> Bool in
+                    return firstImage.dateTime > secondImage.dateTime
+                })
+                
+            case .failure(let error):
+                // just ignore and keep count for now
+                print(error)
+                self.failedEarthImageCount += 1
+                break
+
+            }
+            
+            if (self.earthImages.count + self.failedEarthImageCount) == expectedCount {
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImagesChanged.rawValue), object: self)
+                
+                if self.earthImages.count == 0 {
+                    NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                    let note = TJMApplicationNotification(title: "No Assets Retrieved", message: "Failed to retrieve any image assets for this location", fatal: false)
+                    note.postMyself()
+                }
+            }
+        }
+    }
+    
+    internal func fetchEarthImageAssetList(lat: Double, lon: Double, beginDate: NasaDate, endDate: NasaDate) {
+        
+        earthImages = []
+        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImagesChanged.rawValue), object: self)
+        
+        let endpoint = NASAEarthImageryEndpoint.getAssets(lat, lon, beginDate, endDate)
+        
+        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImageAssetsProcessing.rawValue), object: self)
+            
+        client.fetch(request: endpoint.request, parse: NASAEarthImageryEndpoint.assetsParser) {(result) in
+                
+            switch result {
+                
+            case .success(let assets):
+                
+                guard assets.count > 0 else {
+                    NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                    let note = TJMApplicationNotification(title: "No Assets Found", message: "Failed to find any image assets for this location", fatal: false)
+                    note.postMyself()
+                    return
+                }
+                
+                self.failedEarthImageCount = 0
+                
+                // take each asset and fetch the corresponding EarthImagery entry
+                for asset in assets {
+  
+                    asset.
+//                    self.fetchEarthImage(id: asset.id, expectedCount: 1); break
+//                    self.fetchEarthImage(id: asset.id, expectedCount: assets.count)
+                }
+                
+            case .failure(let error):
+                
+                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Rover Photos: \(error.localizedDescription)", fatal: false)
+                note.postMyself()
+            }
+        }
     }
 }
 

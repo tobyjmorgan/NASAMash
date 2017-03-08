@@ -50,8 +50,13 @@ extension APIEndpoint {
         var components = [URLQueryItem]()
         
         for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.append(queryItem)
+            if key == "problematicID" {
+                let queryItem = URLQueryItem(name: "id", value: "\"\(value)\"")
+                components.append(queryItem)
+            } else {
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                components.append(queryItem)
+            }
         }
         
         return components

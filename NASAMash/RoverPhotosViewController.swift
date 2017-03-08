@@ -364,7 +364,10 @@ extension RoverPhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = collectionView.frame.size.width/3
+        var width = collectionView.frame.size.width / 2
+        if width > 200 {
+            width = collectionView.frame.size.width / 3
+        }
         
         return CGSize(width: width, height: width/3*2)
     }

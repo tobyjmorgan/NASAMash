@@ -45,6 +45,7 @@ enum Key: HTTPKey {
     case results
     case begin
     case end
+    case problematicID
     
     
     // APOD API

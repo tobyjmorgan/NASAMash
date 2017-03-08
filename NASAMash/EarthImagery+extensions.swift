@@ -15,7 +15,7 @@ extension EarthImagery: JSONInitable {
         guard let id        = json[Key.id.rawValue] as? String,
               let rawDate   = json[Key.date.rawValue] as? NasaDateTime,
               let url       = json[Key.url.rawValue] as? String,
-              let cloudScore = json[Key.cloud_score.rawValue] as? Double else {
+              let cloudScore = json[Key.cloud_score.rawValue] as? Double? else {
             return nil
         }
         

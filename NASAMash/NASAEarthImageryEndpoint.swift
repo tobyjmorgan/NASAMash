@@ -11,6 +11,7 @@ import Foundation
 enum NASAEarthImageryEndpoint {
     case getImageForLocation(EarthImageryParams)
     case getAssets(Latitude, Longitude, BeginDate, EndDate)
+    case getImageForID(String)
 }
 
 // computed properties which get the path components we need based on the endpoint being used
@@ -26,7 +27,7 @@ extension NASAEarthImageryEndpoint: APIEndpoint {
     
     var path: String {
         switch self {
-        case .getImageForLocation:
+        case .getImageForLocation, .getImageForID:
             return "/planetary/earth/imagery"
         case .getAssets:
             return "/planetary/earth/assets"
@@ -54,6 +55,9 @@ extension NASAEarthImageryEndpoint: APIEndpoint {
 // Not working in API            parameters[Key.dim.rawValue] = params.dim
             parameters[Key.date.rawValue] = params.date
             parameters[Key.cloud_score.rawValue] = true
+            
+        case .getImageForID(let id):
+            parameters[Key.problematicID.rawValue] = id
             
         }
         

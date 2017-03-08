@@ -22,7 +22,9 @@ class RepointerViewController: UIViewController {
                     }
                     
                 case .earth:
-                    break
+                    if let vc = storyboard?.instantiateViewController(withIdentifier: "EarthVC") {
+                        nav.viewControllers[0] = vc
+                    }
                     
                 case .rovers:
                     if let vc = storyboard?.instantiateViewController(withIdentifier: "RoverPhotosVC") {
