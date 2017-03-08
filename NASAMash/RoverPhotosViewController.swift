@@ -65,8 +65,9 @@ class RoverPhotosViewController: UIViewController {
         refreshSearchDateLabel()
         refreshPhotoCountLabel()
         
+        activityIndicator.isHidden = true
+        
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onChanges), name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: model)
-        NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onRoverChanges), name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onProcessing), name: Notification.Name(Model.Notifications.roverPhotosProcessing.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onDoneProcessing), name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onRoverModeChanged), name: Notification.Name(Model.Notifications.roverModeChanged.rawValue), object: model)
@@ -186,10 +187,6 @@ class RoverPhotosViewController: UIViewController {
     
     func onChanges() {
         collectionView.reloadData()
-    }
-    
-    func onRoverChanges() {
-        refreshRoverPicker()
     }
     
     func onRoverModeChanged() {

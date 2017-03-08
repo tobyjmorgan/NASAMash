@@ -23,10 +23,27 @@ enum RoverMode: Int {
 
 class Model: NSObject {
 
+    ///////////////////////////////////////////////////////////////////
+    // singleton stuff
+    static let shared = Model()
+    
+    private override init() {
+        // nothing to do here, but want to make initialization private
+        // to force use of the shared instance singleton
+        super.init()
+        
+        startUp()
+    }
+    ///////////////////////////////////////////////////////////////////
+
+    
+    
+    
+    
     static let daysOfAPODImagesForLatest = 6
     
     enum Notifications: String {
-        case roversChanged
+        case modelReady
         case selectedRoverChanged
         case selectedManifestChanged
         case roverPhotosChanged
@@ -72,8 +89,7 @@ class Model: NSObject {
                     break
                     
                 case .latest:
-                    roverPhotos = []
-                    fetchLatestRoverPhotos()
+                    roverPhotos = prefetchedLatestRoverPhotos
                     
                 case .random:
                     roverPhotos = []
@@ -190,27 +206,40 @@ class Model: NSObject {
     
     internal var prefetchedAPODImages: [APODImage] = []
     internal var favoriteAPODImages: [APODImage] = []
+    internal var prefetchedLatestRoverPhotos: [RoverPhoto] = []
     internal let client = NASAAPIClient()
     internal let defaults = UserDefaults.standard
     
 
-    
-    // singleton stuff
-    static let shared = Model()
-    
-    private override init() {
-        // nothing to do here, but want to make initialization private
-        // to force use of the shared instance singleton
-        super.init()
-        
-        startUp()
-    }
     
     internal func startUp() {
         
         fetchRovers()
         fetchLatestAPODImages(lastFetchDate: Date())
         fetchFavoriteAPODImages()
+    }
+    
+    internal func checkPrefetchRequestsComplete() {
+        
+        for rover in rovers {
+            if rover.manifests.count == 0 {
+                // manifest not yet loaded for this rover
+                return
+            }
+        }
+
+        if rovers.count > 0 {
+            
+            selectedRoverIndex = 0
+            
+            if let max = maxManifestIndex {
+                
+                selectedManifestIndex = max
+            }
+        }
+        
+        // if we made it here, then everything is ready
+        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.modelReady.rawValue), object: self)
     }
 }
 
@@ -222,30 +251,32 @@ class Model: NSObject {
 // MARK: - APOD Image Handling
 extension Model {
 
-    internal func fetchAPODImage(nasaDate: NasaDate, contextApodMode: APODMode, finalOfBatch: Bool) {
+    internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode, finalOfBatch: Bool) {
         
         let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
-        
         client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
             
             switch result {
                 
             case .success(let image):
                 
-                switch contextApodMode {
+                switch context {
                     
                 case .favorites:
+                    // there is the possibility of duplicates, so prevent them and sort the results
                     if !self.favoriteAPODImages.contains(image) {
                         
                         self.favoriteAPODImages.append(image)
                         self.favoriteAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
                             return firstImage.date > secondImage.date
                         })
+                    }
+
+                    if finalOfBatch {
+                        // if we are currently in "favorites" APOD mode then make these results the working results
+                        if self.apodMode == .favorites { self.apodImages = self.favoriteAPODImages }
                         
-                        if finalOfBatch {
-                            if self.apodMode == .favorites { self.apodImages = self.favoriteAPODImages }
-                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
-                        }
+                        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
                     }
 
                 case .latest:
@@ -255,18 +286,21 @@ extension Model {
                         self.prefetchedAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
                             return firstImage.date > secondImage.date
                         })
-                        
-                        if finalOfBatch {
-                            if self.apodMode == .latest { self.apodImages = self.prefetchedAPODImages }
-                            NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
-                        }
                     }
+                    
+                    if finalOfBatch {
+                        // if we are currently in "latest" APOD mode then make these results the working results
+                        if self.apodMode == .latest { self.apodImages = self.prefetchedAPODImages }
+                        
+                        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
+                    }
+
                 }
                 
             case .failure(let error):
+                
                 let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Astronomy Photo information: \(error.localizedDescription)", fatal: false)
                 note.postMyself()
-                
             }
         }
     }
@@ -277,7 +311,7 @@ extension Model {
             
             if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: lastFetchDate) {
                 
-                fetchAPODImage(nasaDate: fetchDate.earthDate, contextApodMode: .latest, finalOfBatch: daysBefore == Model.daysOfAPODImagesForLatest)
+                fetchAPODImage(nasaDate: fetchDate.earthDate, context: .latest, finalOfBatch: daysBefore == Model.daysOfAPODImagesForLatest)
             }
         }
     }
@@ -286,7 +320,7 @@ extension Model {
         
         for favoriteDate in allFavoriteApods() {
             
-            fetchAPODImage(nasaDate: favoriteDate, contextApodMode: .favorites, finalOfBatch: false)
+            fetchAPODImage(nasaDate: favoriteDate, context: .favorites, finalOfBatch: false)
         }
     }
 }
@@ -310,20 +344,18 @@ extension Model {
             switch result {
                 
             case .success(let rovers):
+
                 self.rovers = rovers
                 
-                // now we have loaded rovers, we can set the initial rover mode
-                // this will trigger loading the latest rover photos
-                // we don't want to allow the GUI to drive this, because it won't know
-                // exaclt when the rovers are ready for use
-                self.roverMode = .latest
-
                 // now go and get all available manifests for each of the rovers
                 self.fetchManifestsForRovers()
-                NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roversChanged.rawValue), object: self)
+                
+                // and get the latest rover photos
+                self.fetchLatestRoverPhotos()
                 
             case .failure(let error):
-                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Mars Rover information: \(error.localizedDescription)", fatal: false)
+                
+                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Mars Rover information: \(error.localizedDescription)", fatal: true)
                 note.postMyself()
             }
         }
@@ -350,9 +382,12 @@ extension Model {
                         // replace the previous instance with the new instance
                         self.rovers[index] = newRover                        
                     }
+                    
+                    self.checkPrefetchRequestsComplete()
 
                 case .failure(let error):
-                    let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Manifest information for Mars Rovers: \(error.localizedDescription)", fatal: false)
+                    
+                    let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Manifest information for Mars Rovers: \(error.localizedDescription)", fatal: true)
                     note.postMyself()
                 }
             }
@@ -368,7 +403,7 @@ extension Model {
 // MARK: - Rover Photo Handling
 extension Model {
     
-    internal func fetchRoverPhotos(roverName: RoverName, sol: Sol, lastInBatch: Bool) {
+    internal func fetchRoverPhotos(roverName: RoverName, sol: Sol, context: RoverMode, lastInBatch: Bool) {
         
         if let params = RoverRequestParameters(roverName: roverName, sol: sol, earthDate: nil, cameras: nil, page: nil) {
             
@@ -380,16 +415,27 @@ extension Model {
                 switch result {
                     
                 case .success(let photos):
-                    self.roverPhotos = self.roverPhotos + photos
                     
-                    if lastInBatch {
-                        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
-                        NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: self)
+                    if context == .latest {
+                        
+                        self.prefetchedLatestRoverPhotos = self.prefetchedLatestRoverPhotos + photos
+                        
+                        self.roverPhotos = self.prefetchedLatestRoverPhotos
+                        
+                    } else {
+                        
+                        self.roverPhotos = self.roverPhotos + photos
                     }
                     
                 case .failure(let error):
+                    
                     let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Rover Photos: \(error.localizedDescription)", fatal: false)
                     note.postMyself()
+                }
+                
+                if lastInBatch {
+                    NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
+                    NotificationCenter.default.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: self)
                 }
             }
         }
@@ -401,7 +447,7 @@ extension Model {
             
             guard let lastRover = rovers.last else { break }
             
-            fetchRoverPhotos(roverName: rover.name, sol: rover.maxSol, lastInBatch: rover==lastRover)
+            fetchRoverPhotos(roverName: rover.name, sol: rover.maxSol, context: .latest, lastInBatch: rover==lastRover)
         }
     }
     
@@ -413,7 +459,7 @@ extension Model {
             
             let randomSol = Int.random(range: Range(0...rover.maxSol))
             
-            fetchRoverPhotos(roverName: rover.name, sol: randomSol, lastInBatch: rover==lastRover)
+            fetchRoverPhotos(roverName: rover.name, sol: randomSol, context: .random, lastInBatch: rover==lastRover)
         }
     }
     
@@ -424,7 +470,7 @@ extension Model {
         
         guard let rover = currentRover, let manifest = currentManifest else { return }
         
-        fetchRoverPhotos(roverName: rover.name, sol: manifest.sol, lastInBatch: true)
+        fetchRoverPhotos(roverName: rover.name, sol: manifest.sol, context: .search, lastInBatch: true)
     }
 }
 

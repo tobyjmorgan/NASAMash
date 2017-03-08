@@ -109,7 +109,7 @@ class PostcardViewController: UIViewController {
     
     func takeSnapshotOfView(view: UIView) -> UIImage? {
         
-        UIGraphicsBeginImageContext(CGSize(width: view.frame.size.width, height: view.frame.size.height))
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: view.frame.size.width, height: view.frame.size.height), false, 0.0)
         view.drawHierarchy(in: CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: view.frame.size.height), afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

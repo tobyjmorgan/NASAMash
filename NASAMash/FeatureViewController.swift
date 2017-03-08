@@ -16,6 +16,33 @@ class FeatureViewController: UIViewController {
 
     var lastSelectedFeature: Feature? = nil
     
+    enum LoadingState {
+        case notStarted
+        case inProgress
+        case done
+    }
+    
+    var showingLoading: LoadingState = .notStarted {
+        
+        didSet {
+            
+            switch (oldValue, showingLoading) {
+            
+            case (.notStarted, .inProgress):
+                // present loading dialogue
+                let loading = ActivityViewController(message: "Loading...")
+                present(loading, animated: true, completion: nil)
+            
+            case (.inProgress, .done):
+                dismiss(animated: true, completion: { self.displayWelcome() })
+                
+            default:
+                showingLoading = .done
+                break
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +50,9 @@ class FeatureViewController: UIViewController {
         tableView.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(FeatureViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
+        
+        let model = Model.shared
+        NotificationCenter.default.addObserver(self, selector: #selector(FeatureViewController.hideLoading), name: Notification.Name(Model.Notifications.modelReady.rawValue), object: model)
     }
 
     override func viewWillLayoutSubviews() {
@@ -36,7 +66,7 @@ class FeatureViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        displayWelcome()
+        showLoading()
         
         // unselect anything that was previously selected when returning to this screen
         // but only if not in split view mode (both sides showing)
@@ -74,6 +104,18 @@ class FeatureViewController: UIViewController {
             let welcome = TJMApplicationNotification(title: "Welcome", message: "We hope you enjoy exploring some great images from NASA!", fatal: false)
             welcome.postMyself()
         }
+    }
+    
+    func showLoading() {
+        
+        // warm up the model
+        let _ = Model.shared
+        
+        showingLoading = .inProgress
+    }
+    
+    func hideLoading() {
+        showingLoading = .done
     }
 }
 

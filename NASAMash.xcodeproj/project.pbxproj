@@ -92,6 +92,7 @@
 		6B907B2F1E67344800B75514 /* APODCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B2E1E67344800B75514 /* APODCell.swift */; };
 		6B907B321E67417700B75514 /* APODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B907B311E67417700B75514 /* APODViewController.swift */; };
 		6B9D8EC11E6F048600F626FD /* PostcardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D8EC01E6F048600F626FD /* PostcardViewController.swift */; };
+		6B9D8EC31E703EA800F626FD /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D8EC21E703EA800F626FD /* ActivityViewController.swift */; };
 		6BBEDD301E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */; };
 		6BBEDD311E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */; };
 		6BBEDD331E6E675100ED9D3F /* RoverPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */; };
@@ -177,6 +178,7 @@
 		6B907B2E1E67344800B75514 /* APODCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APODCell.swift; sourceTree = "<group>"; };
 		6B907B311E67417700B75514 /* APODViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APODViewController.swift; sourceTree = "<group>"; };
 		6B9D8EC01E6F048600F626FD /* PostcardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostcardViewController.swift; sourceTree = "<group>"; };
+		6B9D8EC21E703EA800F626FD /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+extensions.swift"; sourceTree = "<group>"; };
 		6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhotoCell.swift; sourceTree = "<group>"; };
 		6BCE2B2E1E6C422A003D6893 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */,
 				6B9D8EC01E6F048600F626FD /* PostcardViewController.swift */,
 				6BCE2B2E1E6C422A003D6893 /* ImageManager.swift */,
+				6B9D8EC21E703EA800F626FD /* ActivityViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -722,6 +725,7 @@
 				6B907B281E663EFF00B75514 /* FeatureViewController.swift in Sources */,
 				6BCE2B2F1E6C422A003D6893 /* ImageManager.swift in Sources */,
 				6B907B221E66165B00B75514 /* Feature.swift in Sources */,
+				6B9D8EC31E703EA800F626FD /* ActivityViewController.swift in Sources */,
 				6B871CC41E5E12E9006F2236 /* RoverPhoto.swift in Sources */,
 				6B907B101E6539E400B75514 /* EarthImageryParams.swift in Sources */,
 				6B907B0A1E65310C00B75514 /* EarthImageAsset.swift in Sources */,
