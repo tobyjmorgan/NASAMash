@@ -34,6 +34,7 @@ class APODCell: UICollectionViewCell {
         onDownloadClosure?(self)
     }
 
+    // closures that get called when the favorite / download buttons get tapped
     var onFavoriteClosure: ((APODCell) -> Void)? = nil
     var onDownloadClosure: ((APODCell) -> Void)? = nil
     
@@ -133,7 +134,7 @@ class APODCell: UICollectionViewCell {
             
         } else {
             
-            UIImage.getImageAsynchronously(urlString: secureURLString) { (image, error) in
+            UIImage.getImageAsynchronously(urlString: secureURLString) { [ unowned self ] (image, error) in
                 
                 guard let image = image else {
                     self.imageState = .noImageFound

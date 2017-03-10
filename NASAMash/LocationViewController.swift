@@ -193,7 +193,7 @@ extension LocationViewController: MKMapViewDelegate {
         let coordinate = mapView.convert(locationPoint,toCoordinateFrom: mapView)
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
-        locationManager.geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+        locationManager.geocoder.reverseGeocodeLocation(location) { [ unowned self ] (placemarks, error) in
             
             guard let rawPlacemark = placemarks?.first else { return }
             

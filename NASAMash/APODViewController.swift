@@ -122,10 +122,10 @@ class APODViewController: UIViewController {
             
             let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
+            let save = UIAlertAction(title: "Save Image", style: .default) { [ weak self ] (action) in
                 
                 // go do the download processing
-                self?.onDownloadImage	(urlString: apodImage.url)
+                self?.onDownloadImage(urlString: apodImage.url)
                 
                 // disable the download button, so repeated downloads don't occur
                 cell.downloadButton.isEnabled = false

@@ -234,9 +234,11 @@ extension EarthViewController {
         
         let alert = UIAlertController(title: "Animated GIF", message: "Do you want to create an animated time-lapse GIF and send it by email?", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let yes = UIAlertAction(title: "Yes!", style: .default) { (action) in
+        let yes = UIAlertAction(title: "Yes!", style: .default) { [weak self ] (action) in
             
-            let flattenedImages = self.images.flatMap { $0.image }
+            guard let happySelf = self else { return }
+                
+            let flattenedImages = happySelf.images.flatMap { $0.image }
             
             guard let gifData = UIImage.createGIF(with: flattenedImages, loopCount: 10, frameDelay: 0.2) else {
                 
@@ -245,7 +247,7 @@ extension EarthViewController {
                 return
             }
             
-            self.sendEmail(imageData: gifData)
+            happySelf.sendEmail(imageData: gifData)
         }
         
         alert.addAction(cancel)

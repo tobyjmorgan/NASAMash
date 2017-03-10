@@ -265,13 +265,15 @@ extension PhotoViewController {
         
         let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
+        let save = UIAlertAction(title: "Save Image", style: .default) { [ weak self ] (action) in
+            
+            guard let happySelf = self else { return }
             
             // go do the download processing
-            self.onDownloadImage(urlString: self.imageURLString)
+            happySelf.onDownloadImage(urlString: happySelf.imageURLString)
             
             // disable the download button, so repeated downloads don't occur
-            self.downloadButton.isEnabled = false
+            happySelf.downloadButton.isEnabled = false
         }
         
         alert.addAction(cancel)

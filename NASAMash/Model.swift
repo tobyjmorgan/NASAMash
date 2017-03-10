@@ -260,7 +260,7 @@ extension Model {
     internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode, finalOfBatch: Bool) {
         
         let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
-        client.fetch(request: endpoint.request, parse: APODImage.init) { (result) in
+        client.fetch(request: endpoint.request, parse: APODImage.init) { [ unowned self ] (result) in
             
             switch result {
                 
@@ -345,7 +345,7 @@ extension Model {
     internal func fetchRovers() {
         
         let endpoint = NASARoverEndpoint.rovers
-        client.fetch(request: endpoint.request, parse: NASARoverEndpoint.roversParser) { (result) in
+        client.fetch(request: endpoint.request, parse: NASARoverEndpoint.roversParser) { [ unowned self ] (result) in
         
             switch result {
                 
@@ -373,7 +373,7 @@ extension Model {
             
             let endpoint = NASARoverEndpoint.manifest(rover.name)
             
-            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.manifestParser) { (result) in
+            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.manifestParser) { [ unowned self ] (result) in
                 
                 switch result {
 
@@ -492,7 +492,7 @@ extension Model {
 
         let params = EarthImageryParams(lat: lat, lon: lon, dim: nil, date: date.earthDate)
         let endpoint = NASAEarthImageryEndpoint.getImageForLocation(params)
-        client.fetch(request: endpoint.request, parse: EarthImagery.init) { (result) in
+        client.fetch(request: endpoint.request, parse: EarthImagery.init) { [ unowned self ] (result) in
             
             switch result {
                 

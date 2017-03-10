@@ -41,7 +41,7 @@ extension UIViewController {
         let secureURLString = urlString.replacingOccurrences(of: "http://", with: "https://")
         
         // ok download image in the background
-        UIImage.getImageAsynchronously(urlString: secureURLString) { (image, error) in
+        UIImage.getImageAsynchronously(urlString: secureURLString) { [ unowned self ] (image, error) in
             
             guard let image = image else {
                 // failed to download image

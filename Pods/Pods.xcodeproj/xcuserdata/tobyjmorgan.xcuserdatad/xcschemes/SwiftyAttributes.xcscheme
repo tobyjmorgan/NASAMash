@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B9A4DBAC2EABF45E008711B897DBF22A"
-               BuildableName = "Pods_NASAMashTests.framework"
-               BlueprintName = "Pods-NASAMashTests"
+               BlueprintIdentifier = "A2CC99AC71C7BACCB879AD9B22DE8077"
+               BuildableName = "SwiftyAttributes.framework"
+               BlueprintName = "SwiftyAttributes"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B9A4DBAC2EABF45E008711B897DBF22A"
-            BuildableName = "Pods_NASAMashTests.framework"
-            BlueprintName = "Pods-NASAMashTests"
+            BlueprintIdentifier = "A2CC99AC71C7BACCB879AD9B22DE8077"
+            BuildableName = "SwiftyAttributes.framework"
+            BlueprintName = "SwiftyAttributes"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
