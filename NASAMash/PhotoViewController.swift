@@ -268,7 +268,7 @@ extension PhotoViewController {
         let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
             
             // go do the download processing
-            self.onDownload(urlString: self.imageURLString)
+            self.onDownloadImage(urlString: self.imageURLString)
             
             // disable the download button, so repeated downloads don't occur
             self.downloadButton.isEnabled = false

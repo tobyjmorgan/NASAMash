@@ -34,6 +34,8 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to your Photo Library so it can save images you want to download.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs to access your location so it can find your location in Earth Imagery</string>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>

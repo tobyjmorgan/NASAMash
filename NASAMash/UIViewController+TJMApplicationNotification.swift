@@ -33,9 +33,29 @@ extension UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func onDownload(urlString: String?) {
+    func onDownloadImage(urlString: String?) {
         
         guard let urlString = urlString else { return }
+        
+        // only allow secure requests - if it fails then no image will show
+        let secureURLString = urlString.replacingOccurrences(of: "http://", with: "https://")
+        
+        // ok download image in the background
+        UIImage.getImageAsynchronously(urlString: secureURLString) { (image, error) in
+            
+            guard let image = image else {
+                // failed to download image
+                let note = TJMApplicationNotification(title: "Oops!", message: "Unable to download high-definition image from the server", fatal: false)
+                note.postMyself()
+                return
+            }
+            
+            // success - save to Photo Library
+            self.onSaveImagetoPhotoLibrary(image: image)
+        }
+    }
+    
+    func onSaveImagetoPhotoLibrary(image: UIImage) {
         
         // make sure we have permission to save to the Photo Library
         PHPhotoLibrary.requestAuthorization { (authorizationStatus) in
@@ -44,32 +64,17 @@ extension UIViewController {
                 
             case .authorized:
                 
-                // only allow secure requests - if it fails then no image will show
-                let secureURLString = urlString.replacingOccurrences(of: "http://", with: "https://")
-                
-                // ok download image in the background
-                UIImage.getImageAsynchronously(urlString: secureURLString) { (image) in
-                    
-                    guard let image = image else {
-                        // failed to download image
-                        let note = TJMApplicationNotification(title: "Oops!", message: "Unable to download high-definition image from the server", fatal: false)
-                        note.postMyself()
-                        return
-                    }
-                    
-                    // success - save to Photo Library
-                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(UIViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                }
-                
+                // success - save to Photo Library
+                UIImageWriteToSavedPhotosAlbum(image, self, #selector(UIViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            
             default:
                 // we don't have permission, so notify the user that this feature can't be used
-                let note = TJMApplicationNotification(title: "Oops!", message: "This app does not have permission to access your Photo Library. You can change this in Settings if you want download images in future", fatal: false)
+                let note = TJMApplicationNotification(title: "Oops!", message: "This app does not have permission to access your Photo Library. You can change this in Settings if you want save images in future", fatal: false)
                 note.postMyself()
             }
         }
     }
-    
-    
+
     func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         
         guard error == nil else {

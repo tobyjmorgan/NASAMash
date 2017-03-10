@@ -57,7 +57,7 @@ class APODViewController: UIViewController {
             let apodImage = model.apodImages[indexPath.item]
             
             vc.photoVCMode = .apodImage
-            vc.imageURLString = apodImage.hdUrl
+            vc.imageURLString = apodImage.url
             vc.details = apodImage.attributedStringDescription(baseFontSize: 14, headerColor: .green, bodyColor: .white)
             vc.apodImage = apodImage
         }
@@ -125,7 +125,7 @@ class APODViewController: UIViewController {
             let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
                 
                 // go do the download processing
-                self?.onDownload(urlString: apodImage.hdUrl)
+                self?.onDownloadImage	(urlString: apodImage.url)
                 
                 // disable the download button, so repeated downloads don't occur
                 cell.downloadButton.isEnabled = false

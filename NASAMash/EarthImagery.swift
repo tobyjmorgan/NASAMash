@@ -12,5 +12,4 @@ struct EarthImagery {
     let id: String
     let dateTime: Date
     let url: String
-    let cloudScore: Double?
 }

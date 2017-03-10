@@ -150,7 +150,7 @@ class RoverPhotosViewController: UIViewController {
             let save = UIAlertAction(title: "Save Image", style: .default) { (action) in
                 
                 // go do the download processing
-                self?.onDownload(urlString: roverPhoto.imageURL)
+                self?.onDownloadImage(urlString: roverPhoto.imageURL)
                 
                 // disable the download button, so repeated downloads don't occur
                 cell.downloadButton.isEnabled = false

@@ -133,7 +133,7 @@ class APODCell: UICollectionViewCell {
             
         } else {
             
-            UIImage.getImageAsynchronously(urlString: secureURLString) { image in
+            UIImage.getImageAsynchronously(urlString: secureURLString) { (image, error) in
                 
                 guard let image = image else {
                     self.imageState = .noImageFound

@@ -54,10 +54,10 @@ extension NASAEarthImageryEndpoint: APIEndpoint {
             parameters[Key.lon.rawValue] = params.lon
 // Not working in API            parameters[Key.dim.rawValue] = params.dim
             parameters[Key.date.rawValue] = params.date
-            parameters[Key.cloud_score.rawValue] = true
+//            parameters[Key.cloud_score.rawValue] = true
             
         case .getImageForID(let id):
-            parameters[Key.problematicID.rawValue] = id
+            parameters[Key.id.rawValue] = id
             
         }
         

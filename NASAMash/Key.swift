@@ -39,7 +39,6 @@ enum Key: HTTPKey {
     case lon
     case dim
     case date
-    case cloud_score
     case url
     case count
     case results
