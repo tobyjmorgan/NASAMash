@@ -10,7 +10,7 @@ import UIKit
 
 class APODViewController: UIViewController {
 
-    let model = Model.shared
+    let model = ModelAccess.shared.model
     
     var lastTouchedIndexPath: IndexPath? = nil
     
@@ -84,7 +84,7 @@ class APODViewController: UIViewController {
             // if it doesn't for some strange reason, then do nothing
             guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
             
-            let model = Model.shared
+            let model = ModelAccess.shared.model
             
             // unwrap weak self and get the image information
             guard model.apodImages.indices.contains(indexPath.item) else { return }
@@ -114,7 +114,7 @@ class APODViewController: UIViewController {
             // if it doesn't for some strange reason, then do nothing
             guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
             
-            let model = Model.shared
+            let model = ModelAccess.shared.model
             
             guard model.apodImages.indices.contains(indexPath.row) else { return }
             

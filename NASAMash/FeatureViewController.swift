@@ -14,6 +14,7 @@ class FeatureViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var settingsButton: UIButton!
 
+    let model = ModelAccess.shared.model
     var lastSelectedFeature: Feature? = nil
     
     enum LoadingState {
@@ -51,7 +52,6 @@ class FeatureViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(FeatureViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
         
-        let model = Model.shared
         NotificationCenter.default.addObserver(self, selector: #selector(FeatureViewController.hideLoading), name: Notification.Name(Model.Notifications.modelReady.rawValue), object: model)
     }
 
@@ -99,7 +99,7 @@ class FeatureViewController: UIViewController {
     
     func displayWelcome() {
         
-        if !Model.shared.hasBeenRunBefore() {
+        if !model.hasBeenRunBefore() {
             
             let welcome = TJMApplicationNotification(title: "Welcome", message: "We hope you enjoy exploring some great images from NASA!", fatal: false)
             welcome.postMyself()
@@ -109,7 +109,7 @@ class FeatureViewController: UIViewController {
     func showLoading() {
         
         // warm up the model
-        let _ = Model.shared
+        let _ = ModelAccess.shared.model
         
         showingLoading = .inProgress
     }

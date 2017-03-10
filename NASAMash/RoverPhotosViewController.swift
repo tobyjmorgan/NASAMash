@@ -28,7 +28,7 @@ class RoverPhotosViewController: UIViewController {
     @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    let model = Model.shared
+    let model = ModelAccess.shared.model
     
     var minimizeSearchControls: Bool = false {
         didSet {
@@ -139,7 +139,7 @@ class RoverPhotosViewController: UIViewController {
             // if it doesn't for some strange reason, then do nothing
             guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
             
-            let model = Model.shared
+            let model = ModelAccess.shared.model
             
             guard model.roverPhotos.indices.contains(indexPath.row) else { return }
             

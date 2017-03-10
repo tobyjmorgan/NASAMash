@@ -41,6 +41,7 @@ class PhotoViewController: UIViewController {
         }
     }()
 
+    let model = ModelAccess.shared.model
     var photoVCMode: PhotoVCMode = .notSet
     var imageURLString: String? = nil
     var details: NSAttributedString? = nil
@@ -94,7 +95,7 @@ class PhotoViewController: UIViewController {
         refreshSpecialButtons()
         
         if let apodImage = apodImage {
-            if Model.shared.isFavoriteApod(apodImage: apodImage) {
+            if model.isFavoriteApod(apodImage: apodImage) {
                 isFavorite = true
             }
         }
@@ -243,9 +244,7 @@ extension PhotoViewController {
     @IBAction func onFave() {
 
         guard let apodImage = apodImage else { return }
-        
-        let model = Model.shared
-        
+                
         // check to see if it is already a favorite
         if model.isFavoriteApod(apodImage: apodImage) {
             

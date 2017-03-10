@@ -23,19 +23,20 @@ enum RoverMode: Int {
 
 class Model: NSObject {
 
-    ///////////////////////////////////////////////////////////////////
-    // singleton stuff
-    static let shared = Model()
-    
     private override init() {
-        // nothing to do here, but want to make initialization private
-        // to force use of the shared instance singleton
         super.init()
         
         startUp()
     }
-    ///////////////////////////////////////////////////////////////////
-
+    
+    convenience init(iKnowIShouldUseModelAccess: Bool) {
+        
+        if !iKnowIShouldUseModelAccess {
+            fatalError()
+        }
+        
+        self.init()
+    }
     
     
     enum Notifications: String {

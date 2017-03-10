@@ -11,18 +11,34 @@ import XCTest
 @testable import NASAMash
 
 class ModelTests: XCTestCase {
+    
+    var model: Model = Model(iKnowIShouldUseModelAccess: true)
+    
+    var mockNotificationCenter = MockNotificationCenter.default
+
+    class MockNotificationCenter: NotificationCenter {
         
+        var didRecieveRoverModeChangedNotification: Bool = false
+        var didRecieveRoverPhotosChangedNotification: Bool = false
+        
+        override func post(name aName: NSNotification.Name, object anObject: Any?, userInfo aUserInfo: [AnyHashable : Any]? = nil) {
+            
+            if aName.rawValue == Model.Notifications.roverModeChanged.rawValue {
+                didRecieveRoverModeChangedNotification = true
+            }
+
+            if aName.rawValue == Model.Notifications.roverPhotosChanged.rawValue {
+                didRecieveRoverPhotosChangedNotification = true
+            }
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        model = Model(iKnowIShouldUseModelAccess: true)
+        mockNotificationCenter = MockNotificationCenter.default
+        model.notificationCenter = mockNotificationCenter
     }
     
     override func tearDown() {
@@ -30,9 +46,37 @@ class ModelTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testRoverModeChangeToLatest() {
+        
+        XCTAssertTrue(model.roverMode==RoverMode.notSet, "Model Rover Mode in incorrect initial state")
+        
+        model.roverMode = .latest
+        
+        XCTAssertTrue(model.roverMode==RoverMode.latest, "Model did not change Rover Mode correctly")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
     }
-    
+
+    func testRoverModeChangeToRandom() {
+        
+        XCTAssertTrue(model.roverMode==RoverMode.notSet, "Model Rover Mode in incorrect initial state")
+        
+        model.roverMode = .random
+        
+        XCTAssertTrue(model.roverMode==RoverMode.random, "Model did not change Rover Mode correctly")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
+    }
+
+    func testRoverModeChangeToSearch() {
+        
+        XCTAssertTrue(model.roverMode==RoverMode.notSet, "Model Rover Mode in incorrect initial state")
+        
+        model.roverMode = .search
+        
+        XCTAssertTrue(model.roverMode==RoverMode.search, "Model did not change Rover Mode correctly")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
+    }
+
 }

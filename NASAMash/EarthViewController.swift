@@ -45,7 +45,7 @@ class EarthViewController: UIViewController {
         case right = 1
     }
     
-    let model = Model.shared
+    let model = ModelAccess.shared.model
     var images: [ImageWithDate] = []
     var imageFetchFails: Int = 0
         
@@ -137,7 +137,7 @@ class EarthViewController: UIViewController {
                     self.imageFetchFails += 1
                 }
                 
-                if (self.imageFetchFails + self.images.count) == Model.shared.earthImages.count {
+                if (self.imageFetchFails + self.images.count) == ModelAccess.shared.model.earthImages.count {
                     
                     self.refreshSliderForCurrentImages(tryToUseIndex: nil)
     
