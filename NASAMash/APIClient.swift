@@ -80,11 +80,8 @@ protocol APIClient {
     var configuration: URLSessionConfiguration { get }
     var session: URLSession { get }
     
-    init(config: URLSessionConfiguration)
-    
     func JSONTaskWithRequest(request: URLRequest, completion: @escaping JSONTaskCompletion) -> JSONTask
     func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> T?, completion: @escaping (APIResult<T>) -> Void)
-    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> [T]?, completion: @escaping (APIResult<[T]>) -> Void)
 }
 
 extension APIClient {
@@ -123,31 +120,6 @@ extension APIClient {
     }
     
     func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> T?, completion: @escaping (APIResult<T>) -> Void) {
-        
-        let task = JSONTaskWithRequest(request: request) { (json, response, error) in
-            
-            DispatchQueue.main.async {
-                guard let json = json else {
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        completion(.failure(APIClientError.unknownError))
-                    }
-                    return
-                }
-                
-                if let value = parse(json) {
-                    completion(.success(value))
-                } else {
-                    completion(.failure(APIClientError.unableToParseJSON(json)))
-                }
-            }
-        }
-        
-        task.resume()
-    }
-    
-    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> [T]?, completion: @escaping (APIResult<[T]>) -> Void) {
         
         let task = JSONTaskWithRequest(request: request) { (json, response, error) in
             

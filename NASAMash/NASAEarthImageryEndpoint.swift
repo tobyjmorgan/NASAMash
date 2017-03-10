@@ -18,7 +18,7 @@ enum NASAEarthImageryEndpoint {
 extension NASAEarthImageryEndpoint: APIEndpoint {
     
     var apiKey: String {
-        return "GCPIr7WPD2SiwQwqWrddqNMJOFMvXkf57rhRX4sx"
+        return "IIvXddHXar46wtlvGKsGPLXppK98e6qG3yVocF3O"
     }
     
     var baseURL: String {
