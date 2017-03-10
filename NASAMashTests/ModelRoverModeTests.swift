@@ -10,13 +10,13 @@ import XCTest
 
 @testable import NASAMash
 
-class ModelTests: XCTestCase {
+class ModelRoverModeTests: XCTestCase {
     
-    var model: Model = Model(iKnowIShouldUseModelAccess: true)
+    var model: Model = TestModelAccess().model
     
-    var mockNotificationCenter = MockNotificationCenter.default
+    var mockNotificationCenter = MockNotificationCenterForRoverMode.default
 
-    class MockNotificationCenter: NotificationCenter {
+    class MockNotificationCenterForRoverMode: NotificationCenter {
         
         var didRecieveRoverModeChangedNotification: Bool = false
         var didRecieveRoverPhotosChangedNotification: Bool = false
@@ -35,9 +35,9 @@ class ModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        model = Model(iKnowIShouldUseModelAccess: true)
-        mockNotificationCenter = MockNotificationCenter.default
+                
+        model = TestModelAccess().model
+        mockNotificationCenter = MockNotificationCenterForRoverMode.default
         model.notificationCenter = mockNotificationCenter
     }
     
@@ -53,8 +53,8 @@ class ModelTests: XCTestCase {
         model.roverMode = .latest
         
         XCTAssertTrue(model.roverMode==RoverMode.latest, "Model did not change Rover Mode correctly")
-        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
-        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenterForRoverMode).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenterForRoverMode).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
     }
 
     func testRoverModeChangeToRandom() {
@@ -64,8 +64,8 @@ class ModelTests: XCTestCase {
         model.roverMode = .random
         
         XCTAssertTrue(model.roverMode==RoverMode.random, "Model did not change Rover Mode correctly")
-        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
-        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenterForRoverMode).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenterForRoverMode).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
     }
 
     func testRoverModeChangeToSearch() {
@@ -75,8 +75,7 @@ class ModelTests: XCTestCase {
         model.roverMode = .search
         
         XCTAssertTrue(model.roverMode==RoverMode.search, "Model did not change Rover Mode correctly")
-        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
-        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenter).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
-    }
-
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenterForRoverMode).didRecieveRoverModeChangedNotification, "Model should have posted Rover Mode Changed")
+        XCTAssertTrue((mockNotificationCenter as! MockNotificationCenterForRoverMode).didRecieveRoverPhotosChangedNotification, "Model should have posted Rover Photos Changed")
+    }    
 }

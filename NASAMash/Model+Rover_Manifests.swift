@@ -26,11 +26,19 @@ extension Model {
                 
                 self.rovers = rovers
                 
-                // now go and get all available manifests for each of the rovers
-                self.fetchManifestsForRovers()
+                if self.rovers.count > 0 {
+                    
+                    // now go and get all available manifests for each of the rovers
+                    self.fetchManifestsForRovers()
+                    
+                    // and get the latest rover photos
+                    self.fetchLatestRoverPhotos()
                 
-                // and get the latest rover photos
-                self.fetchLatestRoverPhotos()
+                } else {
+                    
+                    // no rovers found, so try to proceed with no rovers
+                    self.checkPrefetchRequestsComplete()
+                }
                 
             case .failure(let error):
                 

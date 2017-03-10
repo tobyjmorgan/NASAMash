@@ -9,6 +9,31 @@
 import Foundation
 import GameKit
 
+class ModelAccess: NSObject {
+    
+    ///////////////////////////////////////////////////////////////////
+    // singleton stuff
+    static let shared = ModelAccess()
+    
+    private var privateModel = Model()
+    
+    private override init() {
+        // nothing to do here, but want to make initialization private
+        // to force use of the shared instance singleton
+        super.init()
+    }
+    ///////////////////////////////////////////////////////////////////
+    
+    var model: Model  {
+        return privateModel
+    }
+}
+
+// special access for testing
+class TestModelAccess: NSObject {
+    var model = Model()
+}
+
 enum APODMode: Int {
     case latest
     case favorites
@@ -23,21 +48,11 @@ enum RoverMode: Int {
 
 class Model: NSObject {
 
-    private override init() {
+    fileprivate override init() {
         super.init()
         
         startUp()
     }
-    
-    convenience init(iKnowIShouldUseModelAccess: Bool) {
-        
-        if !iKnowIShouldUseModelAccess {
-            fatalError()
-        }
-        
-        self.init()
-    }
-    
     
     enum Notifications: String {
         case modelReady
@@ -53,7 +68,7 @@ class Model: NSObject {
         case earthImageAssetsDoneProcessing
     }
     
-    var client = NASAAPIClient()
+    var client: APIClient = NASAAPIClient()
     var defaults = UserDefaults.standard
     var notificationCenter = NotificationCenter.default
 
