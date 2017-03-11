@@ -39,6 +39,7 @@ class EarthViewController: UIViewController {
     @IBOutlet var fetchButtonContainer: UIView!
     @IBOutlet var imageDateLabel: UILabel!
     @IBOutlet var deleteFrameButtonContainer: UIView!
+    @IBOutlet var showHideDetailsButton: UIButton!
 
     enum LeftOrRight: Int {
         case left = -1
@@ -59,8 +60,10 @@ class EarthViewController: UIViewController {
             // when value changes, makes sure controls are shown/hidden accordingly
             if showDetails {
                 detailsViewBottomConstraint.constant = 0
+                showHideDetailsButton.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
             } else {
                 detailsViewBottomConstraint.constant = -150
+                showHideDetailsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
             }
             
             // this animates the changes to the constraint

@@ -27,6 +27,7 @@ class RoverPhotosViewController: UIViewController {
     @IBOutlet var searchControlsFetchButtonContainer: UIView!
     @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var showHideSearchControls: UIButton!
     
     let model = ModelAccess.shared.model
     
@@ -35,8 +36,10 @@ class RoverPhotosViewController: UIViewController {
             // when value changes, makes sure controls are shown/hidden accordingly
             if minimizeSearchControls {
                 searchControlsBottomConstraint.constant = -150
+                showHideSearchControls.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
             } else {
                 searchControlsBottomConstraint.constant = 0
+                showHideSearchControls.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
             }
             
             // this animates the changes to the constraint

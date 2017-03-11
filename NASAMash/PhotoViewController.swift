@@ -24,6 +24,7 @@ class PhotoViewController: UIViewController {
     @IBOutlet var faveButton: UIButton!
     @IBOutlet var fullHeartImageView: UIImageView!
     @IBOutlet var postcardButton: UIButton!
+    @IBOutlet var showHideDetailsButton: UIButton!
     
     enum PhotoVCMode {
         case notSet
@@ -58,8 +59,10 @@ class PhotoViewController: UIViewController {
             // when value changes, makes sure controls are shown/hidden accordingly
             if showDetails {
                 detailsViewBottomConstraint.constant = 0
+                showHideDetailsButton.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
             } else {
                 detailsViewBottomConstraint.constant = -150
+                showHideDetailsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
             }
             
             // this animates the changes to the constraint
@@ -244,7 +247,7 @@ extension PhotoViewController {
     @IBAction func onFave() {
 
         guard let apodImage = apodImage else { return }
-                
+        
         // check to see if it is already a favorite
         if model.isFavoriteApod(apodImage: apodImage) {
             
