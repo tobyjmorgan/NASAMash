@@ -86,7 +86,7 @@ class APODViewController: UIViewController {
             
             let model = ModelAccess.shared.model
             
-            // unwrap weak self and get the image information
+            // ensure the image exists in the model
             guard model.apodImages.indices.contains(indexPath.item) else { return }
             
             let apodImage = model.apodImages[indexPath.item]
@@ -95,8 +95,24 @@ class APODViewController: UIViewController {
             if model.isFavoriteApod(apodImage: apodImage) {
                 
                 // yes, so unfavorite it
-                model.removeApodFromFavorites(apodImage: apodImage)
-                cell.isFavorite = false
+                
+                
+                // if we are in favorites mode, do a little animation
+                if model.apodMode == .favorites {
+                    
+                    UIView.animate(withDuration: 0.3, animations: {
+                        cell.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+                        cell.alpha = 0.0
+                    }, completion: { (result) in
+                        model.removeApodFromFavorites(apodImage: apodImage)
+                        cell.isFavorite = false
+                    })
+
+                } else {
+                    
+                    model.removeApodFromFavorites(apodImage: apodImage)
+                    cell.isFavorite = false
+                }
                 
             } else {
                 

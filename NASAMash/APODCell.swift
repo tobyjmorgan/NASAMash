@@ -86,6 +86,11 @@ class APODCell: UICollectionViewCell {
         onFavoriteClosure = nil
         onDownloadClosure = nil
         isFavorite = false
+        
+        // restore after possible transformations due to animation
+        alpha = 1.0
+        transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
         setNeedsDisplay()
     }
     

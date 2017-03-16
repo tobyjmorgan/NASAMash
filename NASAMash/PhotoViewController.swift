@@ -13,7 +13,7 @@ class PhotoViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var detailsLabel: UITextView!
-    @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
+//    @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
@@ -25,6 +25,9 @@ class PhotoViewController: UIViewController {
     @IBOutlet var fullHeartImageView: UIImageView!
     @IBOutlet var postcardButton: UIButton!
     @IBOutlet var showHideDetailsButton: UIButton!
+    
+    @IBOutlet var collapsibleViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var collapsibleView: UIView!
     
     enum PhotoVCMode {
         case notSet
@@ -57,18 +60,7 @@ class PhotoViewController: UIViewController {
     var showDetails: Bool = true {
         didSet {
             // when value changes, makes sure controls are shown/hidden accordingly
-            if showDetails {
-                detailsViewBottomConstraint.constant = 0
-                showHideDetailsButton.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
-            } else {
-                detailsViewBottomConstraint.constant = -150
-                showHideDetailsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
-            }
-            
-            // this animates the changes to the constraint
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
+            refreshCollapsibleView()
         }
     }
     
@@ -88,6 +80,7 @@ class PhotoViewController: UIViewController {
         setZoomScale()
         applyPadding()
         detailsLabel.scrollRangeToVisible(NSMakeRange(0, 0))
+        refreshCollapsibleView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,11 +102,28 @@ class PhotoViewController: UIViewController {
             detailsLabel.attributedText = details
             detailsLabel.scrollRangeToVisible(NSMakeRange(0, 0))
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PostcardViewController {
             vc.imageURLString = imageURLString
+        }
+    }
+    
+    func refreshCollapsibleView() {
+        
+        if showDetails {
+            collapsibleViewBottomConstraint.constant = 0
+            showHideDetailsButton.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
+        } else {
+            collapsibleViewBottomConstraint.constant = -(collapsibleView.frame.size.height-30)
+            showHideDetailsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
+        }
+        
+        // this animates the changes to the constraint
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
         }
     }
     

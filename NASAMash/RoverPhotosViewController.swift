@@ -14,7 +14,6 @@ class RoverPhotosViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var roverModeSegmentedControl: UISegmentedControl!
     @IBOutlet var searchControlsContainer: UIView!
-    @IBOutlet var searchControlsButton: UIButton!
     @IBOutlet var searchControlsRoverPicker: UIPickerView!
     @IBOutlet var searchControlsSeg: UISegmentedControl!
     @IBOutlet var searchControlsDateLabel: UILabel!
@@ -27,7 +26,7 @@ class RoverPhotosViewController: UIViewController {
     @IBOutlet var searchControlsFetchButtonContainer: UIView!
     @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var showHideSearchControls: UIButton!
+    @IBOutlet var showHideSearchControlsButton: UIButton!
     
     let model = ModelAccess.shared.model
     
@@ -36,10 +35,10 @@ class RoverPhotosViewController: UIViewController {
             // when value changes, makes sure controls are shown/hidden accordingly
             if minimizeSearchControls {
                 searchControlsBottomConstraint.constant = -150
-                showHideSearchControls.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
+                showHideSearchControlsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
             } else {
                 searchControlsBottomConstraint.constant = 0
-                showHideSearchControls.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
+                showHideSearchControlsButton.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
             }
             
             // this animates the changes to the constraint

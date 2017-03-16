@@ -229,6 +229,12 @@ extension EarthViewController {
     
     @IBAction func onEmailGIF() {
         
+        guard MFMailComposeViewController.canSendMail() else {
+            let note = TJMApplicationNotification(title: "Oops!", message: "Email services are not available on this device. Sorry.", fatal: false)
+            note.postMyself()
+            return
+        }
+        
         guard images.count > 0 else {
             let note = TJMApplicationNotification(title: "Oops!", message: "There are no images available to use!", fatal: false)
             note.postMyself()
