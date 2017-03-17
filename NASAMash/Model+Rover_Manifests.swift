@@ -18,26 +18,28 @@ extension Model {
     internal func fetchRovers() {
         
         let endpoint = NASARoverEndpoint.rovers
-        client.fetch(request: endpoint.request, parse: NASARoverEndpoint.roversParser) { [ unowned self ] (result) in
+        client.fetch(request: endpoint.request, parse: NASARoverEndpoint.roversParser) { [ weak self ] (result) in
+            
+            guard let goodSelf = self else { return }
             
             switch result {
                 
             case .success(let rovers):
                 
-                self.rovers = rovers
+                goodSelf.rovers = rovers
                 
-                if self.rovers.count > 0 {
+                if goodSelf.rovers.count > 0 {
                     
                     // now go and get all available manifests for each of the rovers
-                    self.fetchManifestsForRovers()
+                    goodSelf.fetchManifestsForRovers()
                     
                     // and get the latest rover photos
-                    self.fetchLatestRoverPhotos()
+                    goodSelf.fetchLatestRoverPhotos()
                 
                 } else {
                     
                     // no rovers found, so try to proceed with no rovers
-                    self.checkPrefetchRequestsComplete()
+                    goodSelf.checkPrefetchRequestsComplete()
                 }
                 
             case .failure(let error):
@@ -54,7 +56,9 @@ extension Model {
             
             let endpoint = NASARoverEndpoint.manifest(rover.name)
             
-            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.manifestParser) { [ unowned self ] (result) in
+            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.manifestParser) { [ weak self ] (result) in
+                
+                guard let goodSelf = self else { return }
                 
                 switch result {
                     
@@ -64,13 +68,13 @@ extension Model {
                     let newRover = rover.roverWithManifests(manifests: manifests)
                     
                     // quick check nothing has changed during the asynchronous call
-                    if self.rovers.indices.contains(index) {
+                    if goodSelf.rovers.indices.contains(index) {
                         
                         // replace the previous instance with the new instance
-                        self.rovers[index] = newRover
+                        goodSelf.rovers[index] = newRover
                     }
                     
-                    self.checkPrefetchRequestsComplete()
+                    goodSelf.checkPrefetchRequestsComplete()
                     
                 case .failure(let error):
                     

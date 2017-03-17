@@ -60,7 +60,7 @@ class PhotoViewController: UIViewController {
     var showDetails: Bool = true {
         didSet {
             // when value changes, makes sure controls are shown/hidden accordingly
-            refreshCollapsibleView()
+            refreshCollapsibleView(animate: true)
         }
     }
     
@@ -80,7 +80,7 @@ class PhotoViewController: UIViewController {
         setZoomScale()
         applyPadding()
         detailsLabel.scrollRangeToVisible(NSMakeRange(0, 0))
-        refreshCollapsibleView()
+        refreshCollapsibleView(animate: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +111,7 @@ class PhotoViewController: UIViewController {
         }
     }
     
-    func refreshCollapsibleView() {
+    func refreshCollapsibleView(animate: Bool) {
         
         if showDetails {
             collapsibleViewBottomConstraint.constant = 0
@@ -121,9 +121,12 @@ class PhotoViewController: UIViewController {
             showHideDetailsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
         }
         
-        // this animates the changes to the constraint
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
+        if animate {
+            
+            // this animates the changes to the constraint
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
     
@@ -275,6 +278,16 @@ extension PhotoViewController {
     
     @IBAction func onDownload() {
         
+        guard let url = imageURLString else {
+        
+            let alert = UIAlertController(title: "Cannot Download Image", message: "Invalid image URL", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Never Mind", style: .default, handler: nil)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+            
+            return
+        }
+        
         let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let save = UIAlertAction(title: "Save Image", style: .default) { [ weak self ] (action) in
@@ -282,7 +295,7 @@ extension PhotoViewController {
             guard let happySelf = self else { return }
             
             // go do the download processing
-            happySelf.onDownloadImage(urlString: happySelf.imageURLString)
+            happySelf.onDownloadImage(urlString: url)
             
             // disable the download button, so repeated downloads don't occur
             happySelf.downloadButton.isEnabled = false

@@ -19,7 +19,9 @@ extension Model {
             notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosProcessing.rawValue), object: self)
             
             let endpoint = NASARoverEndpoint.roverPhotosBySol(params)
-            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.photosParser) { [ unowned self ](result) in
+            client.fetch(request: endpoint.request, parse: NASARoverEndpoint.photosParser) { [ weak self ](result) in
+                
+                guard let goodSelf = self else { return }
                 
                 switch result {
                     
@@ -27,13 +29,13 @@ extension Model {
                     
                     if context == .latest {
                         
-                        self.prefetchedLatestRoverPhotos = self.prefetchedLatestRoverPhotos + photos
+                        goodSelf.prefetchedLatestRoverPhotos = goodSelf.prefetchedLatestRoverPhotos + photos
                         
-                        self.roverPhotos = self.prefetchedLatestRoverPhotos
+                        goodSelf.roverPhotos = goodSelf.prefetchedLatestRoverPhotos
                         
                     } else {
                         
-                        self.roverPhotos = self.roverPhotos + photos
+                        goodSelf.roverPhotos = goodSelf.roverPhotos + photos
                     }
                     
                 case .failure(let error):
@@ -43,8 +45,8 @@ extension Model {
                 }
                 
                 if lastInBatch {
-                    self.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
-                    self.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: self)
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: goodSelf)
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: goodSelf)
                 }
             }
         }

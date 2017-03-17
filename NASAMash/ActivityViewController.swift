@@ -40,7 +40,7 @@ private class ActivityView: UIView {
         
         backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         
-        boundingBoxView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
+        boundingBoxView.backgroundColor = UIColor.darkGray
         boundingBoxView.layer.cornerRadius = 12.0
         
         activityIndicatorView.startAnimating()

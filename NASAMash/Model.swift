@@ -75,7 +75,23 @@ class Model: NSObject {
     internal var prefetchedAPODImages: [APODImage] = []
     internal var favoriteAPODImages: [APODImage] = []
     internal var prefetchedLatestRoverPhotos: [RoverPhoto] = []
-
+    
+    internal var requestsSent: Int = 0
+    internal var successfulRequestsReturned: Int = 0
+    internal var failedRequestsReturned: Int = 0
+    
+    internal var working: Bool = false {
+        didSet {
+            
+            if !working {
+                // we just turned off working, so reset the counters
+                requestsSent = 0
+                successfulRequestsReturned = 0
+                failedRequestsReturned = 0
+            }
+        }
+    }
+    
     var rovers: [Rover] = []
     var apodImages: [APODImage] = []
     var roverPhotos: [RoverPhoto] = []
@@ -235,7 +251,7 @@ class Model: NSObject {
     internal func startUp() {
         
         fetchRovers()
-        fetchLatestAPODImages(lastFetchDate: Date())
+        fetchLatestAPODImages()
         fetchFavoriteAPODImages()
     }
     

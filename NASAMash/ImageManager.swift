@@ -74,19 +74,21 @@ class ImageManager: NSObject {
             
         } else {
             
-            UIImage.getImageAsynchronously(urlString: secureURLString) { [ unowned self ] (image, error) in
+            UIImage.getImageAsynchronously(urlString: secureURLString) { [ weak self ] (image, error) in
+                
+                guard let goodSelf = self else { return }
                 
                 guard let image = image else {
-                    self.imageState = .noImageFound
+                    goodSelf.imageState = .noImageFound
                     return
                 }
                 
-                self.imageView.image = image
+                goodSelf.imageView.image = image
                 SAMCache.shared().setImage(image, forKey: secureURLString)
-                self.imageState = .imageFound
-                self.containingView.setNeedsDisplay()
+                goodSelf.imageState = .imageFound
+                goodSelf.containingView.setNeedsDisplay()
                 
-                self.onImageLoaded?(image)
+                goodSelf.onImageLoaded?(image)
             }
         }
         

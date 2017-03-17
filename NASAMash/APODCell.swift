@@ -139,16 +139,18 @@ class APODCell: UICollectionViewCell {
             
         } else {
             
-            UIImage.getImageAsynchronously(urlString: secureURLString) { [ unowned self ] (image, error) in
+            UIImage.getImageAsynchronously(urlString: secureURLString) { [ weak self ] (image, error) in
+                
+                guard let goodSelf = self else { return }
                 
                 guard let image = image else {
-                    self.imageState = .noImageFound
+                    goodSelf.imageState = .noImageFound
                     return
                 }
                 
-                self.image.image = image
+                goodSelf.image.image = image
                 SAMCache.shared().setImage(image, forKey: secureURLString)
-                self.imageState = .imageFound
+                goodSelf.imageState = .imageFound
             }
         }
         

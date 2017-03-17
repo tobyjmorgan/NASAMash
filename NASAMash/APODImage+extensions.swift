@@ -15,7 +15,6 @@ extension APODImage: JSONInitable {
         guard let title             = json[Key.title.rawValue] as? String,
               let explanation       = json[Key.explanation.rawValue] as? String,
               let rawDate           = json[Key.date.rawValue] as? String,
-              let hdUrl             = json[Key.hdurl.rawValue] as? String,
               let url               = json[Key.url.rawValue] as? String,
               let mediaType         = json[Key.media_type.rawValue] as? String,
               let serviceVersion    = json[Key.service_version.rawValue] as? String else {
@@ -27,11 +26,17 @@ extension APODImage: JSONInitable {
         self.title = title
         self.explanation = explanation
         self.date = date
-        self.hdUrl = hdUrl
+        
         self.url = url
         self.mediaType = mediaType
         self.serviceVersion = serviceVersion
         
+        if let hdUrl = json[Key.hdurl.rawValue] as? String {
+            self.hdUrl = hdUrl
+        } else {
+            self.hdUrl = nil
+        }
+
         if let copyright = json[Key.copyright.rawValue] as? String {
             self.copyright = copyright
         } else {

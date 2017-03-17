@@ -10,12 +10,12 @@ import UIKit
 
 class APODViewController: UIViewController {
 
-    let model = ModelAccess.shared.model
-    
-    var lastTouchedIndexPath: IndexPath? = nil
-    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var apodModeSegmentedControl: UISegmentedControl!
+    
+    let model = ModelAccess.shared.model
+    var lastTouchedIndexPath: IndexPath? = nil
+    let scrollThresholdToTriggerFetch: CGFloat = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +31,11 @@ class APODViewController: UIViewController {
         super.viewWillAppear(animated)
         
         refreshApodMode()
+        
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.invalidateLayout()
+        }
+        
         collectionView.reloadData()
     }
     
@@ -57,7 +62,11 @@ class APODViewController: UIViewController {
             let apodImage = model.apodImages[indexPath.item]
             
             vc.photoVCMode = .apodImage
-            vc.imageURLString = apodImage.url
+            
+            if apodImage.mediaType == "image" {
+                vc.imageURLString = apodImage.hdUrl
+            }
+
             vc.details = apodImage.attributedStringDescription(baseFontSize: 14, headerColor: .green, bodyColor: .white)
             vc.apodImage = apodImage
         }
@@ -66,7 +75,45 @@ class APODViewController: UIViewController {
     func configureCell(cell: APODCell, apodImage: APODImage, indexPath: IndexPath) {
         
         cell.title.text = apodImage.title
-        cell.imageURL = apodImage.url
+        
+        // only do these parts if it is an image
+        if apodImage.mediaType == "image" {
+            
+            cell.imageURL = apodImage.url
+            
+            
+            // we provide the APODCell with a closure telling it what to do when the user
+            // taps the download button
+            cell.onDownloadClosure = { [weak self] (cell) in
+                
+                // get the index path for the cell if it exists
+                // if it doesn't for some strange reason, then do nothing
+                guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
+                
+                let model = ModelAccess.shared.model
+                
+                guard model.apodImages.indices.contains(indexPath.row) else { return }
+                
+                let apodImage = model.apodImages[indexPath.item]
+                
+                let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let save = UIAlertAction(title: "Save Image", style: .default) { [ weak self ] (action) in
+                    
+                    // go do the download processing
+                    self?.onDownloadImage(urlString: apodImage.hdUrl)
+                    
+                    // disable the download button, so repeated downloads don't occur
+                    cell.downloadButton.isEnabled = false
+                }
+                
+                alert.addAction(cancel)
+                alert.addAction(save)
+                
+                self?.present(alert, animated: true, completion: nil)
+            }
+
+        }
         
         if let copyright = apodImage.copyright {
             cell.subtitle.text = copyright
@@ -120,37 +167,6 @@ class APODViewController: UIViewController {
                 model.addApodToFavorites(apodImage: apodImage)
                 cell.isFavorite = true
             }
-        }
-        
-        // we provide the APODCell with a closure telling it what to do when the user
-        // taps the download button
-        cell.onDownloadClosure = { [weak self] (cell) in
-            
-            // get the index path for the cell if it exists
-            // if it doesn't for some strange reason, then do nothing
-            guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
-            
-            let model = ModelAccess.shared.model
-            
-            guard model.apodImages.indices.contains(indexPath.row) else { return }
-            
-            let apodImage = model.apodImages[indexPath.item]
-            
-            let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let save = UIAlertAction(title: "Save Image", style: .default) { [ weak self ] (action) in
-                
-                // go do the download processing
-                self?.onDownloadImage(urlString: apodImage.url)
-                
-                // disable the download button, so repeated downloads don't occur
-                cell.downloadButton.isEnabled = false
-            }
-            
-            alert.addAction(cancel)
-            alert.addAction(save)
-            
-            self?.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -208,9 +224,16 @@ extension APODViewController: UICollectionViewDelegateFlowLayout {
         
         let width: CGFloat
         
-        if indexPath.item == 0 {
-            width = collectionView.frame.size.width
+        if model.apodMode == .latest {
+            
+            if indexPath.item == 0 {
+                width = collectionView.frame.size.width
+            } else {
+                width = collectionView.frame.size.width/2
+            }
+
         } else {
+            
             width = collectionView.frame.size.width/2
         }
         
@@ -246,6 +269,28 @@ extension APODViewController {
     }
 }
 
+
+
+
+
+//////////////////////////////////////////////////////////////
+// MARK: - UIScrollViewDelegate
+extension APODViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        guard model.apodMode == .latest else { return }
+        
+        let contentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        if !model.working && (maximumOffset - contentOffset <= scrollThresholdToTriggerFetch) {
+
+            // Get more data - API call
+            model.fetchMoreLatestAPODImages()
+        }
+    }
+}
 
 
 

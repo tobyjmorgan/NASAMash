@@ -41,7 +41,9 @@ extension UIViewController {
         let secureURLString = urlString.replacingOccurrences(of: "http://", with: "https://")
         
         // ok download image in the background
-        UIImage.getImageAsynchronously(urlString: secureURLString) { [ unowned self ] (image, error) in
+        UIImage.getImageAsynchronously(urlString: secureURLString) { [ weak self ] (image, error) in
+            
+            guard let goodSelf = self else { return }
             
             guard let image = image else {
                 // failed to download image
@@ -51,7 +53,7 @@ extension UIViewController {
             }
             
             // success - save to Photo Library
-            self.onSaveImagetoPhotoLibrary(image: image)
+            goodSelf.onSaveImagetoPhotoLibrary(image: image)
         }
     }
     

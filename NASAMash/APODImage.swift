@@ -13,7 +13,7 @@ struct APODImage {
     let title: String
     let explanation: String
     let date: Date
-    let hdUrl: String
+    let hdUrl: String?
     let url: String
     let mediaType: String
     let serviceVersion: String

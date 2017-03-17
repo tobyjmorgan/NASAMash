@@ -13,79 +13,128 @@ import Foundation
 extension Model {
     
     static var daysOfAPODImagesForLatest: Int {
-        return 6
+        return 7
     }
 
-    internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode, finalOfBatch: Bool) {
+    internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode, totalInBatch: Int) {
         
+        requestsSent = totalInBatch
+
         let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
-        client.fetch(request: endpoint.request, parse: APODImage.init) { [ unowned self ] (result) in
+        client.fetch(request: endpoint.request, parse: APODImage.init) { [ weak self ] (result) in
+            
+            guard let goodSelf = self else { return }
             
             switch result {
                 
             case .success(let image):
                 
+                goodSelf.successfulRequestsReturned += 1
+                
                 switch context {
                     
                 case .favorites:
                     // there is the possibility of duplicates, so prevent them and sort the results
-                    if !self.favoriteAPODImages.contains(image) {
+                    if !goodSelf.favoriteAPODImages.contains(image) {
                         
-                        self.favoriteAPODImages.append(image)
-                        self.favoriteAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
+                        goodSelf.favoriteAPODImages.append(image)
+                        goodSelf.favoriteAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
                             return firstImage.date > secondImage.date
                         })
-                    }
-                    
-                    if finalOfBatch {
-                        // if we are currently in "favorites" APOD mode then make these results the working results
-                        if self.apodMode == .favorites { self.apodImages = self.favoriteAPODImages }
-                        
-                        self.notificationCenter.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
                     }
                     
                 case .latest:
-                    if !self.prefetchedAPODImages.contains(image) {
+                    if !goodSelf.prefetchedAPODImages.contains(image) {
                         
-                        self.prefetchedAPODImages.append(image)
-                        self.prefetchedAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
+                        goodSelf.prefetchedAPODImages.append(image)
+                        goodSelf.prefetchedAPODImages.sort(by: { (firstImage, secondImage) -> Bool in
                             return firstImage.date > secondImage.date
                         })
-                    }
-                    
-                    if finalOfBatch {
-                        // if we are currently in "latest" APOD mode then make these results the working results
-                        if self.apodMode == .latest { self.apodImages = self.prefetchedAPODImages }
-                        
-                        self.notificationCenter.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: self)
                     }
                     
                 }
                 
             case .failure(let error):
                 
+                goodSelf.failedRequestsReturned += 1
+                
                 let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Astronomy Photo information: \(error.localizedDescription)", fatal: false)
                 note.postMyself()
+            }
+            
+            
+            
+            if (goodSelf.successfulRequestsReturned + goodSelf.failedRequestsReturned) == goodSelf.requestsSent {
+                
+                goodSelf.working = false
+                
+                switch context {
+                case .favorites:
+                        // if we are currently in "favorites" APOD mode then make these results the working results
+                        if goodSelf.apodMode == .favorites { goodSelf.apodImages = goodSelf.favoriteAPODImages }
+                        
+                        goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: goodSelf)
+
+                case .latest:
+                    // if we are currently in "latest" APOD mode then make these results the working results
+                    if goodSelf.apodMode == .latest { goodSelf.apodImages = goodSelf.prefetchedAPODImages }
+                    
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.apodImagesChanged.rawValue), object: goodSelf)
+                }
             }
         }
     }
     
-    internal func fetchLatestAPODImages(lastFetchDate: Date) {
+    internal func fetchLatestAPODImages() {
         
-        for daysBefore in 0...Model.daysOfAPODImagesForLatest {
+        working = true
+        
+        let useDate: Date
+        let startIndex: Int
+
+        if prefetchedAPODImages.count == 0 {
+            useDate = Date()
+            startIndex = 0
+        } else {
+            useDate = prefetchedAPODImages.last!.date
+            startIndex = 1
+        }
+        
+        for daysBefore in startIndex..<Model.daysOfAPODImagesForLatest {
             
-            if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: lastFetchDate) {
-                
-                fetchAPODImage(nasaDate: fetchDate.earthDate, context: .latest, finalOfBatch: daysBefore == Model.daysOfAPODImagesForLatest)
+            if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: useDate) {
+
+                delay(0.2) {
+                    self.fetchAPODImage(nasaDate: fetchDate.earthDate, context: .latest, totalInBatch: Model.daysOfAPODImagesForLatest-startIndex)
+                }
             }
         }
     }
     
     internal func fetchFavoriteAPODImages() {
         
-        for favoriteDate in allFavoriteApods() {
+        working = true
+        
+        let favorites = allFavoriteApods()
+        
+        for favoriteDate in favorites {
             
-            fetchAPODImage(nasaDate: favoriteDate, context: .favorites, finalOfBatch: false)
+            fetchAPODImage(nasaDate: favoriteDate, context: .favorites, totalInBatch: favorites.count)
         }
+    }
+    
+    func fetchMoreLatestAPODImages() {
+        
+        guard !working else { return }
+        
+        // if there are any already, it will try to fetch more
+        fetchLatestAPODImages()
+    }
+}
+
+extension Model {
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        let when = DispatchTime.now() + delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
     }
 }

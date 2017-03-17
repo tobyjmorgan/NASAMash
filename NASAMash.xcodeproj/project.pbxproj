@@ -114,6 +114,7 @@
 		6BBEDD301E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */; };
 		6BBEDD311E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */; };
 		6BBEDD331E6E675100ED9D3F /* RoverPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */; };
+		6BC1CF1E1E7B150300C79EC2 /* NSObject+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1CF1D1E7B150300C79EC2 /* NSObject+extensions.swift */; };
 		6BCE2B2F1E6C422A003D6893 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCE2B2E1E6C422A003D6893 /* ImageManager.swift */; };
 		6BCE2B311E6C6587003D6893 /* AttributedStringDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCE2B301E6C6587003D6893 /* AttributedStringDescription.swift */; };
 		6BF4EF081E6D14EF002A81B7 /* RepointerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF4EF071E6D14EF002A81B7 /* RepointerViewController.swift */; };
@@ -211,6 +212,7 @@
 		6B9D8ED01E72178000F626FD /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
 		6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+extensions.swift"; sourceTree = "<group>"; };
 		6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhotoCell.swift; sourceTree = "<group>"; };
+		6BC1CF1D1E7B150300C79EC2 /* NSObject+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+extensions.swift"; sourceTree = "<group>"; };
 		6BCE2B2E1E6C422A003D6893 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		6BCE2B301E6C6587003D6893 /* AttributedStringDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringDescription.swift; sourceTree = "<group>"; };
 		6BF4EF071E6D14EF002A81B7 /* RepointerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepointerViewController.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				6B5FE8251E6A067D002CBDAA /* Int+extensions.swift */,
 				6BBEDD2F1E6E4A0C00ED9D3F /* CGRect+extensions.swift */,
 				6B9D8ECB1E71054700F626FD /* CLPlacemark+extensions.swift */,
+				6BC1CF1D1E7B150300C79EC2 /* NSObject+extensions.swift */,
 			);
 			name = "Foundation Extensions";
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				6B907B101E6539E400B75514 /* EarthImageryParams.swift in Sources */,
 				6B907B0A1E65310C00B75514 /* EarthImageAsset.swift in Sources */,
 				6B871CDB1E5E30A7006F2236 /* ListParseable.swift in Sources */,
+				6BC1CF1E1E7B150300C79EC2 /* NSObject+extensions.swift in Sources */,
 				6B907B1F1E66124300B75514 /* NASAAPODEndpoint.swift in Sources */,
 				6BBEDD301E6E4A0C00ED9D3F /* CGRect+extensions.swift in Sources */,
 				6B907B2F1E67344800B75514 /* APODCell.swift in Sources */,

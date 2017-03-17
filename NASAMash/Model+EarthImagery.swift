@@ -20,34 +20,32 @@ extension Model {
         
         let params = EarthImageryParams(lat: lat, lon: lon, dim: nil, date: date.earthDate)
         let endpoint = NASAEarthImageryEndpoint.getImageForLocation(params)
-        client.fetch(request: endpoint.request, parse: EarthImagery.init) { [ unowned self ] (result) in
+        client.fetch(request: endpoint.request, parse: EarthImagery.init) { [ weak self ] (result) in
+            
+            guard let goodSelf = self else { return }
             
             switch result {
                 
             case .success(let earthImage):
-                self.earthImages.append(earthImage)
-                self.earthImages.sort(by: { (firstImage, secondImage) -> Bool in
+                goodSelf.earthImages.append(earthImage)
+                goodSelf.earthImages.sort(by: { (firstImage, secondImage) -> Bool in
                     return firstImage.dateTime > secondImage.dateTime
                 })
                 
             case .failure(let error):
                 // just ignore and keep count for now
                 print(error)
-                self.failedEarthImageCount += 1
+                goodSelf.failedEarthImageCount += 1
                 break
                 
             }
             
-            print("TJM earthImages.count: \(self.earthImages.count)")
-            print("TJM failedEarthImageCount: \(self.failedEarthImageCount)")
-            print("TJM expectedCount: \(expectedCount)")
-            
-            if (self.earthImages.count + self.failedEarthImageCount) == expectedCount {
-                self.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
-                self.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImagesChanged.rawValue), object: self)
+            if (goodSelf.earthImages.count + goodSelf.failedEarthImageCount) == expectedCount {
+                goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: goodSelf)
+                goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImagesChanged.rawValue), object: goodSelf)
                 
-                if self.earthImages.count == 0 {
-                    self.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                if goodSelf.earthImages.count == 0 {
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: goodSelf)
                     let note = TJMApplicationNotification(title: "No Assets Retrieved", message: "Failed to retrieve any image assets for this location", fatal: false)
                     note.postMyself()
                 }
@@ -99,14 +97,16 @@ extension Model {
         
         notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsProcessing.rawValue), object: self)
         
-        client.fetch(request: endpoint.request, parse: NASAEarthImageryEndpoint.assetsParser) { [ unowned self ] (result) in
+        client.fetch(request: endpoint.request, parse: NASAEarthImageryEndpoint.assetsParser) { [ weak self ] (result) in
+            
+            guard let goodSelf = self else { return }
             
             switch result {
                 
             case .success(let assets):
                 
                 guard assets.count > 0 else {
-                    self.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: goodSelf)
                     let note = TJMApplicationNotification(title: "No Assets Found", message: "Failed to find any image assets for this location", fatal: false)
                     note.postMyself()
                     return
@@ -131,7 +131,7 @@ extension Model {
                 }
                 
                 // keep track of how many requests fail, so we know when we are done
-                self.failedEarthImageCount = 0
+                goodSelf.failedEarthImageCount = 0
                 
                 // focus on getting most recent first
                 let reversedAssets = assets.reversed()
@@ -140,7 +140,7 @@ extension Model {
                 for (index, reversedAssets) in reversedAssets.enumerated() {
                     
                     if useThese.contains(index) {
-                        self.fetchEarthImage(date: reversedAssets.dateTime, lat: lat, lon: lon, expectedCount: Model.maxEarthImageCount)
+                        goodSelf.fetchEarthImage(date: reversedAssets.dateTime, lat: lat, lon: lon, expectedCount: Model.maxEarthImageCount)
                     }
                     
                     // intermittent success getting assets with id search, using a different approach now
@@ -150,7 +150,7 @@ extension Model {
                 
             case .failure(let error):
                 
-                self.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: self)
+                goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.earthImageAssetsDoneProcessing.rawValue), object: goodSelf)
                 let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Rover Photos: \(error.localizedDescription)", fatal: false)
                 note.postMyself()
             }

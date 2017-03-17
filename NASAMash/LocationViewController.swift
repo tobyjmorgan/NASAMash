@@ -193,7 +193,9 @@ extension LocationViewController: MKMapViewDelegate {
         let coordinate = mapView.convert(locationPoint,toCoordinateFrom: mapView)
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
-        locationManager.geocoder.reverseGeocodeLocation(location) { [ unowned self ] (placemarks, error) in
+        locationManager.geocoder.reverseGeocodeLocation(location) { [ weak self ] (placemarks, error) in
+            
+            guard let goodSelf = self else { return }
             
             guard let rawPlacemark = placemarks?.first else { return }
             
@@ -202,10 +204,10 @@ extension LocationViewController: MKMapViewDelegate {
             DispatchQueue.main.async {
                 
                 // send the info back to the delegate
-                self.delegate?.onLocationPicked(lat: placemark.coordinate.latitude,
+                goodSelf.delegate?.onLocationPicked(lat: placemark.coordinate.latitude,
                                                 lon: placemark.coordinate.longitude)
                 
-                self.addMapAnnotationForPlacemark(placemark: placemark, refreshRegion: false)
+                goodSelf.addMapAnnotationForPlacemark(placemark: placemark, refreshRegion: false)
             }
         }
     }

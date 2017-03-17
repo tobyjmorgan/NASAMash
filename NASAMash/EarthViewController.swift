@@ -120,14 +120,16 @@ class EarthViewController: UIViewController {
         
         for earthImage in model.earthImages {
             
-            UIImage.getImageAsynchronously(urlString: earthImage.url, completion: { [unowned self] (image, error) in
+            UIImage.getImageAsynchronously(urlString: earthImage.url, completion: { [weak self] (image, error) in
+                
+                guard let goodSelf = self else { return }
                 
                 if let image = image {
                 
                     let imageWithDate = ImageWithDate(image: image, dateTaken: earthImage.dateTime)
-                    self.images.append(imageWithDate)
+                    goodSelf.images.append(imageWithDate)
                     
-                    self.images = self.images.sorted(by: { (firstImage, secondImage) -> Bool in
+                    goodSelf.images = goodSelf.images.sorted(by: { (firstImage, secondImage) -> Bool in
                         return firstImage.dateTaken < secondImage.dateTaken
                     })
                     
@@ -137,14 +139,14 @@ class EarthViewController: UIViewController {
                         print(error.localizedDescription)
                     }
                     
-                    self.imageFetchFails += 1
+                    goodSelf.imageFetchFails += 1
                 }
                 
-                if (self.imageFetchFails + self.images.count) == ModelAccess.shared.model.earthImages.count {
+                if (goodSelf.imageFetchFails + goodSelf.images.count) == ModelAccess.shared.model.earthImages.count {
                     
-                    self.refreshSliderForCurrentImages(tryToUseIndex: nil)
+                    goodSelf.refreshSliderForCurrentImages(tryToUseIndex: nil)
     
-                    self.onStopProcessing()
+                    goodSelf.onStopProcessing()
                 }
             })
         }
