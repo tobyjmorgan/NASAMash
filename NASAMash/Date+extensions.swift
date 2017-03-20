@@ -12,6 +12,7 @@ typealias NasaDate = String
 typealias NasaDateTime = String
 
 extension Date {
+    
     var earthDate: NasaDate {
         
         let formatter = DateFormatter()
@@ -40,4 +41,9 @@ extension Date {
         
         self.init(timeInterval:0, since:newDate)
     }
+    
+    static func daysBetween(start: Date, end: Date) -> Int? {
+        return Calendar.current.dateComponents([.day], from: start, to: end).day
+    }
+    
 }

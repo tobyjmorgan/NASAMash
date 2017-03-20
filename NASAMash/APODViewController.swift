@@ -284,7 +284,7 @@ extension APODViewController: UIScrollViewDelegate {
         let contentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
         
-        if !model.working && (maximumOffset - contentOffset <= scrollThresholdToTriggerFetch) {
+        if !model.apodStatus.isWorking && (maximumOffset - contentOffset <= scrollThresholdToTriggerFetch) {
 
             // Get more data - API call
             model.fetchMoreLatestAPODImages()

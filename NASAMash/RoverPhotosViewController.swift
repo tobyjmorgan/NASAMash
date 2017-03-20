@@ -306,8 +306,7 @@ class RoverPhotosViewController: UIViewController {
         
         } else {
             
-            guard let landingDate = Date(earthDate: rover.landingDate),
-                  let earthDate = Calendar.current.date(byAdding: .day, value: manifest.sol, to: landingDate) else {
+            guard let earthDate = rover.earthDateFromSol(sol: manifest.sol) else {
                     
                 searchControlsDateLabel.text = "Error Getting Earth Date"
                 return

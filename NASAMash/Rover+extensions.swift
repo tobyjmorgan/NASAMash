@@ -49,7 +49,7 @@ extension Rover: ListParseable {
 }
 
 extension Rover {
-    func roverWithManifests(manifests: [Manifest]) -> Rover {
+    func creatRoverObjectWithManifests(manifests: [Manifest]) -> Rover {
         
         let newRover = Rover(id: self.id, name: self.name, landingDate: self.landingDate, launchDate: self.launchDate, status: self.status, maxSol: self.maxSol, maxDate: self.maxDate, totalPhotos: self.totalPhotos, cameras: self.cameras, manifests: manifests)
         
@@ -62,3 +62,34 @@ extension Rover: Equatable { }
 func == (lhs: Rover, rhs: Rover) -> Bool {
     return lhs.id == rhs.id
 }
+
+extension Rover {
+    
+    private static var marsSolInSeconds: Double {
+        return (((24*60)+39)*60)+35.244
+    }
+    
+    private static var earthDayInSeconds: Double {
+        return 24*60*60
+    }
+    
+    private static var ratioOfEarthDaysToMarsSols: Double {
+        return (Rover.marsSolInSeconds / Rover.earthDayInSeconds)
+    }
+    
+    private static func earthDays(sols: Int) -> Double {
+        return Double(sols) * Rover.ratioOfEarthDaysToMarsSols
+    }
+    
+    func earthDateFromSol(sol: Int) -> Date? {
+        
+        guard let landingDate = Date(earthDate: landingDate),
+              let earthDate = Calendar.current.date(byAdding: .day, value: Int(Rover.earthDays(sols: sol)), to: landingDate) else { return nil }
+        
+        return earthDate
+    }
+}
+
+
+
+

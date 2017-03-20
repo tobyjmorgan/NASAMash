@@ -17,6 +17,8 @@ extension Model {
     // day, then the user may have out of date manifests
     internal func fetchRovers() {
         
+        startUpStatus.noteSentRequest()
+        
         let endpoint = NASARoverEndpoint.rovers
         client.fetch(request: endpoint.request, parse: NASARoverEndpoint.roversParser) { [ weak self ] (result) in
             
@@ -26,31 +28,41 @@ extension Model {
                 
             case .success(let rovers):
                 
+                goodSelf.startUpStatus.noteSuccessfulResult()
+                
                 goodSelf.rovers = rovers
+                
+for rover in rovers {
+    print("rover: \(rover.name), landingDate: \(rover.landingDate), maxDate: \(rover.maxDate), maxSol: \(rover.maxSol)")
+}
+            case .failure(let error):
+                
+                goodSelf.startUpStatus.noteFailedResult()
+                
+                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Mars Rover information: \(error.localizedDescription)", fatal: true)
+                note.postMyself()
+            }
+            
+            if goodSelf.startUpStatus.checkComplete() {
                 
                 if goodSelf.rovers.count > 0 {
                     
                     // now go and get all available manifests for each of the rovers
                     goodSelf.fetchManifestsForRovers()
+                    goodSelf.selectedRoverIndex = 0
                     
-                    // and get the latest rover photos
-                    goodSelf.fetchLatestRoverPhotos()
-                
                 } else {
-                    
+
                     // no rovers found, so try to proceed with no rovers
-                    goodSelf.checkPrefetchRequestsComplete()
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.modelReady.rawValue), object: self)
                 }
-                
-            case .failure(let error):
-                
-                let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Mars Rover information: \(error.localizedDescription)", fatal: true)
-                note.postMyself()
             }
         }
     }
     
     internal func fetchManifestsForRovers() {
+        
+        startUpStatus.noteSentRequests(rovers.count)
         
         for (index, rover) in rovers.enumerated() {
             
@@ -64,8 +76,10 @@ extension Model {
                     
                 case .success(let manifests):
                     
+                    goodSelf.startUpStatus.noteSuccessfulResult()
+                    
                     // update the relevant rover in the list of rovers with the returned manifests
-                    let newRover = rover.roverWithManifests(manifests: manifests)
+                    let newRover = rover.creatRoverObjectWithManifests(manifests: manifests)
                     
                     // quick check nothing has changed during the asynchronous call
                     if goodSelf.rovers.indices.contains(index) {
@@ -74,12 +88,26 @@ extension Model {
                         goodSelf.rovers[index] = newRover
                     }
                     
-                    goodSelf.checkPrefetchRequestsComplete()
-                    
                 case .failure(let error):
+                    
+                    goodSelf.startUpStatus.noteFailedResult()
                     
                     let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Manifest information for Mars Rovers: \(error.localizedDescription)", fatal: true)
                     note.postMyself()
+                }
+                
+                if goodSelf.startUpStatus.checkComplete() {
+                    
+                    if let max = goodSelf.maxManifestIndex {
+                        
+                        goodSelf.selectedManifestIndex = max
+                        
+                        // now go and prefetch the latest rover photos, if any
+                        goodSelf.fetchLatestRoverPhotos()
+                    }
+                    
+                    // ok, done with set up (whether everything loaded correctly or not) - model is ready
+                    goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.modelReady.rawValue), object: self)
                 }
             }
         }

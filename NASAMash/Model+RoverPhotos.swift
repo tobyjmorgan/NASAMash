@@ -12,7 +12,7 @@ import Foundation
 // MARK: - Rover Photo Handling
 extension Model {
     
-    internal func fetchRoverPhotos(roverName: RoverName, sol: Sol, context: RoverMode, lastInBatch: Bool) {
+    internal func fetchRoverPhotos(roverName: RoverName, sol: Sol, context: RoverMode) {
         
         if let params = RoverRequestParameters(roverName: roverName, sol: sol, earthDate: nil, cameras: nil, page: nil) {
             
@@ -27,6 +27,8 @@ extension Model {
                     
                 case .success(let photos):
                     
+                    goodSelf.roverPhotoStatus.noteSuccessfulResult()
+                    
                     if context == .latest {
                         
                         goodSelf.prefetchedLatestRoverPhotos = goodSelf.prefetchedLatestRoverPhotos + photos
@@ -40,11 +42,13 @@ extension Model {
                     
                 case .failure(let error):
                     
+                    goodSelf.roverPhotoStatus.noteFailedResult()
+                    
                     let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Rover Photos: \(error.localizedDescription)", fatal: false)
                     note.postMyself()
                 }
                 
-                if lastInBatch {
+                if goodSelf.roverPhotoStatus.checkComplete() {
                     goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: goodSelf)
                     goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: goodSelf)
                 }
@@ -54,33 +58,50 @@ extension Model {
     
     internal func fetchLatestRoverPhotos() {
         
+        guard !roverPhotoStatus.isWorking else { return }
+        
         for rover in rovers {
             
-            guard let lastRover = rovers.last else { break }
+            guard let mostRecentManifest = rover.manifests.last  else { break }
+
+            guard let lastManifestDate = rover.earthDateFromSol(sol: mostRecentManifest.sol) else { break }
             
-            fetchRoverPhotos(roverName: rover.name, sol: rover.maxSol, context: .latest, lastInBatch: rover==lastRover)
+            guard let daysSinceLastManifest = Date.daysBetween(start: lastManifestDate, end: Date()), daysSinceLastManifest < 30 else { break }
+            
+            roverPhotoStatus.noteSentRequest()
+            
+            fetchRoverPhotos(roverName: rover.name, sol: mostRecentManifest.sol, context: .latest)
         }
     }
     
     internal func fetchRandomRoverPhotos() {
         
+        guard !roverPhotoStatus.isWorking else { return }
+        
+        roverPhotoStatus.noteSentRequests(rovers.count)
+        
         for rover in rovers {
-            
-            guard let lastRover = rovers.last else { break }
             
             let randomSol = Int.random(range: Range(0...rover.maxSol))
             
-            fetchRoverPhotos(roverName: rover.name, sol: randomSol, context: .random, lastInBatch: rover==lastRover)
+            fetchRoverPhotos(roverName: rover.name, sol: randomSol, context: .random)
         }
     }
     
     func fetchRoverPhotosForSelectedManifest() {
+        
+        guard !roverPhotoStatus.isWorking else { return }
         
         roverPhotos = []
         notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
         
         guard let rover = currentRover, let manifest = currentManifest else { return }
         
-        fetchRoverPhotos(roverName: rover.name, sol: manifest.sol, context: .search, lastInBatch: true)
+        roverPhotoStatus.noteSentRequest()
+        
+        fetchRoverPhotos(roverName: rover.name, sol: manifest.sol, context: .search)
     }
 }
+
+
+

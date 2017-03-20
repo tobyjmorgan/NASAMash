@@ -18,7 +18,7 @@ extension Model {
 
     internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode, totalInBatch: Int) {
         
-        requestsSent = totalInBatch
+        apodStatus.noteSentRequests(totalInBatch)
 
         let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
         client.fetch(request: endpoint.request, parse: APODImage.init) { [ weak self ] (result) in
@@ -29,7 +29,7 @@ extension Model {
                 
             case .success(let image):
                 
-                goodSelf.successfulRequestsReturned += 1
+                goodSelf.apodStatus.noteSuccessfulResult()
                 
                 switch context {
                     
@@ -56,7 +56,7 @@ extension Model {
                 
             case .failure(let error):
                 
-                goodSelf.failedRequestsReturned += 1
+                goodSelf.apodStatus.noteFailedResult()
                 
                 let note = TJMApplicationNotification(title: "Connection Problem", message: "Failed to fetch Astronomy Photo information: \(error.localizedDescription)", fatal: false)
                 note.postMyself()
@@ -64,9 +64,7 @@ extension Model {
             
             
             
-            if (goodSelf.successfulRequestsReturned + goodSelf.failedRequestsReturned) == goodSelf.requestsSent {
-                
-                goodSelf.working = false
+            if goodSelf.apodStatus.checkComplete() {
                 
                 switch context {
                 case .favorites:
@@ -86,8 +84,6 @@ extension Model {
     }
     
     internal func fetchLatestAPODImages() {
-        
-        working = true
         
         let useDate: Date
         let startIndex: Int
@@ -113,8 +109,6 @@ extension Model {
     
     internal func fetchFavoriteAPODImages() {
         
-        working = true
-        
         let favorites = allFavoriteApods()
         
         for favoriteDate in favorites {
@@ -125,7 +119,7 @@ extension Model {
     
     func fetchMoreLatestAPODImages() {
         
-        guard !working else { return }
+        guard !apodStatus.isWorking else { return }
         
         // if there are any already, it will try to fetch more
         fetchLatestAPODImages()

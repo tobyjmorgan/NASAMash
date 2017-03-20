@@ -76,21 +76,9 @@ class Model: NSObject {
     internal var favoriteAPODImages: [APODImage] = []
     internal var prefetchedLatestRoverPhotos: [RoverPhoto] = []
     
-    internal var requestsSent: Int = 0
-    internal var successfulRequestsReturned: Int = 0
-    internal var failedRequestsReturned: Int = 0
-    
-    internal var working: Bool = false {
-        didSet {
-            
-            if !working {
-                // we just turned off working, so reset the counters
-                requestsSent = 0
-                successfulRequestsReturned = 0
-                failedRequestsReturned = 0
-            }
-        }
-    }
+    internal let startUpStatus: EndpointStatus = EndpointStatus()
+    internal let apodStatus: EndpointStatus = EndpointStatus()
+    internal let roverPhotoStatus: EndpointStatus = EndpointStatus()
     
     var rovers: [Rover] = []
     var apodImages: [APODImage] = []
@@ -249,32 +237,9 @@ class Model: NSObject {
 
     
     internal func startUp() {
-        
+                
         fetchRovers()
         fetchLatestAPODImages()
         fetchFavoriteAPODImages()
-    }
-    
-    internal func checkPrefetchRequestsComplete() {
-        
-        for rover in rovers {
-            if rover.manifests.count == 0 {
-                // manifest not yet loaded for this rover
-                return
-            }
-        }
-
-        if rovers.count > 0 {
-            
-            selectedRoverIndex = 0
-            
-            if let max = maxManifestIndex {
-                
-                selectedManifestIndex = max
-            }
-        }
-        
-        // if we made it here, then everything is ready
-        notificationCenter.post(name: Notification.Name(Model.Notifications.modelReady.rawValue), object: self)
     }
 }
