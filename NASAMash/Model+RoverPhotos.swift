@@ -14,6 +14,8 @@ extension Model {
     
     internal func fetchRoverPhotos(roverName: RoverName, sol: Sol, context: RoverMode) {
         
+        var workingRoverPhotos: [RoverPhoto] = []
+        
         if let params = RoverRequestParameters(roverName: roverName, sol: sol, earthDate: nil, cameras: nil, page: nil) {
             
             notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosProcessing.rawValue), object: self)
@@ -29,16 +31,7 @@ extension Model {
                     
                     goodSelf.roverPhotoStatus.noteSuccessfulResult()
                     
-                    if context == .latest {
-                        
-                        goodSelf.prefetchedLatestRoverPhotos = goodSelf.prefetchedLatestRoverPhotos + photos
-                        
-                        goodSelf.roverPhotos = goodSelf.prefetchedLatestRoverPhotos
-                        
-                    } else {
-                        
-                        goodSelf.roverPhotos = goodSelf.roverPhotos + photos
-                    }
+                    workingRoverPhotos += photos
                     
                 case .failure(let error):
                     
@@ -49,6 +42,34 @@ extension Model {
                 }
                 
                 if goodSelf.roverPhotoStatus.checkComplete() {
+
+                    let roverPhotoResults: RoverPhotoResults
+                    
+                    var roverPhotosInSections: [ String : [RoverPhoto]] = [:]
+                    
+                    // get sections
+                    let sections = Array(Set(workingRoverPhotos.map { $0.rover.name }))
+                    
+                    for section in sections {
+                        
+                        let sectionPhotos = workingRoverPhotos.filter { $0.rover.name == section }
+                        
+                        roverPhotosInSections[section] = sectionPhotos
+                    }
+                    
+                    roverPhotoResults = RoverPhotoResults(sections: sections, sectionPhotos: roverPhotosInSections)
+                    
+                    if context == .latest {
+                        
+                        goodSelf.prefetchedLatestRoverPhotos = roverPhotoResults
+                        
+                        goodSelf.roverPhotos = goodSelf.prefetchedLatestRoverPhotos
+                        
+                    } else {
+                        
+                        goodSelf.roverPhotos = roverPhotoResults
+                    }
+                    
                     goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: goodSelf)
                     goodSelf.notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosDoneProcessing.rawValue), object: goodSelf)
                 }
@@ -74,25 +95,25 @@ extension Model {
         }
     }
     
-    internal func fetchRandomRoverPhotos() {
-        
-        guard !roverPhotoStatus.isWorking else { return }
-        
-        roverPhotoStatus.noteSentRequests(rovers.count)
-        
-        for rover in rovers {
-            
-            let randomSol = Int.random(range: Range(0...rover.maxSol))
-            
-            fetchRoverPhotos(roverName: rover.name, sol: randomSol, context: .random)
-        }
-    }
+//    internal func fetchRandomRoverPhotos() {
+//        
+//        guard !roverPhotoStatus.isWorking else { return }
+//        
+//        roverPhotoStatus.noteSentRequests(rovers.count)
+//        
+//        for rover in rovers {
+//            
+//            let randomSol = Int.random(range: Range(0...rover.maxSol))
+//            
+//            fetchRoverPhotos(roverName: rover.name, sol: randomSol, context: .random)
+//        }
+//    }
     
     func fetchRoverPhotosForSelectedManifest() {
         
         guard !roverPhotoStatus.isWorking else { return }
         
-        roverPhotos = []
+        roverPhotos = nil
         notificationCenter.post(name: Notification.Name(Model.Notifications.roverPhotosChanged.rawValue), object: self)
         
         guard let rover = currentRover, let manifest = currentManifest else { return }

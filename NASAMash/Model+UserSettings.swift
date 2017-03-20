@@ -96,4 +96,29 @@ extension Model {
         
         return false
     }
+    
+    func getLastLocation() -> (Double, Double) {
+        
+        let lat = defaults.double(forKey: UserDefaultsKey.lastLatitude.rawValue)
+        let lon = defaults.double(forKey: UserDefaultsKey.lastLongitude.rawValue)
+
+        return (lat, lon)
+    }
+    
+    func setLastLocation(latitude: Double, longitude: Double) {
+        
+        defaults.set(latitude, forKey: UserDefaultsKey.lastLatitude.rawValue)
+        defaults.set(longitude, forKey: UserDefaultsKey.lastLongitude.rawValue)
+        
+        defaults.synchronize()
+    }
 }
+
+
+
+
+
+
+
+
+

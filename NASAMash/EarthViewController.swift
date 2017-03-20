@@ -25,21 +25,11 @@ class ImageWithDate: NSObject {
 class EarthViewController: UIViewController {
 
     @IBOutlet var imageView: UIImageView!
-    @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var saveButtonContainer: UIView!
     @IBOutlet var timeSlider: UISlider!
-    @IBOutlet var latitude: UITextField!
-    @IBOutlet var longitude: UITextField!
-    @IBOutlet var zoom: UITextField!
-    @IBOutlet var zoomSlider: UISlider!
-    @IBOutlet var currentLocationButtonContainer: UIView!
-    @IBOutlet var mapSearchButtonContainer: UIView!
-    @IBOutlet var fetchButton: UIButton!
-    @IBOutlet var fetchButtonContainer: UIView!
     @IBOutlet var imageDateLabel: UILabel!
     @IBOutlet var deleteFrameButtonContainer: UIView!
-    @IBOutlet var showHideDetailsButton: UIButton!
 
     enum LeftOrRight: Int {
         case left = -1
@@ -47,6 +37,7 @@ class EarthViewController: UIViewController {
     }
     
     let model = ModelAccess.shared.model
+    var selectedLocation: (Double, Double)?
     var images: [ImageWithDate] = []
     var imageFetchFails: Int = 0
         
@@ -55,41 +46,13 @@ class EarthViewController: UIViewController {
         return LocationManager(alertPresentingViewController: self)
     }()
     
-    var showDetails: Bool = true {
-        didSet {
-            // when value changes, makes sure controls are shown/hidden accordingly
-            if showDetails {
-                detailsViewBottomConstraint.constant = 0
-                showHideDetailsButton.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
-            } else {
-                detailsViewBottomConstraint.constant = -150
-                showHideDetailsButton.setImage(#imageLiteral(resourceName: "UpArrow"), for: .normal)
-            }
-            
-            // this animates the changes to the constraint
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         saveButtonContainer.layer.cornerRadius = 3
-        currentLocationButtonContainer.layer.cornerRadius = 3
-        mapSearchButtonContainer.layer.cornerRadius = 3
-        fetchButtonContainer.layer.cornerRadius = 3
         deleteFrameButtonContainer.layer.cornerRadius = 3
         
         activityIndicator.isHidden = true
-        
-        // TODO: - these are just default values for now
-        zoom.text = "\(0.25)"
-        zoomSlider.isEnabled = false
-        
-        latitude.text = "42.3601"
-        longitude.text = "-71.0589"
         
         NotificationCenter.default.addObserver(self, selector: #selector(EarthViewController.onChanges), name: Notification.Name(Model.Notifications.earthImagesChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(EarthViewController.onStartProcessing), name: Notification.Name(Model.Notifications.earthImageAssetsProcessing.rawValue), object: model)
@@ -97,10 +60,10 @@ class EarthViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(EarthViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? LocationViewController {
-            vc.delegate = self
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        onFetch()
     }
     
     func onStartProcessing() {
@@ -214,6 +177,15 @@ class EarthViewController: UIViewController {
         timeSlider.value = Float(candidateIndex)
         fetchImageForSliderPosition()
     }
+    
+    func onFetch() {
+        
+        clearOut()
+        
+        let location = model.getLastLocation()
+        
+        model.fetchEarthImageAssetList(lat: location.0, lon: location.1, beginDate: "2000-01-01", endDate: Date().earthDate)
+    }
 }
 
 
@@ -223,11 +195,6 @@ class EarthViewController: UIViewController {
 //////////////////////////////////////////////////////////////
 // MARK: - IBActions
 extension EarthViewController {
-    
-    @IBAction func onShowDetails() {
-        // toggle controls
-        showDetails = !showDetails
-    }
     
     @IBAction func onEmailGIF() {
         
@@ -268,38 +235,6 @@ extension EarthViewController {
     
     @IBAction func onTimeSliderChanged(_ sender: Any) {
         fetchImageForSliderPosition()
-    }
-    
-    @IBAction func onZoomSliderChanged(_ sender: Any) {
-        // TODO: - disabled for now
-    }
-    
-    @IBAction func onCurrentLocation() {
-        locationManager.getLocation { (location) in
-            self.latitude.text = "\(location.coordinate.latitude)"
-            self.longitude.text = "\(location.coordinate.longitude)"
-        }
-    }
-    
-    @IBAction func onMapSearch(_ sender: Any) {
-        performSegue(withIdentifier: "ShowMap", sender: self)
-    }
-    
-    @IBAction func onFetch() {
-        
-        clearOut()
-        
-        guard let latText   = latitude.text,
-              let lat       = Double(latText),
-              let lonText   = longitude.text,
-              let lon       = Double(lonText) else {
-            
-            let note = TJMApplicationNotification(title: "Oops!", message: "There was a problem with the Latitude / Longitude values. Try values betweem -180 through 180 for longitude and -90 through 90 for latitude", fatal: false)
-            note.postMyself()
-            return
-        }
-        
-        model.fetchEarthImageAssetList(lat: lat, lon: lon, beginDate: "2000-01-01", endDate: Date().earthDate)
     }
     
     @IBAction func onRemoveCurrentFrame() {
@@ -360,27 +295,4 @@ extension EarthViewController: MFMailComposeViewControllerDelegate {
 
 
 
-
-
-//////////////////////////////////////////////////////////////
-// MARK: - LocationViewControllerDelegate
-extension EarthViewController: LocationViewControllerDelegate {
-    
-    func onLocationPicked(lat: Double, lon: Double) {
-        
-        latitude.text = "\(lat)"
-        longitude.text = "\(lon)"
-    }
-    
-    func currentTriggerLocation() -> (Double, Double)?{
-        guard let latText   = latitude.text,
-            let lat       = Double(latText),
-            let lonText   = longitude.text,
-            let lon       = Double(lonText) else {
-            return (0, 0)
-        }
-        
-        return (lat, lon)
-    }
-}
 

@@ -22,7 +22,15 @@ class RepointerViewController: UIViewController {
                     }
                     
                 case .earth:
-                    if let vc = storyboard?.instantiateViewController(withIdentifier: "EarthVC") {
+                    if let vc = storyboard?.instantiateViewController(withIdentifier: "LocationVC") as? LocationViewController {
+                        
+                        let lastLocation = ModelAccess.shared.model.getLastLocation()
+
+                        if lastLocation.0 != 0 && lastLocation.1 != 0 {
+                        
+                            vc.initialLocation = lastLocation
+                        }
+                        
                         nav.viewControllers[0] = vc
                     }
                     

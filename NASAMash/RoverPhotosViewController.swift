@@ -55,7 +55,9 @@ class RoverPhotosViewController: UIViewController {
 
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+  
+        collectionView.register(RoverPhotoSectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "RoverPhotoSectionHeader")
+                
         searchControlsContainer.isHidden = true
         searchControlsPickerViewContainer.layer.cornerRadius = 10
         searchControlsRoverLabelContainer.layer.cornerRadius = 3
@@ -76,8 +78,6 @@ class RoverPhotosViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onSelectedRoverChanged), name: Notification.Name(Model.Notifications.selectedRoverChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onSelectedManifestChanged), name: Notification.Name(Model.Notifications.selectedManifestChanged.rawValue), object: model)
         NotificationCenter.default.addObserver(self, selector: #selector(RoverPhotosViewController.onApplicationNotification(notification:)), name: TJMApplicationNotification.ApplicationNotification, object: nil)
-        
-        collectionView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,12 +106,12 @@ class RoverPhotosViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let indexPath = lastTouchedIndexPath,
+              let roverPhotos = model.roverPhotos,
+              let roverPhoto = roverPhotos.getRoverPhoto(indexPath: indexPath) else { return }
+
         if let vc = segue.destination as? PhotoViewController {
-            
-            guard let indexPath = lastTouchedIndexPath,
-                  model.roverPhotos.indices.contains(indexPath.item) else { return }
-            
-            let roverPhoto = model.roverPhotos[indexPath.item]
             
             vc.photoVCMode = .roverPhoto
             vc.imageURLString = roverPhoto.imageURL
@@ -119,10 +119,6 @@ class RoverPhotosViewController: UIViewController {
             
         } else if let vc = segue.destination as? PostcardViewController {
             
-            guard let indexPath = lastTouchedIndexPath,
-                  model.roverPhotos.indices.contains(indexPath.item) else { return }
-
-            let roverPhoto = model.roverPhotos[indexPath.item]
             vc.imageURLString = roverPhoto.imageURL
         }
     }
@@ -143,10 +139,9 @@ class RoverPhotosViewController: UIViewController {
             
             let model = ModelAccess.shared.model
             
-            guard model.roverPhotos.indices.contains(indexPath.row) else { return }
-            
-            let roverPhoto = model.roverPhotos[indexPath.item]
-            
+            guard let roverPhotos = model.roverPhotos,
+                  let roverPhoto = roverPhotos.getRoverPhoto(indexPath: indexPath) else { return }
+                        
             let alert = UIAlertController(title: "Download Image", message: "Do you want to download this image to your Photo Library?", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let save = UIAlertAction(title: "Save Image", style: .default) { [ weak self ] (action) in
@@ -334,14 +329,17 @@ class RoverPhotosViewController: UIViewController {
 extension RoverPhotosViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // get unique rovers in results set
-//        let sectionCount = Set(model.roverPhotos.map { $0.rover.name }).count
-                
-        return 1
+        
+        guard let roverPhotos = model.roverPhotos else { return 0 }
+        
+        return roverPhotos.numberOfSections()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model.roverPhotos.count
+        
+        guard let roverPhotos = model.roverPhotos else { return 0 }
+        
+        return roverPhotos.numberOfItemsInSection(section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -349,11 +347,31 @@ extension RoverPhotosViewController: UICollectionViewDataSource {
         
         cell.resetCell()
         
-        let roverPhoto = model.roverPhotos[indexPath.item]
-        configureCell(cell: cell, roverPhoto: roverPhoto, indexPath: indexPath)
+        if let roverPhoto = model.roverPhotos?.getRoverPhoto(indexPath: indexPath) {
+            
+            configureCell(cell: cell, roverPhoto: roverPhoto, indexPath: indexPath)
+        }
+
         cell.setNeedsDisplay()
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+            
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "RoverPhotoSectionHeader", for: indexPath) as! RoverPhotoSectionHeader
+            
+            headerView.title?.text = model.roverPhotos?.getSectionTitle(indexPath.section)
+            
+            return headerView
+            
+        default:
+            assert(false, "Unexpected element kind")
+        }
+
     }
 }
 
@@ -367,12 +385,17 @@ extension RoverPhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var width = collectionView.frame.size.width / 2
+        var width = collectionView.frame.size.width
         if width > 200 {
             width = collectionView.frame.size.width / 3
         }
         
         return CGSize(width: width, height: width/3*2)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        return CGSize(width: collectionView.frame.size.width, height: 30)
     }
 }
 

@@ -9,17 +9,17 @@
 import UIKit
 import MapKit
 
-protocol LocationViewControllerDelegate {
-    func onLocationPicked(lat: Double, lon: Double)
-    func currentTriggerLocation() -> (Double, Double)?
-}
-
 class LocationViewController: UIViewController {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var searchBarContainerView: UIView!
+    @IBOutlet var buttonContainer: UIView!
     
-    var delegate: LocationViewControllerDelegate? = nil
+    @IBAction func onNext() {
+        performSegue(withIdentifier: "ShowImagery", sender: self)
+    }
+    
+    var initialLocation: (Double, Double)? = nil
     
     // will handle fetching location info
     lazy var locationManager: LocationManager = {
@@ -56,6 +56,8 @@ class LocationViewController: UIViewController {
         
         mapView.delegate = self
         
+        buttonContainer.layer.cornerRadius = 3
+        
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LocationViewController.handleLongPress(gestureReconizer:)))
         mapView.addGestureRecognizer(gestureRecognizer)
         
@@ -63,7 +65,7 @@ class LocationViewController: UIViewController {
         searchCompleter.region = mapView.region
         searchCompleter.filterType = .locationsAndQueries
         
-        if let delegate = delegate, let location = delegate.currentTriggerLocation() {
+        if let location = initialLocation {
             
             let coordinate = CLLocationCoordinate2D(latitude: location.0, longitude: location.1)
             let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
@@ -137,7 +139,7 @@ extension LocationViewController: UISearchControllerDelegate {
 
 extension LocationViewController: UITableViewDelegate {
     
-    // when a row is selected, we need to go get a placemark, pass it to the delegate and plot it on the map
+    // when a row is selected, we need to go get a placemark,record selected location and plot it on the map
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let completion = resultsTableController.searchResults[indexPath.row]
@@ -152,9 +154,9 @@ extension LocationViewController: UITableViewDelegate {
                     
                     let placemark = mapItem.placemark
                     
-                    // send the info back to the delegate
-                    self.delegate?.onLocationPicked(lat: placemark.coordinate.latitude,
-                                                    lon: placemark.coordinate.longitude)
+                    // record the last selected location
+                    ModelAccess.shared.model.setLastLocation(latitude: placemark.coordinate.latitude,
+                                                             longitude: placemark.coordinate.longitude)
                     
                     // display the placemark on the map
                     self.presentMapViewWithPlacemark(placemark: placemark)
@@ -203,9 +205,10 @@ extension LocationViewController: MKMapViewDelegate {
             
             DispatchQueue.main.async {
                 
-                // send the info back to the delegate
-                goodSelf.delegate?.onLocationPicked(lat: placemark.coordinate.latitude,
-                                                lon: placemark.coordinate.longitude)
+                // record the last selected location
+                ModelAccess.shared.model.setLastLocation(latitude: placemark.coordinate.latitude,
+                                                         longitude: placemark.coordinate.longitude)
+
                 
                 goodSelf.addMapAnnotationForPlacemark(placemark: placemark, refreshRegion: false)
             }

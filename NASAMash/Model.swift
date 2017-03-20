@@ -41,7 +41,6 @@ enum APODMode: Int {
 
 enum RoverMode: Int {
     case latest
-    case random
     case search
     case notSet
 }
@@ -74,7 +73,7 @@ class Model: NSObject {
 
     internal var prefetchedAPODImages: [APODImage] = []
     internal var favoriteAPODImages: [APODImage] = []
-    internal var prefetchedLatestRoverPhotos: [RoverPhoto] = []
+    internal var prefetchedLatestRoverPhotos: RoverPhotoResults? = nil
     
     internal let startUpStatus: EndpointStatus = EndpointStatus()
     internal let apodStatus: EndpointStatus = EndpointStatus()
@@ -82,7 +81,7 @@ class Model: NSObject {
     
     var rovers: [Rover] = []
     var apodImages: [APODImage] = []
-    var roverPhotos: [RoverPhoto] = []
+    var roverPhotos: RoverPhotoResults? = nil
     var earthImages: [EarthImagery] = []
     var failedEarthImageCount: Int = 0
     
@@ -120,12 +119,8 @@ class Model: NSObject {
                 case .latest:
                     roverPhotos = prefetchedLatestRoverPhotos
                     
-                case .random:
-                    roverPhotos = []
-                    fetchRandomRoverPhotos()
-                    
                 case .search:
-                    roverPhotos = []
+                    roverPhotos = nil
                 }
                 
                 notificationCenter.post(name: Notification.Name(Model.Notifications.roverModeChanged.rawValue), object: self)

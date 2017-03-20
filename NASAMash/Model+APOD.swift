@@ -16,10 +16,8 @@ extension Model {
         return 7
     }
 
-    internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode, totalInBatch: Int) {
+    internal func fetchAPODImage(nasaDate: NasaDate, context: APODMode) {
         
-        apodStatus.noteSentRequests(totalInBatch)
-
         let endpoint = NASAAPODEndpoint.getAPODImage(nasaDate)
         client.fetch(request: endpoint.request, parse: APODImage.init) { [ weak self ] (result) in
             
@@ -96,12 +94,14 @@ extension Model {
             startIndex = 1
         }
         
+        apodStatus.noteSentRequests(Model.daysOfAPODImagesForLatest-startIndex)
+
         for daysBefore in startIndex..<Model.daysOfAPODImagesForLatest {
             
             if let fetchDate = Calendar.current.date(byAdding: .day, value: -daysBefore, to: useDate) {
 
                 delay(0.2) {
-                    self.fetchAPODImage(nasaDate: fetchDate.earthDate, context: .latest, totalInBatch: Model.daysOfAPODImagesForLatest-startIndex)
+                    self.fetchAPODImage(nasaDate: fetchDate.earthDate, context: .latest)
                 }
             }
         }
@@ -111,9 +111,11 @@ extension Model {
         
         let favorites = allFavoriteApods()
         
+        apodStatus.noteSentRequests(favorites.count)
+        
         for favoriteDate in favorites {
             
-            fetchAPODImage(nasaDate: favoriteDate, context: .favorites, totalInBatch: favorites.count)
+            fetchAPODImage(nasaDate: favoriteDate, context: .favorites)
         }
     }
     

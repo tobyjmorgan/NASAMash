@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		079CA3CCD23B62C887AB86F6 /* Pods_NASAMashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6380640F00A036EEDDB5537A /* Pods_NASAMashTests.framework */; };
 		0F400C6FAF242272EE9C8773 /* Pods_NASAMashUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B5E95D589A2B07BB230A02 /* Pods_NASAMashUITests.framework */; };
+		6B28A5401E800BC80044B6C4 /* EndpointStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1CF1F1E7C642900C79EC2 /* EndpointStatus.swift */; };
+		6B28A5421E8020390044B6C4 /* RoverPhotoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A5411E8020390044B6C4 /* RoverPhotoResults.swift */; };
+		6B28A5431E8024FA0044B6C4 /* RoverPhotoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A5411E8020390044B6C4 /* RoverPhotoResults.swift */; };
+		6B28A5451E8028750044B6C4 /* RoverPhotoSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A5441E8028750044B6C4 /* RoverPhotoSectionHeader.swift */; };
 		6B5FE8191E67590B002CBDAA /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE8181E67590B002CBDAA /* UIImage+extensions.swift */; };
 		6B5FE81B1E67598C002CBDAA /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE81A1E67598C002CBDAA /* UserDefaultsKey.swift */; };
 		6B5FE81C1E67598C002CBDAA /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FE81A1E67598C002CBDAA /* UserDefaultsKey.swift */; };
@@ -142,6 +146,8 @@
 		3A47DEC2F92CBE4711BD09A7 /* Pods-NASAMashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NASAMashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NASAMashTests/Pods-NASAMashTests.release.xcconfig"; sourceTree = "<group>"; };
 		5A5B3D0AE136817123733CF3 /* Pods-NASAMashUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NASAMashUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NASAMashUITests/Pods-NASAMashUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6380640F00A036EEDDB5537A /* Pods_NASAMashTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NASAMashTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B28A5411E8020390044B6C4 /* RoverPhotoResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhotoResults.swift; sourceTree = "<group>"; };
+		6B28A5441E8028750044B6C4 /* RoverPhotoSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoverPhotoSectionHeader.swift; sourceTree = "<group>"; };
 		6B5FE8181E67590B002CBDAA /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
 		6B5FE81A1E67598C002CBDAA /* UserDefaultsKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		6B5FE81D1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+TJMApplicationNotification.swift"; sourceTree = "<group>"; };
@@ -271,8 +277,8 @@
 				6B907B271E663EFF00B75514 /* FeatureViewController.swift */,
 				6BF4EF071E6D14EF002A81B7 /* RepointerViewController.swift */,
 				6B907B311E67417700B75514 /* APODViewController.swift */,
-				6B9D8EC41E706E9100F626FD /* EarthViewController.swift */,
 				6B9D8EC61E71045800F626FD /* LocationViewController.swift */,
+				6B9D8EC41E706E9100F626FD /* EarthViewController.swift */,
 				6B9D8ECE1E71061500F626FD /* SearchResultsTableViewController.swift */,
 				6B5FE8231E69DF56002CBDAA /* RoverPhotosViewController.swift */,
 				6B5FE8281E6BBF72002CBDAA /* PhotoViewController.swift */,
@@ -353,6 +359,7 @@
 				6B7EB4541E725B9700C4070B /* Model+EarthImagery.swift */,
 				6B7EB45A1E725BF800C4070B /* Model+UserSettings.swift */,
 				6BC1CF1F1E7C642900C79EC2 /* EndpointStatus.swift */,
+				6B28A5411E8020390044B6C4 /* RoverPhotoResults.swift */,
 				6B5FE81A1E67598C002CBDAA /* UserDefaultsKey.swift */,
 				6B871D2E1E64B4F5006F2236 /* Base Types */,
 				6B871D2F1E64B54C006F2236 /* Extensions */,
@@ -439,6 +446,7 @@
 				6B907B2B1E66400900B75514 /* FeatureCell.swift */,
 				6B907B2E1E67344800B75514 /* APODCell.swift */,
 				6BBEDD321E6E675100ED9D3F /* RoverPhotoCell.swift */,
+				6B28A5441E8028750044B6C4 /* RoverPhotoSectionHeader.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -737,6 +745,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B28A5451E8028750044B6C4 /* RoverPhotoSectionHeader.swift in Sources */,
 				6B907B251E66168D00B75514 /* Feature+extensions.swift in Sources */,
 				6B5FE8261E6A067D002CBDAA /* Int+extensions.swift in Sources */,
 				6B5FE81E1E687D47002CBDAA /* UIViewController+TJMApplicationNotification.swift in Sources */,
@@ -794,6 +803,7 @@
 				6B9D8EC11E6F048600F626FD /* PostcardViewController.swift in Sources */,
 				6B907B161E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */,
 				6B871CAF1E5DE498006F2236 /* NASAAPIClient.swift in Sources */,
+				6B28A5421E8020390044B6C4 /* RoverPhotoResults.swift in Sources */,
 				6B907B321E67417700B75514 /* APODViewController.swift in Sources */,
 				6BF4EF081E6D14EF002A81B7 /* RepointerViewController.swift in Sources */,
 				6B7EB4581E725BCD00C4070B /* Model+Rover_Manifests.swift in Sources */,
@@ -812,6 +822,7 @@
 				6B907B231E66165B00B75514 /* Feature.swift in Sources */,
 				6B7EB4661E72F90700C4070B /* APIClientTests.swift in Sources */,
 				6B7EB4561E725B9700C4070B /* Model+EarthImagery.swift in Sources */,
+				6B28A5431E8024FA0044B6C4 /* RoverPhotoResults.swift in Sources */,
 				6B871CC21E5DF7DC006F2236 /* String+extensions.swift in Sources */,
 				6B871CD91E5E2702006F2236 /* Camera+extensions.swift in Sources */,
 				6B907B111E6539E400B75514 /* EarthImageryParams.swift in Sources */,
@@ -840,6 +851,7 @@
 				6B7EB4501E725B2A00C4070B /* Model+APOD.swift in Sources */,
 				6B907B141E653F0500B75514 /* EarthImageAsset+extensions.swift in Sources */,
 				6B907B171E65F2F300B75514 /* EarthImagery+extensions.swift in Sources */,
+				6B28A5401E800BC80044B6C4 /* EndpointStatus.swift in Sources */,
 				6B9D8ECD1E71054700F626FD /* CLPlacemark+extensions.swift in Sources */,
 				6B871CBF1E5DF532006F2236 /* DictionaryAddValuesFromDictionary.swift in Sources */,
 				6B871CA71E5DE43D006F2236 /* APIClient.swift in Sources */,

@@ -14,4 +14,6 @@ enum UserDefaultsKey: String {
     case photoRootPath
     case favoriteApodImages
     case favoriteRoverPhotos
+    case lastLatitude
+    case lastLongitude
 }
