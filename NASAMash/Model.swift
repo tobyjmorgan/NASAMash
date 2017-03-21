@@ -15,7 +15,7 @@ class ModelAccess: NSObject {
     // singleton stuff
     static let shared = ModelAccess()
     
-    private var privateModel = Model()
+    let model = Model()
     
     private override init() {
         // nothing to do here, but want to make initialization private
@@ -23,10 +23,6 @@ class ModelAccess: NSObject {
         super.init()
     }
     ///////////////////////////////////////////////////////////////////
-    
-    var model: Model  {
-        return privateModel
-    }
 }
 
 // special access for testing
