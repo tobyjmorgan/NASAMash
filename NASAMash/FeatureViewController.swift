@@ -141,9 +141,12 @@ extension FeatureViewController: UITableViewDataSource {
         cell.name.text = feature.description
         cell.icon.image = feature.largeIcon
         
-        if (cell.frame.size.width / cell.frame.size.height) < 1.2 {
+        if !self.splitViewController!.isCollapsed {
             cell.name.text = ""
         }
+//        if (cell.frame.size.width / cell.frame.size.height) < 1.2 {
+//            
+//        }
         
         cell.setNeedsLayout()
         

@@ -142,7 +142,7 @@ class APODCell: UICollectionViewCell {
             UIImage.getImageAsynchronously(urlString: secureURLString) { [ weak self ] (image, error) in
                 
                 guard let goodSelf = self else { return }
-                
+
                 guard let image = image else {
                     goodSelf.imageState = .noImageFound
                     return

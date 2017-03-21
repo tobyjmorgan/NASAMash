@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -47,6 +47,24 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Soz-Zx-FW0">
+                                <rect key="frame" x="259" y="575" width="100" height="72"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redBredLogo" translatesAutoresizingMaskIntoConstraints="NO" id="DOz-0z-R2S">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="8vO-kQ-xrs"/>
+                                            <constraint firstAttribute="height" constant="60" id="GFN-h9-Z3e"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2017 redBred LLC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NT-eZ-txS">
+                                        <rect key="frame" x="0.0" y="60" width="100" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -58,6 +76,8 @@
                             <constraint firstItem="qXV-rc-LTO" firstAttribute="top" secondItem="sh4-OW-AMA" secondAttribute="bottom" constant="8" id="akd-TC-eKh"/>
                             <constraint firstItem="qXV-rc-LTO" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cYL-W9-J1D"/>
                             <constraint firstItem="sh4-OW-AMA" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="jd5-gT-ejn"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Soz-Zx-FW0" secondAttribute="bottom" constant="20" id="mxB-ys-dMJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Soz-Zx-FW0" secondAttribute="trailing" id="pVo-5a-5WL"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -68,5 +88,6 @@
     </scenes>
     <resources>
         <image name="EarthIcon" width="512" height="512"/>
+        <image name="redBredLogo" width="200" height="143"/>
     </resources>
 </document>

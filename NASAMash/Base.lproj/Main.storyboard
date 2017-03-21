@@ -12,10 +12,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Master-->
+        <!--Features-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController title="Master" id="RMx-3f-FxP" sceneMemberID="viewController">
+                <navigationController title="Features" id="RMx-3f-FxP" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -99,7 +99,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PxH-jT-jRe">
                                                             <rect key="frame" x="10" y="8" width="355" height="116"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="35D3FFDF-8697-4B9A-9F77-E9FFBABE3565" translatesAutoresizingMaskIntoConstraints="NO" id="t5k-Uu-mD2">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EAD61BCF-398B-4EC0-B4A0-456BC0949C82" translatesAutoresizingMaskIntoConstraints="NO" id="t5k-Uu-mD2">
                                                                     <rect key="frame" x="0.0" y="0.0" width="116" height="116"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="t5k-Uu-mD2" secondAttribute="height" multiplier="1:1" id="o4R-hF-x2Z"/>
@@ -1764,7 +1764,10 @@ Just add an optional short message, type in the recipient's email, and then tap 
         </scene>
     </scenes>
     <resources>
-        <image name="35D3FFDF-8697-4B9A-9F77-E9FFBABE3565" width="512" height="512">
+        <image name="BlackSquare" width="100" height="100"/>
+        <image name="DownArrow" width="512" height="512"/>
+        <image name="Download" width="20" height="20"/>
+        <image name="EAD61BCF-398B-4EC0-B4A0-456BC0949C82" width="512" height="512">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -19295,9 +19298,6 @@ ABAKVAAQClkAEAphABAKZAAQCmkAEApxABAKdAAQCoYAEAqJABAKjgAAAAAAAAQBAAAAAAAAAEEAAAAA
 AAAAAAAAAAAAEAqQA
 </mutableData>
         </image>
-        <image name="BlackSquare" width="100" height="100"/>
-        <image name="DownArrow" width="512" height="512"/>
-        <image name="Download" width="20" height="20"/>
         <image name="FullHeart" width="20" height="20"/>
         <image name="NoImageIcon" width="200" height="200"/>
         <image name="PostageStamp" width="512" height="512"/>
@@ -19306,7 +19306,7 @@ AAAAAAAAAAAAEAqQA
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="94I-nl-lxG"/>
-        <segue reference="2Hj-IG-3tq"/>
         <segue reference="iKC-Lp-pWM"/>
+        <segue reference="2Hj-IG-3tq"/>
     </inferredMetricsTieBreakers>
 </document>
