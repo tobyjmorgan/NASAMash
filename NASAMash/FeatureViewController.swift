@@ -141,13 +141,6 @@ extension FeatureViewController: UITableViewDataSource {
         cell.name.text = feature.description
         cell.icon.image = feature.largeIcon
         
-        if !self.splitViewController!.isCollapsed {
-            cell.name.text = ""
-        }
-//        if (cell.frame.size.width / cell.frame.size.height) < 1.2 {
-//            
-//        }
-        
         cell.setNeedsLayout()
         
         return cell
@@ -162,7 +155,27 @@ extension FeatureViewController: UITableViewDataSource {
 extension FeatureViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.size.height / CGFloat(Feature.count)
+        
+        // 6 plus portrait - width: 375.0, height: 543.0 = 0.69
+        // 6 plus landscape - width: 295.0, height: 310.0 = 0.952
+        // 6 portrait - width: 375.0, height: 543.0 = 0.69
+        // 6 landscape - width: 667.0, height: 283.0 = 2.35
+        // air portrait - width: 320.5, height: 964.0 = 0.3325 - we want 1x3 cells
+        // air landscape - width: 320.0, height: 644.0 = 0.5 - we want 1x3 cells
+        
+        let height: CGFloat
+        
+        
+        if tableView.frame.size.width / tableView.frame.size.height < 0.6 {
+            
+            height = tableView.frame.size.width / 3
+
+        } else {
+            
+            height = tableView.frame.size.height / CGFloat(Feature.count)
+        }
+        
+        return height
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
